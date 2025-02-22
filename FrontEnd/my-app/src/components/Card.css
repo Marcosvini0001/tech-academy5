@@ -1,0 +1,13 @@
+.container {
+  background-color: #505050;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.header {
+  font-size: 30px;
+  border-bottom: 1px solid white;
+  color: aqua;
+  font-weight: bold;
+}
