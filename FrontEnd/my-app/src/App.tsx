@@ -6,7 +6,10 @@ function App() {
     <div className="">
       <header>
         <p>The Barber Man</p>
-        <div className=""></div>
+        <div className="div-button">
+          <button className="button-login">Login</button>
+          <button className="button-registro">Registre-se</button>
+        </div>
       </header>
       <div className="cards">
         <Card

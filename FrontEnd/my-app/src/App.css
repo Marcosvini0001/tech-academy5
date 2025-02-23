@@ -8,6 +8,20 @@ body {
   background-color: #1c1c1c;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.div-button {
+  display: flex;
+  gap: 8px;
+}
+
+.button-login {
+  background-color: rgb(75, 75, 75);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
