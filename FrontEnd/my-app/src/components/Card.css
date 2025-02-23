@@ -11,3 +11,7 @@
   color: aqua;
   font-weight: bold;
 }
+
+.cards {
+  display: flex;
+}
