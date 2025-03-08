@@ -4,7 +4,8 @@ import sequelize from "../config/database";
 class UserModel extends Model {
   id: number | undefined;
   name: string | undefined;
-  telephone: number | undefined;
+  email: string | undefined;
+  senha: string | undefined;
 }
 
 UserModel.init(
@@ -18,8 +19,14 @@ UserModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    telephone: {
-      type: DataTypes.FLOAT,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {
