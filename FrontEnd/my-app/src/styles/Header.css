@@ -1,0 +1,58 @@
+.titulo-principal {
+  position: relative;
+  text-align: center;
+  margin: 0;
+}
+
+.titulo-principal h1 {
+  font-size: 80px;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  font-weight: 800;
+}
+
+.titulo-principal h3 {
+  font-size: 60px;
+  color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px auto;
+  padding: 40px;
+}
+
+.div-usuario {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.div-login {
+  button {
+    background-color: green;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 8px;
+  }
+}
+.div-registro {
+  button {
+    background-color: rgb(2, 87, 156);
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 8px;
+  }
+}
