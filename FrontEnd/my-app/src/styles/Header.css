@@ -36,6 +36,13 @@ header {
   flex-direction: column;
   gap: 10px;
 }
+
+@media (min-width: 600px) {
+  .div-usuario {
+    display: flex;
+    flex-direction: row; /* Garante que os elementos fiquem na horizontal */
+  }
+}
 .div-login {
   button {
     background-color: green;
@@ -44,6 +51,7 @@ header {
     font-size: 18px;
     border-radius: 8px;
     padding: 8px;
+    cursor: pointer;
   }
 }
 .div-registro {
@@ -54,5 +62,6 @@ header {
     font-size: 18px;
     border-radius: 8px;
     padding: 8px;
+    cursor: pointer;
   }
 }

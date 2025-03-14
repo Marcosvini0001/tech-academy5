@@ -1,78 +1,80 @@
 import { Request, Response } from "express";
-import usersModel from "../models/usersModels";
+import UserModel from "../models/usersModel";
 
-// método que busca todos
 export const getAll = async (req: Request, res: Response) => {
-  const users = await usersModel.findAll();
-  res.send(users);
+  try {
+    const users = await UserModel.findAll();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
+  }
 };
 
-// método que busca por id
-export const getUserById = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
-  const users = await usersModel.findByPk(req.params.id);
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await UserModel.findByPk(id);
 
-  return res.json(users);
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    return res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
+  }
 };
 
-// método que cria um novo usuário
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
+    const { name, email, senha } = req.body;
 
-    if (!name || name === "") {
-      return res.status(400).json({ error: "Name is required" });
+    if (!name || !email || !senha) {
+      return res
+        .status(400)
+        .json({ error: "Todos os campos são obrigatórios" });
     }
 
-    const user = await usersModel.create({ name });
-    res.status(201).json(user);
+    const user = await UserModel.create({ name, email, senha });
+    return res.status(201).json(user);
   } catch (error) {
-    res.status(500).json("Erro interno no servidor " + error);
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-// método que atualiza um usuário
-export const updateUser = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
+export const updateUser = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
-    if (!name || name === "") {
-      return res.status(400).json({ error: "Name is required" });
-    }
+    const { id } = req.params;
+    const { name, email, senha } = req.body;
 
-    const user = await usersModel.findByPk(req.params.id);
+    const user = await UserModel.findByPk(id);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    user.name = name;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.senha = senha || user.senha;
 
     await user.save();
-    res.status(201).json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(500).json("Erro interno no servidor " + error);
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-// método que destrói
-export const deleteUserById = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
+export const deleteUserById = async (req: Request, res: Response) => {
   try {
-    const user = await usersModel.findByPk(req.params.id);
+    const { id } = req.params;
+    const user = await UserModel.findByPk(id);
+
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
     await user.destroy();
-
-    res.status(204).send();
+    return res.status(204).send();
   } catch (error) {
-    res.status(500).json("Erro interno no servidor " + error);
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
