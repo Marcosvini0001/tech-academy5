@@ -1,13 +1,8 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize(
-    'barbearia',
-    'root',
-    '',
-    {
-        host: 'localhost',
-        dialect: 'mysql'
-    }
-)
+const sequelize = new Sequelize("ecommerce", "root", "", {
+  host: "localhost",
+  dialect: "mysql",
+});
 
-export default sequelize
+export default sequelize;
