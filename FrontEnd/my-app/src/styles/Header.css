@@ -10,6 +10,7 @@
   position: relative;
   z-index: 2;
   font-weight: 800;
+  color: #232f3e;
 }
 
 .titulo-principal h3 {
@@ -45,22 +46,23 @@ header {
 }
 .div-login {
   button {
-    background-color: green;
-    border: none;
-    color: white;
+    background-color: transparent;
+    border: 1px solid #232f3e;
+    color: #232f3e;
     font-size: 18px;
     border-radius: 8px;
     padding: 8px;
     cursor: pointer;
   }
   button:hover {
-    background-color: rgb(10, 82, 0);
+    background-color: #232f3e;
+    color: white;
     transition: 0.5s;
   }
 }
 .div-registro {
   button {
-    background-color: rgb(2, 87, 156);
+    background-color: #570000;
     border: none;
     color: white;
     font-size: 18px;
@@ -69,7 +71,7 @@ header {
     cursor: pointer;
   }
   button:hover {
-    background-color: rgb(0, 51, 94);
+    background-color: rgb(44, 0, 0);
     transition: 0.5s;
   }
 }
