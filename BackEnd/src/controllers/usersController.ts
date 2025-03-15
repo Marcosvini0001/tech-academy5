@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserModel from "../models/usersModel";
+import "../routes/usersRoutes";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -10,60 +11,64 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const user = await UserModel.findByPk(id);
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  const user = await UserModel.findByPk(req.params.id);
 
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
-    }
-
-    return res.json(user);
-  } catch (error) {
-    res.status(500).json({ error: "Erro interno no servidor", details: error });
-  }
+  return res.json(user);
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { name, email, senha } = req.body;
+    const { name, email, senha, cpf } = req.body;
 
-    if (!name || !email || !senha) {
+    if (!name || !email || !senha || !cpf) {
       return res
         .status(400)
         .json({ error: "Todos os campos são obrigatórios" });
     }
 
-    const user = await UserModel.create({ name, email, senha });
+    const user = await UserModel.create({ name, email, senha, cpf });
     return res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (
+  req: Request<{ id: string }>,
+  res: Response
+): Promise<any> => {
   try {
-    const { id } = req.params;
-    const { name, email, senha } = req.body;
+    const { name, email, password } = req.body;
+    const loggedUser = req.body.user;
+    console.log("logged", loggedUser);
 
-    const user = await UserModel.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Values required" });
     }
 
-    user.name = name || user.name;
-    user.email = email || user.email;
-    user.senha = senha || user.senha;
+    const user = await UserModel.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.name = name;
+    user.email = email;
 
     await user.save();
-    return res.status(200).json(user);
+    res.status(201).json(user);
   } catch (error) {
-    res.status(500).json({ error: "Erro interno no servidor", details: error });
+    res.status(500).json("Erro interno no servidor " + error);
   }
 };
 
-export const deleteUserById = async (req: Request, res: Response) => {
+export const deleteUserById = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   try {
     const { id } = req.params;
     const user = await UserModel.findByPk(id);

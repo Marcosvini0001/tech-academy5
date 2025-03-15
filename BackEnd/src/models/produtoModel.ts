@@ -6,7 +6,7 @@ class ProdutoModel extends Model {
   name: string | undefined;
   categoria: string | undefined;
   marca: string | undefined;
-  estoque: string | undefined;
+  estoque: number | undefined;
   preco: number | undefined;
   descricao: string | undefined;
 }
@@ -31,7 +31,8 @@ ProdutoModel.init(
       allowNull: false,
     },
     estoque: {
-      type: DataTypes.STRING,
+      //ESQUER MOMENTANEAMENTE
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     preco: {
