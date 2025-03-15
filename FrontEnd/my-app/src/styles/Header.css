@@ -1,40 +1,28 @@
-.titulo-principal {
-  position: relative;
-  text-align: center;
-  margin: 0;
-}
-
-.titulo-principal h1 {
-  font-size: 80px;
-  margin: 0;
-  position: relative;
-  z-index: 2;
-  font-weight: 800;
-  color: #232f3e;
-}
-
-.titulo-principal h3 {
-  font-size: 60px;
-  color: rgba(0, 0, 0, 0.3);
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  margin: 0;
-}
-
 header {
   display: flex;
   justify-content: space-between;
   margin: 16px auto;
-  padding: 40px;
+  background-color: #232f3e;
+  padding: 20px;
+  width: 100% auto;
+  margin: 0;
+}
+.titulo-principal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    position: absolute;
+  }
 }
 
 .div-usuario {
   display: flex;
   align-items: center;
-  flex-direction: column;
   gap: 10px;
 }
 
@@ -46,28 +34,29 @@ header {
 }
 .div-login {
   button {
+    white-space: nowrap;
     background-color: transparent;
-    border: 1px solid #232f3e;
-    color: #232f3e;
-    font-size: 18px;
+    border: 1px solid white;
+    color: white;
+    font-size: 14px;
     border-radius: 8px;
-    padding: 8px;
+    padding: 4px;
     cursor: pointer;
   }
   button:hover {
-    background-color: #232f3e;
     color: white;
     transition: 0.5s;
   }
 }
 .div-registro {
   button {
+    white-space: nowrap;
     background-color: #570000;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 14px;
     border-radius: 8px;
-    padding: 8px;
+    padding: 4px;
     cursor: pointer;
   }
   button:hover {

@@ -1,22 +1,21 @@
-import '../styles/Header.css'
+import "../styles/Header.css";
 
 function Header() {
   return (
     <div>
-        <header>
-          <div className="titulo-principal">
-              <h1>GYM</h1>
-              <h3>POISON</h3>
+      <header>
+        <div className="titulo-principal">
+          <h1>GYM POISON</h1>
+        </div>
+        <div className="div-usuario">
+          <div className="div-login">
+            <button>Login</button>
           </div>
-           <div className="div-usuario">
-              <div className="div-login">
-                <button>Login</button>
-              </div>
-              <div className="div-registro">
-                <button>Registre-se</button>
-              </div>
-           </div>
-        </header>
+          <div className="div-registro">
+            <button>Registre-se</button>
+          </div>
+        </div>
+      </header>
     </div>
   );
 }
