@@ -50,8 +50,8 @@ export const updateUser = async (
 ): Promise<any> => {
   try {
     const { name, email, password } = req.body;
-    const loggedUser = req.body.user;
-    console.log("logged", loggedUser);
+    //const loggedUser = req.body.user;
+    //console.log("logged", loggedUser);
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Values required" });

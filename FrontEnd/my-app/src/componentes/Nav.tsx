@@ -2,8 +2,8 @@ function Nav() {
   return (
     <div>
       <div className="div-nav">
-        <a href="#">HOME</a>
-        <a href="#">PRODUTOS</a>
+        <input type="search" id="search" name="name" />
+        <button>Search</button>
       </div>
     </div>
   );

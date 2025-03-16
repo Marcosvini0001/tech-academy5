@@ -39,7 +39,7 @@ header {
     border: 1px solid white;
     color: white;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 4px;
     cursor: pointer;
   }
@@ -55,7 +55,7 @@ header {
     border: none;
     color: white;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 4px;
     cursor: pointer;
   }
