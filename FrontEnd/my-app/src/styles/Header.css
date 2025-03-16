@@ -64,3 +64,18 @@ header {
     transition: 0.5s;
   }
 }
+
+.div-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background-color: rgb(180, 179, 179);
+  padding: 6px;
+  border: none;
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+  }
+}

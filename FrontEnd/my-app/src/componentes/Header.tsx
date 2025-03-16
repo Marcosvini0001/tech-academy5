@@ -16,6 +16,11 @@ function Header() {
           </div>
         </div>
       </header>
+      <div className="div-header">
+        <a href="">Produtos</a>
+        <a href="">Home</a>
+        <a href="">Suporte</a>
+      </div>
     </div>
   );
 }
