@@ -22,15 +22,22 @@ export const getUserById = async (
 
 export const createUser = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { name, email, senha, cpf } = req.body;
+    const { name, email, senha, cpf, cep, endereco } = req.body;
 
-    if (!name || !email || !senha || !cpf) {
+    if (!name || !email || !senha || !cpf || !cep || !endereco) {
       return res
         .status(400)
         .json({ error: "Todos os campos são obrigatórios" });
     }
 
-    const user = await UserModel.create({ name, email, senha, cpf });
+    const user = await UserModel.create({
+      name,
+      email,
+      senha,
+      cpf,
+      cep,
+      endereco,
+    });
     return res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "Erro interno no servidor", details: error });

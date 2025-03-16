@@ -6,6 +6,7 @@ import "./styles/Card.css";
 import "./styles/Nav.css";
 import Footer from "./componentes/Footer";
 import "./styles/Footer.css";
+import "font-awesome/css/font-awesome.min.css";
 
 function App() {
   return (
