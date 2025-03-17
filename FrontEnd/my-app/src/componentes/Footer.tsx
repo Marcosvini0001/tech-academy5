@@ -1,4 +1,4 @@
-function Footer() {
+const Footer = () => {
   return (
     <div>
       <footer>
@@ -17,6 +17,6 @@ function Footer() {
       </footer>
     </div>
   );
-}
+};
 
 export default Footer;

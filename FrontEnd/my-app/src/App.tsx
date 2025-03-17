@@ -1,18 +1,14 @@
-import Header from "./componentes/Header";
 import "./styles/Styles.css";
 import Card from "./componentes/Card";
-import Nav from "./componentes/Nav";
 import "./styles/Card.css";
-import "./styles/Nav.css";
-import Footer from "./componentes/Footer";
-import "./styles/Footer.css";
 import "font-awesome/css/font-awesome.min.css";
+import Home from "../src/pages/Home";
+import Footer from "../src/componentes/Footer";
 
 function App() {
   return (
     <div className="app">
-      <Header></Header>
-      <Nav></Nav>
+      <Home></Home>
       <Card></Card>
       <Footer></Footer>
     </div>

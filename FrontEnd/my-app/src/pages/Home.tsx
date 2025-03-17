@@ -1,6 +1,6 @@
-import "../styles/Header.css";
+import "../styles/Styles.css";
 
-function Header() {
+function Home() {
   return (
     <div>
       <header>
@@ -16,13 +16,26 @@ function Header() {
           </div>
         </div>
       </header>
+
       <div className="div-header">
         <a href="">Produtos</a>
         <a href="">Home</a>
         <a href="">Suporte</a>
       </div>
+
+      <div>
+        <div className="div-nav">
+          <input
+            type="search"
+            id="search"
+            name="name"
+            placeholder="Procure seu produto"
+          />
+          <button>Search</button>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default Header;
+export default Home;
