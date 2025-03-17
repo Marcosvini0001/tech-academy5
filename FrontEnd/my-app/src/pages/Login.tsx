@@ -1,10 +1,10 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <div>
-      Login
-      <Link to={`/home/`}>Ir para o home</Link>
+      <h1>Login</h1>
+      <Link to="/">Ir para o Home</Link>
     </div>
   );
 };
