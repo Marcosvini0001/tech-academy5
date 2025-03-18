@@ -6,6 +6,7 @@ import "font-awesome/css/font-awesome.min.css";
 import Home from "./pages/Home";
 import Footer from "./componentes/Footer";
 import Login from "./pages/Login";
+import "../src/styles/Login.css";
 
 function App() {
   return (

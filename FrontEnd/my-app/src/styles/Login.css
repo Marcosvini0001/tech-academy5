@@ -1,0 +1,38 @@
+.div-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  background-color: #ccc;
+  h1 {
+    font-size: 40px;
+    font-weight: 800;
+  }
+}
+
+.div-email,
+.div-password {
+  display: flex;
+  flex-direction: column;
+  input {
+    font-size: 20px;
+    border-radius: 4px;
+    padding: 6px;
+  }
+  label {
+    font-size: 20px;
+  }
+}
+
+.link-home {
+  background-color: rgb(0, 0, 0);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+#link-button {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
