@@ -4,6 +4,7 @@ import usersRoutes from "./routes/usersRoutes";
 import admRoutes from "./routes/admRoutes";
 import produtoRoutes from "./routes/produtoRoutes";
 import pagamentoRoutes from "../src/routes/pagamentoRoutes";
+import formaPagamento from "../src/routes/formaPagamento";
 const app = express();
 const port = 3000;
 
@@ -16,6 +17,7 @@ app.use(usersRoutes);
 app.use(admRoutes);
 app.use(produtoRoutes);
 app.use(pagamentoRoutes);
+app.use(formaPagamento);
 
 // sync database
 sequelize
