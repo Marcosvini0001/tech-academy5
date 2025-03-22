@@ -36,7 +36,7 @@ ProdutoModel.init(
       allowNull: false,
     },
     preco: {
-      type: DataTypes.STRING,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     descricao: {
