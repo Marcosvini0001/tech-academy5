@@ -6,8 +6,9 @@ import "font-awesome/css/font-awesome.min.css";
 import Home from "./pages/Home";
 import Footer from "./componentes/Footer";
 import Login from "./pages/Login";
+import Registro from "./pages/Registro";
 import "../src/styles/Login.css";
-
+import "../src/styles/Registro.css";
 function App() {
   return (
     <Router>
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
         </Routes>
         <Card />
         <Footer />

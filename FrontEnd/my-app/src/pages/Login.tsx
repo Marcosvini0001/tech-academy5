@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="div-login">
+    <div className="login">
       <h1>Login</h1>
       <div className="div-email">
         <label htmlFor="username">Email:</label>
@@ -14,10 +14,15 @@ const Login = () => {
           <input type="password" placeholder="Digite sua senha" />
         </div>
       </div>
-      <div className="link-home">
-        <Link id="link-button" to="/">
-          Ir para o Home
-        </Link>
+      <div className="buttons">
+        <div className="link-home">
+          <Link id="link-button" to="/">
+            Ir para o Home
+          </Link>
+        </div>
+        <div className="button-login">
+          <button>Login</button>
+        </div>
       </div>
     </div>
   );
