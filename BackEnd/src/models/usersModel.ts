@@ -6,9 +6,9 @@ class UserModel extends Model {
   name: string | undefined;
   email: string | undefined;
   senha: string | undefined;
-  cpf: number | undefined;
+  cpf: string | undefined;
   endereco: string | undefined;
-  cep: number | undefined;
+  cep: string | undefined;
 }
 
 UserModel.init(
@@ -23,7 +23,7 @@ UserModel.init(
       allowNull: false,
     },
     cpf: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
@@ -32,7 +32,7 @@ UserModel.init(
       allowNull: false,
     },
     cep: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
