@@ -40,7 +40,7 @@ UserModel.init(
       allowNull: false,
       unique: true,
     },
-    senha: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },

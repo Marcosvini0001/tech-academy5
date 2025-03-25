@@ -8,7 +8,7 @@ const Registro = () => {
   const [email, setEmail] = useState("");
   const [endereco, setEndereco] = useState("");
   const [cep, setCep] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +21,7 @@ const Registro = () => {
         email,
         endereco,
         cep,
-        senha,
+        password,
       });
 
       console.log("Usuário registrado:", response.data);
@@ -94,8 +94,8 @@ const Registro = () => {
         <input
           type="password"
           id="senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
           placeholder="Digite sua senha"
         />

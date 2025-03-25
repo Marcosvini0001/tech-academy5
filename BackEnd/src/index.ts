@@ -5,8 +5,11 @@ import admRoutes from "./routes/admRoutes";
 import produtoRoutes from "./routes/produtoRoutes";
 import pagamentoRoutes from "../src/routes/pagamentoRoutes";
 import formaPagamento from "../src/routes/formaPagamento";
+import cors from "cors";
+
 const app = express();
 const port = 3000;
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello, World! :)");
