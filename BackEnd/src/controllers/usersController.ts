@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/usersModel";
 import "../routes/usersRoutes";
+import bcrypt from "bcryptjs";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -21,26 +22,22 @@ export const getUserById = async (
 };
 
 export const createUser = async (req: Request, res: Response): Promise<any> => {
+  const { name, email, password, endereco, cpf, cep } = req.body;
+
   try {
-    const { name, email, senha, cpf, cep, endereco } = req.body;
-
-    if (!name || !email || !senha || !cpf || !cep || !endereco) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos são obrigatórios" });
-    }
-
-    const user = await UserModel.create({
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await UserModel.create({
       name,
       email,
-      senha,
+      password: hashedPassword,
+      endereco,
       cpf,
       cep,
-      endereco,
     });
-    return res.status(201).json(user);
+
+    return res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ error: "Erro interno no servidor", details: error });
+    return res.status(500).json({ error: "Erro ao registrar usuário." });
   }
 };
 
@@ -49,21 +46,22 @@ export const updateUser = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { name, email, password } = req.body;
-    //const loggedUser = req.body.user;
-    //console.log("logged", loggedUser);
+    const { name, email, password, endereco, cpf, cep } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: "Values required" });
+    if (!name || !email || !password || !endereco || !cpf || !cep) {
+      return res.status(400).json({ error: "Valor invalido" });
     }
 
     const user = await UserModel.findByPk(req.params.id);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Usuário nao encontrado" });
     }
 
     user.name = name;
     user.email = email;
+    user.endereco = endereco;
+    user.cpf = cpf;
+    user.cep = cep;
 
     await user.save();
     res.status(201).json(user);

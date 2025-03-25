@@ -19,7 +19,6 @@ app.use(produtoRoutes);
 app.use(pagamentoRoutes);
 app.use(formaPagamento);
 
-// sync database
 sequelize
   .sync({ alter: true })
   .then(() => {
