@@ -24,6 +24,9 @@ function Home() {
         <a href="">Produtos</a>
         <a href="">Home</a>
         <a href="">Suporte</a>
+        <a href="" onClick={() => navigate("/cadastrop")}>
+          Cadastrar produtos
+        </a>
       </div>
 
       <div>
