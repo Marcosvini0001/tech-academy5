@@ -22,13 +22,15 @@ const CadastroProdutos = () => {
         descricao,
       });
 
-      console.log("Usuário registrado:", response.data);
-      alert("Usuário registrado com sucesso!");
+      console.log("Produto registrado:", response.data);
+      alert("Produto registrado com sucesso!");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setError(error.response?.data?.message || "Erro ao registrar usuário");
+        setError(
+          error.response?.data?.message || "Erro ao registrar o produto"
+        );
       } else {
-        setError("Erro desconhecido ao registrar usuário");
+        setError("Erro desconhecido ao registrar produto");
       }
     }
   };

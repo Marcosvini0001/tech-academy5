@@ -20,9 +20,9 @@ export const createProduto = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { name, categoria, marca, estoque, preco, descricao } = req.body;
+    const { name, categoria, marca, preco, descricao } = req.body;
 
-    if (!name || !categoria || !marca || !estoque || !preco || !descricao) {
+    if (!name || !categoria || !marca || !preco || !descricao) {
       return res
         .status(400)
         .json({ error: "Todos os campos são obrigatórios" });
@@ -32,7 +32,6 @@ export const createProduto = async (
       name,
       categoria,
       marca,
-      estoque,
       preco,
       descricao,
     });
