@@ -6,18 +6,21 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState<any>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.get("http://localhost:3000/login", {
         email,
         password,
       });
 
-      console.log("Login bem-sucedido:", response.data);
-      alert("Login realizado com sucesso!");
+      const userData = response.data;
+      setUser(userData); 
+      localStorage.setItem("user", JSON.stringify(userData));
+      alert(`Login realizado com sucesso! Bem-vindo, ${userData.name}`);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.message || "Erro ao fazer login");
@@ -30,6 +33,12 @@ const Login = () => {
   return (
     <div className="login">
       <h1>Login</h1>
+      {user && (
+        <div className="user-info">
+          <p><strong>Nome:</strong> {user.name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+        </div>
+      )}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form className="div-dados" onSubmit={handleLogin}>
         <label htmlFor="email">Email:</label>
@@ -45,7 +54,7 @@ const Login = () => {
         <label htmlFor="senha">Senha:</label>
         <input
           type="password"
-          id="senha"
+          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
