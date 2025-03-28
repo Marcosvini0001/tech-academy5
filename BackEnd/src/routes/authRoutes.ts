@@ -1,39 +1,37 @@
-import express, { Router } from "express";
-import UserModel from "../models/usersModel";
-import bcrypt from "bcrypt";
+import express from "express";
+import sequelize from "../config/database";
+import usersRoutes from "../routes/usersRoutes";
+import admRoutes from "../routes/admRoutes";
+import produtoRoutes from "../routes/produtoRoutes";
+import pagamentoRoutes from "./pagamentoRoutes";
+import formaPagamento from "./formaPagamento"; 
+import cors from "cors";
 
-const router = Router();
+const app = express();
+const port = 3000;
 
-router.post("/login", async (req: any, res: any) =>  {
-  try {
-    const { email, password } = req.body;
+app.use(cors());
+app.use(express.json());
 
-    const user = await UserModel.findOne({ where: { email } });
-
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
-    }
-
-    const senhaCorreta = await bcrypt.compare(password, user.password);
-
-    if (!senhaCorreta) {
-      return res.status(401).json({ message: "Senha incorreta" });
-    }
-
-    return res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      endereco: user.endereco,
-      cpf: user.cpf,
-      cep: user.cep,
-    });
-
-  } catch (error) {
-    console.error("Erro no login:", error);
-    return res.status(500).json({ message: "Erro interno do servidor" });
-  }
+app.get("/", (req, res) => {
+  res.send("Hello, World! :)");
 });
 
-export default router;
+app.use(usersRoutes);
+app.use(admRoutes);
+app.use(produtoRoutes);
+app.use(pagamentoRoutes);
+app.use(formaPagamento);
+app.use("/login"); 
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log("database foi sincronizado com sucesso");
+  })
+  .catch((error: unknown) => {
+    console.log("deu zica no bagulho", error);
+  });
 
+app.listen(port, () => {
+  console.log("Server is running on port ", port);
+});

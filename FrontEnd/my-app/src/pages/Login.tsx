@@ -10,18 +10,23 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
+    console.log("Email:", email); 
+    console.log("Password:", password); 
+  
     try {
-      const response = await axios.get("http://localhost:3000/login", {
+      const response = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
-
+  
+      console.log("Response Data:", response.data);
       const userData = response.data;
-      setUser(userData); 
+      setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
       alert(`Login realizado com sucesso! Bem-vindo, ${userData.name}`);
     } catch (error: unknown) {
+      console.error("Error:", error); 
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.message || "Erro ao fazer login");
       } else {
