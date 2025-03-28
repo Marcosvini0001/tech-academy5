@@ -81,8 +81,7 @@ const CadastroProdutos = () => {
         />
         <br />
         <label htmlFor="cep">Descrição:</label>
-        <input
-          type="text"
+        <textarea
           id="descricao"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}

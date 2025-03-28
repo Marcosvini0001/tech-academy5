@@ -10,6 +10,7 @@ import Registro from "./pages/Registro";
 import CadastroProdutos from "./pages/CadastroProdutos";
 import "../src/styles/Login.css";
 import "../src/styles/Registro.css";
+import "../src/styles/CadastroProdutos.css";
 
 function App() {
   return (

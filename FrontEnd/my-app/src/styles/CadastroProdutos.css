@@ -1,0 +1,6 @@
+/*Outros ajustes padrões estão no Registro.css. Mantive as mesmas estilizações*/
+textarea {
+  min-height: 100px;
+  resize: none;
+  width: 100%;
+}
