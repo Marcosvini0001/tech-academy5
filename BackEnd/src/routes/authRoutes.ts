@@ -6,16 +6,28 @@ import produtoRoutes from "../routes/produtoRoutes";
 import pagamentoRoutes from "./pagamentoRoutes";
 import formaPagamento from "./formaPagamento"; 
 import cors from "cors";
+import loginRoutes from "./loginRoutes"; 
 
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log("Database foi sincronizado com sucesso");
+  })
+  .catch((error: unknown) => {
+    console.error("Erro ao sincronizar o banco de dados:", error);
+  });
 const app = express();
 const port = 3000;
 
+app.use(loginRoutes); 
+
 app.use(cors());
 app.use(express.json());
-
+app.use(cors({ origin: "http://localhost:3001" }));
 app.get("/", (req, res) => {
   res.send("Hello, World! :)");
 });
+
 
 app.use(usersRoutes);
 app.use(admRoutes);
