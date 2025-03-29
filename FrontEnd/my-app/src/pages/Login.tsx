@@ -50,7 +50,7 @@ const Login = () => {
           </p>
         </div>
       )}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <form className="div-dados" onSubmit={handleLogin}>
         <label htmlFor="email">Email:</label>
         <input

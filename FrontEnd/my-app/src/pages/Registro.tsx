@@ -40,7 +40,7 @@ const Registro = () => {
       <div className="h2-registro">
         <h2>CADASTRA-SE</h2>
       </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <form className="div-dados" onSubmit={handleSubmit}>
         <label htmlFor="nome">Seu nome:</label>
         <input
