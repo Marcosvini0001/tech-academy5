@@ -37,7 +37,7 @@ const FormaPagamento = () => {
       </div>
       {error && <p className="error">{error}</p>}
       <form className="div-dados" onSubmit={handleSubmit}>
-        <label htmlFor="nome">Seu nome:</label>
+        <label htmlFor="nome">Forma de pagamento:</label>
         <select
           id="pagamento"
           value={tipoDePagamento}
