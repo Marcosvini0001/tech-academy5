@@ -12,6 +12,7 @@ FormaPagamentoModel.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
+      autoIncrement: true,
     },
     tipo_pagamento: {
       type: DataTypes.STRING,

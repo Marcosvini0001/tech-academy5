@@ -16,6 +16,7 @@ import CadastroProdutos from "./pages/CadastroProdutos";
 import "../src/styles/Login.css";
 import "../src/styles/Registro.css";
 import "../src/styles/CadastroProdutos.css";
+import FormaPagamento from "../src/pages/FormaPagamento";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function MainContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/cadastrop" element={<CadastroProdutos />} />
+        <Route path="/formapagamento" element={<FormaPagamento />} />
       </Routes>
 
       {location.pathname === "/" && <Card />}

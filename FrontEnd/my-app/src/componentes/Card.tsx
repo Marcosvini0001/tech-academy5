@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Card() {
+  const navigate = useNavigate();
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
@@ -28,7 +30,12 @@ function Card() {
           </p>
           <div className="button-card">
             <button className="button-carrinho">Adicionar ao carrinho</button>
-            <button className="button-comprar">Comprar</button>
+            <button
+              className="button-comprar"
+              onClick={() => navigate("/formapagamento")}
+            >
+              Comprar
+            </button>
           </div>
         </div>
       ))}
