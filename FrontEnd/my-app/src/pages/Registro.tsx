@@ -37,7 +37,9 @@ const Registro = () => {
 
   return (
     <div className="registro">
-      <h1>Cadastre-se</h1>
+      <div className="h2-registro">
+        <h2>CADASTRA-SE</h2>
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form className="div-dados" onSubmit={handleSubmit}>
         <label htmlFor="nome">Seu nome:</label>

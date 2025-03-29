@@ -37,7 +37,9 @@ const CadastroProdutos = () => {
 
   return (
     <div className="registro">
-      <h1>Cadastrar Produtos</h1>
+      <div className="h2-cadastro">
+        <h2>CADASTRAR PRODUTOS</h2>
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form className="div-dados" onSubmit={handleSubmit}>
         <label htmlFor="nome">Nome do produto:</label>

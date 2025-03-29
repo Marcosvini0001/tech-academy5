@@ -4,3 +4,22 @@ textarea {
   resize: none;
   width: 100%;
 }
+
+.h2-cadastro {
+  background-color: #232f3e;
+  width: 100%;
+  padding: 0 40px 0 40px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  h2 {
+    color: white;
+    font-size: 40px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-weight: 800;
+  }
+}

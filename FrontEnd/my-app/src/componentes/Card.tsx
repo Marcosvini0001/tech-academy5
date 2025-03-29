@@ -21,7 +21,7 @@ function Card() {
       {produtos.map((produto) => (
         <div className="produto" key={produto.id}>
           <img src="src/img/user.png" alt={produto.name} />
-          <h2>{produto.name}</h2>
+          <h3>{produto.name}</h3>
           <p>{produto.descricao}</p>
           <p>
             <strong>Preço:</strong> R$ {produto.preco}
