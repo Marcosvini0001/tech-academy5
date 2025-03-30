@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 
 const FormaPagamento = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const produto = location.state?.produto;
+
   const [tipoDePagamento, setTipoDePagamento] = useState("");
   const [error, setError] = useState("");
 
@@ -14,6 +18,7 @@ const FormaPagamento = () => {
         "http://localhost:3000/formapagamento",
         {
           tipoDePagamento,
+          produto,
         }
       );
 
@@ -36,28 +41,59 @@ const FormaPagamento = () => {
         <h2>Selecione sua forma de pagamento</h2>
       </div>
       {error && <p className="error">{error}</p>}
+      {produto && (
+        <div className="produto-info">
+          <h3>{produto.name}</h3>
+          <p>{produto.descricao}</p>
+          <p>
+            <strong>Preço:</strong> R$ {produto.preco}
+          </p>
+        </div>
+      )}
       <form className="div-dados" onSubmit={handleSubmit}>
-        <label htmlFor="nome">Forma de pagamento:</label>
-        <select
-          id="pagamento"
-          value={tipoDePagamento}
-          onChange={(e) => setTipoDePagamento(e.target.value)}
-          required
-        >
-          <option value="">Selecione uma opção</option>
-          <option value="pix">PIX</option>
-          <option value="cartao_credito">Cartão de Crédito</option>
-          <option value="cartao_debito">Cartão de Débito</option>
-        </select>
+        <div className="opcoes-pagamento">
+          <label className="label-pag">
+            <input
+              className="input-pagamento"
+              type="checkbox"
+              value="pix"
+              checked={tipoDePagamento === "pix"}
+              onChange={() => setTipoDePagamento("pix")}
+            />
+            PIX
+          </label>
+
+          <label className="label-pag">
+            <input
+              className="input-pagamento"
+              type="checkbox"
+              value="credito"
+              checked={tipoDePagamento === "credito"}
+              onChange={() => setTipoDePagamento("credito")}
+            />
+            Crédito
+          </label>
+
+          <label className="label-pag">
+            <input
+              className="input-pagamento"
+              type="checkbox"
+              value="debito"
+              checked={tipoDePagamento === "debito"}
+              onChange={() => setTipoDePagamento("debito")}
+            />
+            Débito
+          </label>
+        </div>
         <br />
         <div className="buttons">
-          <div className="link-home">
-            <Link id="link-button" to="/">
-              Ir para o Home
-            </Link>
+          <div>
+            <button id="button-cancelar" onClick={() => navigate("/")}>
+              Cancelar
+            </button>
           </div>
           <div className="registrar">
-            <button type="submit">Registrar</button>
+            <button type="submit">Prosseguir</button>
           </div>
         </div>
       </form>

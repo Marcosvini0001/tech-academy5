@@ -17,6 +17,7 @@ import "../src/styles/Login.css";
 import "../src/styles/Registro.css";
 import "../src/styles/CadastroProdutos.css";
 import FormaPagamento from "../src/pages/FormaPagamento";
+import "../src/styles/FormaPagamento.css";
 
 function App() {
   return (

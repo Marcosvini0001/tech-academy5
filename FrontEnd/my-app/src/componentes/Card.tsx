@@ -32,7 +32,9 @@ function Card() {
             <button className="button-carrinho">Adicionar ao carrinho</button>
             <button
               className="button-comprar"
-              onClick={() => navigate("/formapagamento")}
+              onClick={() =>
+                navigate("/formapagamento", { state: { produto } })
+              }
             >
               Comprar
             </button>
