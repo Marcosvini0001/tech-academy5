@@ -17,15 +17,16 @@
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.9",
     "@types/sequelize": "^4.28.20",
+    "axios": "^1.8.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.13.0",
     "sequelize": "^6.37.6"
   }
