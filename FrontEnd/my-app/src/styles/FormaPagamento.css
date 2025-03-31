@@ -1,0 +1,94 @@
+.formapagamento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.h2-forma h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.div-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.div-dados label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.input-pagamento {
+  margin-right: 8px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.registrar button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.registrar button:hover {
+  background: #218838;
+}
+
+.opcoes-pagamento {
+  display: flex;
+  gap: 20px;
+}
+
+.opcoes-pagamento label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+label {
+  background-color: rgb(228, 228, 228);
+  padding: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.label-pag:hover {
+  transition: 0.3s;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+#button-cancelar {
+  font-size: 14px;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: red;
+  cursor: pointer;
+  color: white;
+}
+
+#button-cancelar:hover {
+  transition: 0.5s;
+  background-color: rgb(116, 0, 0);
+}
