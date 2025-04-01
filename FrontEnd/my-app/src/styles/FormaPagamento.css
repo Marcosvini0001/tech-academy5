@@ -92,3 +92,9 @@ label {
   transition: 0.5s;
   background-color: rgb(116, 0, 0);
 }
+
+.select{
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}

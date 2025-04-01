@@ -5,10 +5,18 @@ import axios from "axios";
 const FormaPagamento = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [tipoPagamento, setTipoPagamento] = useState(""); 
+  const [parcelas, setParcelas] = useState(1); 
   const produto = location.state?.produto;
-
-  const [tipoDePagamento, setTipoDePagamento] = useState("");
   const [error, setError] = useState("");
+
+  const gerarParcelas = () => {
+    const opçõesParcelamento = [];
+    for (let i = 1; i <= 12; i++) {
+      opçõesParcelamento.push(i);
+    }
+    return opçõesParcelamento;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,13 +25,14 @@ const FormaPagamento = () => {
       const response = await axios.post(
         "http://localhost:3000/formapagamento",
         {
-          tipoDePagamento,
+          tipoPagamento,
           produto,
+          parcelas, 
         }
       );
 
       console.log("Forma de pagamento selecionado:", response.data);
-      alert("Forma de pagamento selecionado com sucesso!");
+      alert("Forma de pagamento selecionada com sucesso!");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(
@@ -54,37 +63,51 @@ const FormaPagamento = () => {
         <div className="opcoes-pagamento">
           <label className="label-pag">
             <input
-              className="input-pagamento"
-              type="checkbox"
+              type="radio"
               value="pix"
-              checked={tipoDePagamento === "pix"}
-              onChange={() => setTipoDePagamento("pix")}
+              checked={tipoPagamento === "pix"}
+              onChange={() => setTipoPagamento("pix")}
             />
             PIX
           </label>
 
           <label className="label-pag">
             <input
-              className="input-pagamento"
-              type="checkbox"
+              type="radio"
               value="credito"
-              checked={tipoDePagamento === "credito"}
-              onChange={() => setTipoDePagamento("credito")}
+              checked={tipoPagamento === "credito"}
+              onChange={() => setTipoPagamento("credito")}
             />
             Crédito
           </label>
 
           <label className="label-pag">
             <input
-              className="input-pagamento"
-              type="checkbox"
+              type="radio"
               value="debito"
-              checked={tipoDePagamento === "debito"}
-              onChange={() => setTipoDePagamento("debito")}
+              checked={tipoPagamento === "debito"}
+              onChange={() => setTipoPagamento("debito")}
             />
             Débito
           </label>
         </div>
+
+        {tipoPagamento === "credito" && (
+          <div className="parcelamento">
+            <h3>Escolha o número de parcelas</h3>
+            <select className="select"
+              value={parcelas}
+              onChange={(e) => setParcelas(Number(e.target.value))}
+            >
+              {gerarParcelas().map((parcela) => (
+                <option key={parcela} value={parcela}>
+                  {parcela} vez{parcela > 1 ? "es" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <br />
         <div className="buttons">
           <div>

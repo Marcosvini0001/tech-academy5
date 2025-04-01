@@ -93,21 +93,17 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
   try {
     const { name, email, password, cpf, endereco, cep } = req.body;
 
-    // Validate input
     if (!name || !email || !password || !cpf || !endereco || !cep) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
-    // Check if the user already exists
     const existingUser = await UserModel.findOne({ where: { email } });
     if (existingUser) {
       return res.status(409).json({ error: "User already exists." });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create the user
     const newUser = await UserModel.create({
       name,
       email,
