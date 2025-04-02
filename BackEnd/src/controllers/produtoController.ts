@@ -78,3 +78,19 @@ export const updateProduto = async (
     res.status(500).json("Erro interno no servidor " + error);
   }
 };
+
+export const deleteProduto = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const produto = await ProdutoModel.findByPk(id);
+
+    if (!produto) {
+      return res.status(404).json({ error: "Produto não encontrado" });
+    }
+
+    await produto.destroy();
+    return res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
+  }
+};
