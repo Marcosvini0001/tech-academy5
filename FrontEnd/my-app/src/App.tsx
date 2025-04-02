@@ -18,6 +18,8 @@ import "../src/styles/CadastroProdutos.css";
 import FormaPagamento from "../src/pages/FormaPagamento";
 import "../src/styles/FormaPagamento.css";
 import PaginaADM from "../src/pages/PageAdm";
+import "../src/styles/ListaUsuario.css";
+import "../src/styles/PageADM.css";
 
 function App() {
   return (
