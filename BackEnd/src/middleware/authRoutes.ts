@@ -1,5 +1,15 @@
+import express from "express";
+import userRoutes from "../routes/usersRoutes";
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwt';
+
+const app = express();
+
+// Middleware para interpretar JSON
+app.use(express.json());
+
+// Rotas
+app.use("/users", userRoutes);
 
 export const authMiddleware = (
     req: Request,
@@ -22,3 +32,5 @@ export const authMiddleware = (
         res.status(401).json({ error: 'Invalid token.' });
     }
 };
+
+export default app;

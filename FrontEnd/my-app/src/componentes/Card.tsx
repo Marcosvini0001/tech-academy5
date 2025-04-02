@@ -4,19 +4,27 @@ import { useNavigate } from "react-router-dom";
 
 function Card() {
   const navigate = useNavigate();
-  const [produtos, setProdutos] = useState([]);
+  interface Produto {
+    id: number;
+    name: string;
+    descricao: string;
+    preco: number;
+  }
+
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/produtos")
+      .get(`http://localhost:3000/produtos?page=${page}&limit=10`)
       .then((response) => {
         console.log("Dados recebidos da API:", response.data);
-        setProdutos(response.data);
+        setProdutos(response.data.data);
       })
       .catch((error) => {
         console.error("Erro ao buscar produtos:", error);
       });
-  }, []);
+  }, [page]);
 
   return (
     <div className="lista-cards">

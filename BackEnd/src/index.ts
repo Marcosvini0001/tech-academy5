@@ -6,6 +6,7 @@ import produtoRoutes from "./routes/produtoRoutes";
 import pagamentoRoutes from "../src/routes/pagamentoRoutes";
 import formaPagamento from "../src/routes/formaPagamento";
 import loginRoutes from "./routes/loginRoutes"; // Import the login route
+import userRoutes from "./routes/usersRoutes"; // Import the user route
 import cors from "cors";
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(produtoRoutes);
 app.use(pagamentoRoutes);
 app.use(formaPagamento);
 app.use(loginRoutes); // Register the login route
+app.use("/users", userRoutes); // Register the user route
 
 sequelize
   .sync({ alter: true })
@@ -36,3 +38,5 @@ sequelize
 app.listen(port, () => {
   console.log("Server is running on port ", port);
 });
+
+export default app;

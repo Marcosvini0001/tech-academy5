@@ -13,6 +13,13 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      res.status(400).json({ error: "Invalid email format." });
+      return;
+    }
+
     // Find user by email
     const user = await UserModel.findOne({ where: { email } });
     if (!user) {

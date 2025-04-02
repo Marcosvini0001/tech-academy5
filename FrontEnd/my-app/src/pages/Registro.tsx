@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -9,28 +9,57 @@ const Registro = () => {
   const [endereco, setEndereco] = useState("");
   const [cep, setCep] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validação básica no frontend
+    if (!name || !email || !password || !confirmPassword || !cpf || !endereco || !cep) {
+      setError("Todos os campos são obrigatórios.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Formato de e-mail inválido.");
+      return;
+    }
+
+    const cpfRegex = /^\d{11}$/;
+    if (!cpfRegex.test(cpf)) {
+      setError("CPF inválido. Deve conter 11 dígitos.");
+      return;
+    }
+
     try {
+      // Envia os dados para o backend
       const response = await axios.post("http://localhost:3000/users", {
         name,
-        cpf,
         email,
+        password,
+        cpf,
         endereco,
         cep,
-        password,
       });
 
-      console.log("Usuário registrado:", response.data);
-      alert("Usuário registrado com sucesso!");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data?.message || "Erro ao registrar usuário");
+      if (response.status === 201) {
+        alert("Usuário registrado com sucesso!");
+        navigate("/login");
+      }
+    } catch (err: any) {
+      // Captura a mensagem de erro retornada pela API
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
       } else {
-        setError("Erro desconhecido ao registrar usuário");
+        setError("Erro ao registrar usuário.");
       }
     }
   };
@@ -100,6 +129,16 @@ const Registro = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
           placeholder="Digite sua senha"
+        />
+        <br />
+        <label htmlFor="confirmar-senha">Confirmar Senha:</label>
+        <input
+          type="password"
+          id="confirmar-senha"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          placeholder="Confirme sua senha"
         />
         <br />
         <div className="buttons">

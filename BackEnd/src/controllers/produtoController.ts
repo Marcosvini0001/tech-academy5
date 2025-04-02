@@ -2,8 +2,19 @@ import { Request, Response } from "express";
 import ProdutoModel from "../models/produtoModel";
 
 export const getAll = async (req: Request, res: Response) => {
-  const produtos = await ProdutoModel.findAll();
-  res.send(produtos);
+  const { page = 1, limit = 10 } = req.query;
+  const offset = (Number(page) - 1) * Number(limit);
+
+  const produtos = await ProdutoModel.findAndCountAll({
+    limit: Number(limit),
+    offset,
+  });
+
+  res.json({
+    total: produtos.count,
+    pages: Math.ceil(produtos.count / Number(limit)),
+    data: produtos.rows,
+  });
 };
 
 export const getProdutoById = async (

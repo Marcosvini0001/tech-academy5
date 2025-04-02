@@ -11,6 +11,13 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:3000/login", {
         email,
