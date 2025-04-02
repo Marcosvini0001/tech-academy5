@@ -16,8 +16,15 @@ const Registro = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação básica no frontend
-    if (!name || !email || !password || !confirmPassword || !cpf || !endereco || !cep) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !cpf ||
+      !endereco ||
+      !cep
+    ) {
       setError("Todos os campos são obrigatórios.");
       return;
     }
@@ -40,7 +47,6 @@ const Registro = () => {
     }
 
     try {
-      // Envia os dados para o backend
       const response = await axios.post("http://localhost:3000/users", {
         name,
         email,
@@ -55,7 +61,6 @@ const Registro = () => {
         navigate("/login");
       }
     } catch (err: any) {
-      // Captura a mensagem de erro retornada pela API
       if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else {

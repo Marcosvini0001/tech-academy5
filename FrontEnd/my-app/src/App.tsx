@@ -12,12 +12,12 @@ import Home from "./pages/Home";
 import Footer from "./componentes/Footer";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
-import CadastroProdutos from "./pages/CadastroProdutos";
 import "../src/styles/Login.css";
 import "../src/styles/Registro.css";
 import "../src/styles/CadastroProdutos.css";
 import FormaPagamento from "../src/pages/FormaPagamento";
 import "../src/styles/FormaPagamento.css";
+import PaginaADM from "../src/pages/PageAdm";
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function MainContent() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/cadastrop" element={<CadastroProdutos />} />
+        <Route path="/adm/*" element={<PaginaADM />} />
         <Route path="/formapagamento" element={<FormaPagamento />} />
       </Routes>
 

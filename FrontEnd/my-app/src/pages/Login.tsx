@@ -6,7 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Hook for redirection
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,10 +25,10 @@ const Login = () => {
       });
 
       const { token, user } = response.data;
-      localStorage.setItem("token", token); // Save token in local storage
-      localStorage.setItem("user", JSON.stringify(user)); // Save user data in local storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       alert(`Login successful! Welcome, ${user.name}`);
-      navigate("/"); // Redirect to the principal page
+      navigate("/");
     } catch (error: unknown) {
       console.error("Error during login:", error);
       if (axios.isAxiosError(error)) {

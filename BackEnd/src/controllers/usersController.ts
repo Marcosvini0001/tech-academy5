@@ -29,27 +29,30 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
   const { name, email, password, endereco, cpf, cep } = req.body;
 
   try {
-    // Validações
     if (!name || !email || !password || !endereco || !cpf || !cep) {
-      return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+      return res
+        .status(400)
+        .json({ error: "Todos os campos são obrigatórios." });
     }
 
     const cpfRegex = /^\d{11}$/;
     if (!cpfRegex.test(cpf)) {
-      return res.status(400).json({ error: "CPF inválido. Deve conter 11 dígitos." });
+      return res
+        .status(400)
+        .json({ error: "CPF inválido. Deve conter 11 dígitos." });
     }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
-        error: "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
+        error:
+          "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
       });
     }
 
-    // Criptografa a senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Cria o usuário
     const newUser = await UserModel.create({
       name,
       email,
@@ -83,7 +86,9 @@ export const updateUser = async (
     }
 
     if (!req.user || req.user.id !== String(user.id)) {
-      return res.status(403).json({ error: "You can only edit your own data." });
+      return res
+        .status(403)
+        .json({ error: "You can only edit your own data." });
     }
 
     if (email && email !== user.email) {
@@ -126,9 +131,10 @@ export const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password, cpf } = req.body;
 
-    // Validações
     if (!name || !email || !password || !cpf) {
-      return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+      return res
+        .status(400)
+        .json({ error: "Todos os campos são obrigatórios." });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -138,26 +144,27 @@ export const registerUser = async (req: Request, res: Response) => {
 
     const cpfRegex = /^\d{11}$/;
     if (!cpfRegex.test(cpf)) {
-      return res.status(400).json({ error: "CPF inválido. Deve conter 11 dígitos." });
+      return res
+        .status(400)
+        .json({ error: "CPF inválido. Deve conter 11 dígitos." });
     }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
-        error: "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
+        error:
+          "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
       });
     }
 
-    // Verifica se o e-mail já está cadastrado
     const existingUser = await UserModel.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: "E-mail já cadastrado." });
     }
 
-    // Criptografa a senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Cria o usuário
     const newUser = await UserModel.create({
       name,
       email,
@@ -165,7 +172,9 @@ export const registerUser = async (req: Request, res: Response) => {
       cpf,
     });
 
-    res.status(201).json({ message: "Usuário registrado com sucesso.", user: newUser });
+    res
+      .status(201)
+      .json({ message: "Usuário registrado com sucesso.", user: newUser });
   } catch (error) {
     console.error("Erro ao registrar usuário:", error);
     res.status(500).json({ error: "Erro interno do servidor." });

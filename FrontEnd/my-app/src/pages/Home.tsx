@@ -7,19 +7,18 @@ const Home = () => {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    // Check if the user is logged in
     const user = localStorage.getItem("user");
     if (user) {
       setIsLoggedIn(true);
-      setUserName(JSON.parse(user).name); // Extract the user's name
+      setUserName(JSON.parse(user).name);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user"); // Remove user data from local storage
-    localStorage.removeItem("token"); // Remove token from local storage
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
-    navigate("/login"); // Redirect to login page
+    navigate("/login");
   };
 
   return (
@@ -51,8 +50,8 @@ const Home = () => {
         <a href="">Products</a>
         <a href="">Home</a>
         <a href="">Support</a>
-        <a href="" onClick={() => navigate("/cadastrop")}>
-          Register Products
+        <a href="" onClick={() => navigate("/adm")}>
+          ADM
         </a>
       </div>
 
