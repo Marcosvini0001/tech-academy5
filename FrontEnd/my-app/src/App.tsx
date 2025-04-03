@@ -20,10 +20,8 @@ import "../src/styles/FormaPagamento.css";
 import PaginaADM from "../src/pages/PageAdm";
 import "../src/styles/ListaUsuario.css";
 import "../src/styles/PageADM.css";
-<<<<<<< HEAD
 import Compras from "./pages/Compras";
-=======
->>>>>>> 353f6fe2db20fde759010dc8ae67ef8862ae386d
+
 
 function App() {
   return (

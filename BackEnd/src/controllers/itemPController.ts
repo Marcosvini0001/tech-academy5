@@ -77,7 +77,7 @@ export const getUserPurchases = async (req: Request, res: Response): Promise<voi
   const { userId } = req.params;
 
   try {
-    console.log("Buscando pedidos para o usuário:", userId); // Log para depuração
+    console.log("Buscando pedidos para o usuário:", userId); 
     const purchases = await itemPmodel.findAll({
       where: { id_usuario: userId },
     });

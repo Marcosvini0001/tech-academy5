@@ -7,7 +7,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
 
-    // Validate input
+
     if (!email || !password) {
       res.status(400).json({ error: "Email and password are required." });
       return;
@@ -20,14 +20,13 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Find user by email
+
     const user = await UserModel.findOne({ where: { email } });
     if (!user) {
       res.status(404).json({ error: "User not found." });
       return;
     }
 
-    // Validate password
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       res.status(401).json({ error: "Invalid password." });
