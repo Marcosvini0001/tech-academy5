@@ -9,6 +9,7 @@ const PaginaADM = () => {
       <nav>
         <Link to="/adm/cadastro">Cadastro</Link>
         <Link to="/adm/listadeusuario">Lista de Usuários</Link>
+        <Link to="/">Home</Link>
       </nav>
 
       <Routes>

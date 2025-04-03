@@ -21,24 +21,41 @@ const FormaPagamento = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if (!tipoPagamento || !produto || !produto.id || !produto.preco || !user.id) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    console.log("Dados enviados para o backend:", {
+      tipoPagamento,
+      produto,
+      parcelas,
+      userId: user.id,
+    });
+
     try {
       const response = await axios.post(
-        "http://localhost:3000/formapagamento",
+        "http://localhost:3000/formapagamento/process",
         {
           tipoPagamento,
           produto,
-          parcelas, 
+          parcelas,
+          userId: user.id,
         }
       );
 
-      console.log("Forma de pagamento selecionado:", response.data);
+      console.log("Forma de pagamento selecionada:", response.data);
       alert("Forma de pagamento selecionada com sucesso!");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
+        console.error("Erro ao registrar pagamento:", error.response?.data || error.message);
         setError(
-          error.response?.data?.message || "Erro ao registrar pagamento"
+          error.response?.data?.error || "Erro ao registrar pagamento"
         );
       } else {
+        console.error("Erro desconhecido:", error);
         setError("Erro desconhecido ao selecionar forma de pagamento");
       }
     }

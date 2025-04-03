@@ -40,6 +40,7 @@ const Home = () => {
           ) : (
             <div className="div-logout">
               <p>Welcome, {userName}!</p>
+              <button onClick={() => navigate("/compras")}>Compras</button> {/* Novo botão */}
               <button onClick={handleLogout}>Logout</button>
             </div>
           )}

@@ -23,6 +23,7 @@ FormaPagamentoModel.init(
     sequelize,
     modelName: "FormaPagamentoModel",
     tableName: "formapagamento",
+    timestamps: true,
   }
 );
 

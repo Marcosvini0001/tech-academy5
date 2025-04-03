@@ -4,9 +4,11 @@ import usersRoutes from "./routes/usersRoutes";
 import admRoutes from "./routes/admRoutes";
 import produtoRoutes from "./routes/produtoRoutes";
 import pagamentoRoutes from "../src/routes/pagamentoRoutes";
-import formaPagamento from "../src/routes/formaPagamento";
+import formaPagamento from "./routes/formaPagamentoRoutes";
 import loginRoutes from "./routes/loginRoutes"; // Import the login route
 import userRoutes from "./routes/usersRoutes"; // Import the user route
+import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
+import itemPedidoRoutes from './routes/itemPRoutes';
 import cors from "cors";
 
 const app = express();
@@ -23,16 +25,25 @@ app.use(admRoutes);
 app.use(produtoRoutes);
 app.use(pagamentoRoutes);
 app.use(formaPagamento);
-app.use(loginRoutes); // Register the login route
-app.use("/users", userRoutes); // Register the user route
-
+app.use(loginRoutes); 
+app.use("/users", userRoutes); 
+app.use(formaPagamentoRoutes);
+app.use('/itemPedido', itemPedidoRoutes); 
 sequelize
-  .sync({ alter: true })
+  .sync({ alter: true }) 
   .then(() => {
-    console.log("database foi sincronizado com sucesso");
+    console.log("Banco de dados sincronizado com sucesso.");
   })
   .catch((error) => {
-    console.log("deu zica no bagulho", error);
+    console.error("Erro ao sincronizar o banco de dados:", error);
+  });
+sequelize
+  .sync({ alter: true }) 
+  .then(() => {
+    console.log("Banco de dados sincronizado com sucesso.");
+  })
+  .catch((error) => {
+    console.error("Erro ao sincronizar o banco de dados:", error);
   });
 
 app.listen(port, () => {
