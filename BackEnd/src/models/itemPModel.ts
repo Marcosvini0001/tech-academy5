@@ -20,7 +20,8 @@ itemPmodel.init(
     },
     id_pedido: {
       type: DataTypes.INTEGER,
-      allowNull: false, // Campo obrigatório
+      allowNull: false, 
+      
     },
     id_produto: {
       type: DataTypes.INTEGER,

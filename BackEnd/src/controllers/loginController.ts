@@ -33,10 +33,10 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Generate JWT token
+
     const token = generateToken(user);
 
-    // Respond with user data and token
+
     res.json({
       message: "Login successful.",
       token,

@@ -5,8 +5,8 @@ import admRoutes from "./routes/admRoutes";
 import produtoRoutes from "./routes/produtoRoutes";
 import pagamentoRoutes from "../src/routes/pagamentoRoutes";
 import formaPagamento from "./routes/formaPagamentoRoutes";
-import loginRoutes from "./routes/loginRoutes"; // Import the login route
-import userRoutes from "./routes/usersRoutes"; // Import the user route
+import loginRoutes from "./routes/loginRoutes"; 
+import userRoutes from "./routes/usersRoutes"; 
 import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
 import itemPedidoRoutes from './routes/itemPRoutes';
 import cors from "cors";
