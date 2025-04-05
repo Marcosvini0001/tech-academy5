@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 interface Pedido {
@@ -6,12 +7,16 @@ interface Pedido {
   id_produto: number;
   precoCompra: string;
   quantidade: number;
+  enderecoEntrega: string;
 }
 
-const Compras = () => {
+const Usuario = () => {
+  const [novoEndereco, setNovoEndereco] = useState("");
+  const [mensagem, setMensagem] = useState("");
+  const [erro, setErro] = useState("");
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -24,30 +29,51 @@ const Compras = () => {
       setPedidos(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Erro ao buscar pedidos:", error.response?.data || error.message);
-        setError(error.response?.data?.error || "Erro ao buscar pedidos.");
+        console.error(
+          "Erro ao buscar pedidos:",
+          error.response?.data || error.message
+        );
+        setErro(error.response?.data?.error || "Erro ao buscar pedidos.");
       } else {
         console.error("Erro desconhecido:", error);
-        setError("Erro desconhecido ao buscar pedidos.");
+        setErro("Erro desconhecido ao buscar pedidos.");
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleUpdateAddress = async (id_item_pedido: number) => {
-    const novoEndereco = prompt("Digite o novo endereço:");
-    if (!novoEndereco) return;
+  const handleUpdateUserAddress = async () => {
+    if (!novoEndereco) {
+      setErro("O endereço não pode estar vazio.");
+      return;
+    }
 
     try {
-      await axios.put(`http://localhost:3000/itemPedido/${id_item_pedido}/endereco`, {
-        novoEndereco,
-      });
-      alert("Endereço atualizado com sucesso!");
-      fetchPedidos(); 
+      const response = await axios.put(
+        `http://localhost:3000/users/${user.id}/address`,
+        { endereco: novoEndereco }
+      );
+      setMensagem(response.data.message);
+      setErro("");
     } catch (error) {
       console.error("Erro ao atualizar endereço:", error);
-      setError("Erro ao atualizar endereço.");
+      setErro("Erro ao atualizar endereço.");
+      setMensagem("");
+    }
+  };
+
+  const handleUpdateOrderAddress = async (id_item_pedido: number) => {
+    try {
+      await axios.put(
+        `http://localhost:3000/itemPedido/${id_item_pedido}/endereco`,
+        { userId: user.id }
+      );
+      alert("Endereço do pedido atualizado com sucesso!");
+      fetchPedidos();
+    } catch (error) {
+      console.error("Erro ao atualizar endereço do pedido:", error);
+      setErro("Erro ao atualizar endereço do pedido.");
     }
   };
 
@@ -57,10 +83,10 @@ const Compras = () => {
     try {
       await axios.delete(`http://localhost:3000/itemPedido/${id_item_pedido}`);
       alert("Pedido excluído com sucesso!");
-      fetchPedidos(); 
+      fetchPedidos();
     } catch (error) {
       console.error("Erro ao excluir pedido:", error);
-      setError("Erro ao excluir pedido.");
+      setErro("Erro ao excluir pedido.");
     }
   };
 
@@ -70,29 +96,55 @@ const Compras = () => {
 
   return (
     <div>
-      <h2>Minhas Compras</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {isLoading ? (
-        <p>Carregando...</p>
-      ) : (
-        <ul>
-          {Array.isArray(pedidos) && pedidos.map((pedido) => (
-            <li key={pedido.id_item_pedido}>
-              <p>Produto ID: {pedido.id_produto}</p>
-              <p>Endereço: {pedido.precoCompra}</p>
-              <p>Quantidade: {pedido.quantidade}</p>
-              <button onClick={() => handleUpdateAddress(pedido.id_item_pedido)}>
-                Alterar Endereço
-              </button>
-              <button onClick={() => handleDeletePedido(pedido.id_item_pedido)}>
-                Apagar Pedido
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <h2>Bem-vindo, {user.name}</h2>
+
+      <div>
+        <h3>Atualizar Endereço</h3>
+        {mensagem && <p style={{ color: "green" }}>{mensagem}</p>}
+        {erro && <p style={{ color: "red" }}>{erro}</p>}
+        <input
+          type="text"
+          placeholder="Digite seu novo endereço"
+          value={novoEndereco}
+          onChange={(e) => setNovoEndereco(e.target.value)}
+        />
+        <button onClick={handleUpdateUserAddress}>Atualizar Endereço</button>
+      </div>
+
+      <div>
+        <h3>Meus Pedidos</h3>
+        {erro && <p style={{ color: "red" }}>{erro}</p>}
+        {isLoading ? (
+          <p>Carregando...</p>
+        ) : (
+          <ul>
+            {Array.isArray(pedidos) &&
+              pedidos.map((pedido) => (
+                <li key={pedido.id_item_pedido}>
+                  <p>Produto ID: {pedido.id_produto}</p>
+                  <p>Endereço: {pedido.enderecoEntrega}</p>
+                  <p>Quantidade: {pedido.quantidade}</p>
+                  <button
+                    onClick={() =>
+                      handleUpdateOrderAddress(pedido.id_item_pedido)
+                    }
+                  >
+                    Alterar Endereço do Pedido
+                  </button>
+                  <button
+                    onClick={() => handleDeletePedido(pedido.id_item_pedido)}
+                  >
+                    Apagar Pedido
+                  </button>
+                </li>
+              ))}
+            
+          </ul>
+        )}
+      </div>
+      <button onClick={() => navigate("/")}>Ir para o Home</button>
     </div>
   );
 };
 
-export default Compras;
+export default Usuario;

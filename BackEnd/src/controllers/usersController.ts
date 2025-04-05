@@ -180,3 +180,30 @@ export const registerUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
+
+export const updateUserAddress = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { endereco } = req.body;
+
+    if (!endereco) {
+      res.status(400).json({ error: "O endereço é obrigatório." });
+      return;
+    }
+
+    const user = await UserModel.findByPk(id);
+
+    if (!user) {
+      res.status(404).json({ error: "Usuário não encontrado." });
+      return;
+    }
+
+    user.endereco = endereco;
+    await user.save();
+
+    res.status(200).json({ message: "Endereço atualizado com sucesso." });
+  } catch (error) {
+    console.error("Erro ao atualizar endereço:", error);
+    res.status(500).json({ error: "Erro interno no servidor." });
+  }
+};

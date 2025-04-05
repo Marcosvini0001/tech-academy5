@@ -1,6 +1,7 @@
 import itemPmodel from "../models/itemPModel";
 import { Request, Response, NextFunction } from "express";
 import ItemPedido from '../models/itemPModel'; 
+import UserModel from "../models/usersModel";
 
 export const getAll = async (req: Request, res: Response) => {
   const itemP = await itemPmodel.findAll();
@@ -100,7 +101,7 @@ export const updateDeliveryAddress = async (
   next: NextFunction
 ): Promise<void> => {
   const { id_item_pedido } = req.params;
-  const { novoEndereco } = req.body;
+  const { userId } = req.body; 
 
   try {
     const item = await itemPmodel.findByPk(id_item_pedido);
@@ -110,14 +111,21 @@ export const updateDeliveryAddress = async (
       return;
     }
 
-    // Atualizar o endereço de entrega
-    item.precoCompra = novoEndereco; // Supondo que o campo `precoCompra` armazena o endereço
+    const user = await UserModel.findByPk(userId);
+
+    if (!user || !user.endereco) {
+      res.status(404).json({ error: "Usuário ou endereço não encontrado." });
+      return;
+    }
+
+
+    item.enderecoEntrega = user.endereco; 
     await item.save();
 
     res.status(200).json({ message: "Endereço atualizado com sucesso." });
   } catch (error) {
     console.error("Erro ao atualizar endereço:", error);
-    next(error); // Passa o erro para o middleware de tratamento de erros
+    next(error); 
   }
 };
 
@@ -141,13 +149,13 @@ export const cancelOrder = async (
       return;
     }
 
-    // Excluir o pedido
+
     await item.destroy();
 
     res.status(200).send({ message: "Pedido cancelado com sucesso." });
   } catch (error) {
     console.error("Erro ao cancelar pedido:", error);
-    next(error); // Passa o erro para o middleware de tratamento de erros
+    next(error);
   }
 };
 
@@ -155,7 +163,7 @@ export const getCompras = async (req: Request, res: Response): Promise<void> => 
   try {
     const { id } = req.params;
 
-    // Busca os pedidos no banco de dados
+
     const compras = await ItemPedido.findAll({ where: { id_usuario: id } });
 
     if (!compras) {

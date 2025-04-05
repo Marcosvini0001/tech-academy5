@@ -47,7 +47,8 @@ const FormaPagamento = () => {
       );
 
       console.log("Forma de pagamento selecionada:", response.data);
-      alert("Forma de pagamento selecionada com sucesso!");
+      alert("Compra realizada com sucesso!");
+      navigate("/"); 
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Erro ao registrar pagamento:", error.response?.data || error.message);

@@ -9,6 +9,7 @@ class itemPmodel extends Model {
   quantidade: number | undefined;
   precoCompra: string | undefined;
   preco_unitario: number | undefined;
+  enderecoEntrega: string | undefined; 
 }
 
 itemPmodel.init(
@@ -42,6 +43,10 @@ itemPmodel.init(
     precoCompra: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    enderecoEntrega: {
+      type: DataTypes.STRING,
+      allowNull: true, 
     },
   },
   {
