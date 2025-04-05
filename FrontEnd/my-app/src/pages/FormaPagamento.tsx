@@ -5,8 +5,8 @@ import axios from "axios";
 const FormaPagamento = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [tipoPagamento, setTipoPagamento] = useState(""); 
-  const [parcelas, setParcelas] = useState(1); 
+  const [tipoPagamento, setTipoPagamento] = useState("");
+  const [parcelas, setParcelas] = useState(1);
   const produto = location.state?.produto;
   const [error, setError] = useState("");
 
@@ -23,7 +23,13 @@ const FormaPagamento = () => {
 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    if (!tipoPagamento || !produto || !produto.id || !produto.preco || !user.id) {
+    if (
+      !tipoPagamento ||
+      !produto ||
+      !produto.id ||
+      !produto.preco ||
+      !user.id
+    ) {
       setError("Preencha todos os campos obrigatórios.");
       return;
     }
@@ -48,13 +54,14 @@ const FormaPagamento = () => {
 
       console.log("Forma de pagamento selecionada:", response.data);
       alert("Compra realizada com sucesso!");
-      navigate("/"); 
+      navigate("/");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.error("Erro ao registrar pagamento:", error.response?.data || error.message);
-        setError(
-          error.response?.data?.error || "Erro ao registrar pagamento"
+        console.error(
+          "Erro ao registrar pagamento:",
+          error.response?.data || error.message
         );
+        setError(error.response?.data?.error || "Erro ao registrar pagamento");
       } else {
         console.error("Erro desconhecido:", error);
         setError("Erro desconhecido ao selecionar forma de pagamento");
@@ -79,41 +86,48 @@ const FormaPagamento = () => {
       )}
       <form className="div-dados" onSubmit={handleSubmit}>
         <div className="opcoes-pagamento">
-          <label className="label-pag">
-            <input
-              type="radio"
-              value="pix"
-              checked={tipoPagamento === "pix"}
-              onChange={() => setTipoPagamento("pix")}
-            />
-            PIX
-          </label>
-
-          <label className="label-pag">
-            <input
-              type="radio"
-              value="credito"
-              checked={tipoPagamento === "credito"}
-              onChange={() => setTipoPagamento("credito")}
-            />
-            Crédito
-          </label>
-
-          <label className="label-pag">
-            <input
-              type="radio"
-              value="debito"
-              checked={tipoPagamento === "debito"}
-              onChange={() => setTipoPagamento("debito")}
-            />
-            Débito
-          </label>
+          <div className="div-forma-pagamento">
+            <label className="label-pag">
+              <input
+                type="radio"
+                value="pix"
+                checked={tipoPagamento === "pix"}
+                onChange={() => setTipoPagamento("pix")}
+              />
+              PIX
+            </label>
+          </div>
+          <div className="div-forma-pagamento">
+            {" "}
+            <label className="label-pag">
+              <input
+                type="radio"
+                value="credito"
+                checked={tipoPagamento === "credito"}
+                onChange={() => setTipoPagamento("credito")}
+              />
+              Crédito
+            </label>
+          </div>
+          <div className="div-forma-pagamento">
+            {" "}
+            <label className="label-pag">
+              <input
+                type="radio"
+                value="debito"
+                checked={tipoPagamento === "debito"}
+                onChange={() => setTipoPagamento("debito")}
+              />
+              Débito
+            </label>
+          </div>
         </div>
 
         {tipoPagamento === "credito" && (
           <div className="parcelamento">
             <h3>Escolha o número de parcelas</h3>
-            <select className="select"
+            <select
+              className="select"
               value={parcelas}
               onChange={(e) => setParcelas(Number(e.target.value))}
             >

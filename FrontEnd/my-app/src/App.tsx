@@ -21,7 +21,7 @@ import PaginaADM from "../src/pages/PageAdm";
 import "../src/styles/ListaUsuario.css";
 import "../src/styles/PageADM.css";
 import Compras from "./pages/Compras";
-
+import "../src/styles/Compras.css";
 
 function App() {
   return (

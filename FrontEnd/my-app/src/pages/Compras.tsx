@@ -49,15 +49,15 @@ const Usuario = () => {
       return;
     }
 
-   
-    const senha = prompt("Digite sua senha para confirmar a alteração do endereço:");
+    const senha = prompt(
+      "Digite sua senha para confirmar a alteração do endereço:"
+    );
     if (!senha) {
       setErro("A senha é obrigatória.");
       return;
     }
 
     try {
-
       const response = await axios.put(
         `http://localhost:3000/users/${user.id}/address`,
         { endereco: novoEndereco, senha }
@@ -108,19 +108,28 @@ const Usuario = () => {
 
   return (
     <div>
-      <h2>Bem-vindo, {user.name}</h2>
+      <div className="header-compras">
+        <h2>Bem-vindo, {user.name}</h2>
+      </div>
 
-      <div>
-        <h3>Atualizar Endereço</h3>
+      <div className="div-end">
+        <div>
+          {" "}
+          <h3>Atualizar Endereço</h3>
+        </div>
+
         {mensagem && <p style={{ color: "green" }}>{mensagem}</p>}
         {erro && <p style={{ color: "red" }}>{erro}</p>}
         <input
+          className="input-compras"
           type="text"
           placeholder="Digite seu novo endereço"
           value={novoEndereco}
           onChange={(e) => setNovoEndereco(e.target.value)}
         />
-        <button onClick={handleUpdateUserAddress}>Atualizar Endereço</button>
+        <button className="button-compras" onClick={handleUpdateUserAddress}>
+          Atualizar Endereço
+        </button>
       </div>
 
       <div>
@@ -150,7 +159,6 @@ const Usuario = () => {
                   </button>
                 </li>
               ))}
-            
           </ul>
         )}
       </div>

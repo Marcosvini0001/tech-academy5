@@ -46,23 +46,38 @@ const Login = () => {
       </div>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleLogin}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
+        <div className="div-inputs">
+          <label>Email:</label>
+          <input
+            type="email"
+            placeholder="Seu email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="div-inputs">
+          <label>Senha:</label>
+          <input
+            type="password"
+            placeholder="Sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="div-button-login">
+          {" "}
+          <Link className="link-login" to="/registro">
+            Criar conta
+          </Link>
+          <Link className="link-login" to="/">
+            Home
+          </Link>
+          <button type="submit">Login</button>
+        </div>
       </form>
-      <Link to="/registro">Create Account</Link>
     </div>
   );
 };
