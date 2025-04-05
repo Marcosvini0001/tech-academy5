@@ -184,10 +184,10 @@ export const registerUser = async (req: Request, res: Response) => {
 export const updateUserAddress = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { endereco } = req.body;
+    const { endereco, senha } = req.body;
 
-    if (!endereco) {
-      res.status(400).json({ error: "O endereço é obrigatório." });
+    if (!endereco || !senha) {
+      res.status(400).json({ error: "O endereço e a senha são obrigatórios." });
       return;
     }
 
@@ -197,6 +197,14 @@ export const updateUserAddress = async (req: Request, res: Response): Promise<vo
       res.status(404).json({ error: "Usuário não encontrado." });
       return;
     }
+
+
+    const isPasswordValid = await bcrypt.compare(senha, user.password);
+    if (!isPasswordValid) {
+      res.status(401).json({ error: "Senha incorreta." });
+      return;
+    }
+
 
     user.endereco = endereco;
     await user.save();

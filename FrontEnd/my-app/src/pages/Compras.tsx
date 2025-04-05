@@ -49,16 +49,28 @@ const Usuario = () => {
       return;
     }
 
+   
+    const senha = prompt("Digite sua senha para confirmar a alteração do endereço:");
+    if (!senha) {
+      setErro("A senha é obrigatória.");
+      return;
+    }
+
     try {
+
       const response = await axios.put(
         `http://localhost:3000/users/${user.id}/address`,
-        { endereco: novoEndereco }
+        { endereco: novoEndereco, senha }
       );
       setMensagem(response.data.message);
       setErro("");
     } catch (error) {
       console.error("Erro ao atualizar endereço:", error);
-      setErro("Erro ao atualizar endereço.");
+      if (axios.isAxiosError(error)) {
+        setErro(error.response?.data?.error || "Erro ao atualizar endereço.");
+      } else {
+        setErro("Erro desconhecido ao atualizar endereço.");
+      }
       setMensagem("");
     }
   };
