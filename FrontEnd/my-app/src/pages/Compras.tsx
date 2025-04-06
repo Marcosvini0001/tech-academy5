@@ -113,7 +113,7 @@ const Usuario = () => {
       </div>
 
       <div className="div-end">
-        <div>
+        <div className="h3-compras">
           {" "}
           <h3>Atualizar Endereço</h3>
         </div>
@@ -132,7 +132,7 @@ const Usuario = () => {
         </button>
       </div>
 
-      <div>
+      <div className="ul-compra">
         <h3>Meus Pedidos</h3>
         {erro && <p style={{ color: "red" }}>{erro}</p>}
         {isLoading ? (
@@ -141,11 +141,21 @@ const Usuario = () => {
           <ul>
             {Array.isArray(pedidos) &&
               pedidos.map((pedido) => (
-                <li key={pedido.id_item_pedido}>
-                  <p>Produto ID: {pedido.id_produto}</p>
-                  <p>Endereço: {pedido.enderecoEntrega}</p>
-                  <p>Quantidade: {pedido.quantidade}</p>
+                <li className="li-compra" key={pedido.id_item_pedido}>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Produto ID: {pedido.id_produto}</p>
+                  </div>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Endereço: {pedido.enderecoEntrega}</p>
+                  </div>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Quantidade: {pedido.quantidade}</p>
+                  </div>
                   <button
+                    className="edit-compra"
                     onClick={() =>
                       handleUpdateOrderAddress(pedido.id_item_pedido)
                     }
@@ -153,6 +163,7 @@ const Usuario = () => {
                     Alterar Endereço do Pedido
                   </button>
                   <button
+                    className="del-compra"
                     onClick={() => handleDeletePedido(pedido.id_item_pedido)}
                   >
                     Apagar Pedido
@@ -161,8 +172,10 @@ const Usuario = () => {
               ))}
           </ul>
         )}
+        <button className="btn-home" onClick={() => navigate("/")}>
+          Ir para o Home
+        </button>
       </div>
-      <button onClick={() => navigate("/")}>Ir para o Home</button>
     </div>
   );
 };
