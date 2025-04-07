@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #d4d3d3;
+  background-color: #ececec;
 }
 
 header {
@@ -144,4 +144,26 @@ footer {
     color: #d4d3d3;
     padding: 5px;
   }
+}
+
+label {
+  padding: 6px;
+  background-color: #232f3e;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.div-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-color: #c0c0c0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 600px;
 }

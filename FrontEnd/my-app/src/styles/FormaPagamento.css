@@ -24,12 +24,6 @@
   gap: 10px;
 }
 
-.div-dados label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #444;
-}
-
 .input-pagamento {
   margin-right: 8px;
 }
@@ -65,19 +59,6 @@
   gap: 5px;
 }
 
-label {
-  background-color: rgb(228, 228, 228);
-  padding: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.label-pag:hover {
-  transition: 0.3s;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
 #button-cancelar {
   font-size: 14px;
   border: none;
@@ -93,8 +74,21 @@ label {
   background-color: rgb(116, 0, 0);
 }
 
-.select{
+.select {
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+.div-forma-pargamento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.label-pag {
+  background-color: #dddddd;
+  color: black;
+  padding: 20px;
 }

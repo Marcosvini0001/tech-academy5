@@ -89,9 +89,17 @@ const ListaDeUsuarios: React.FC = () => {
                 <td>{usuario.cpf}</td>
                 <td>{usuario.endereco}</td>
                 <td>{usuario.cep}</td>
-                <td>
-                  <button onClick={() => handleUpdate(usuario)}>Editar</button>
-                  <button onClick={() => handleDelete(usuario.id)}>
+                <td className="td-btn">
+                  <button
+                    className="edit-btn"
+                    onClick={() => handleUpdate(usuario)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(usuario.id)}
+                  >
                     Excluir
                   </button>
                 </td>

@@ -1,47 +1,139 @@
-/*Outros ajustes padrões estão no Registro.css. Mantive as mesmas estilizações*/
+textarea,
+.input-texto {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
 textarea {
   min-height: 100px;
   resize: none;
-  width: 100%;
 }
 
-.h2-cadastro {
+.cabecalho-cadastro {
   background-color: #232f3e;
   width: 100%;
-  padding: 0 40px 0 40px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-  h2 {
-    color: white;
-    font-size: 40px;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    font-weight: 800;
-  }
+  margin-bottom: 30px;
 }
 
-button {
-  margin-left: 10px;
-  padding: 5px 10px;
+.titulo-cadastro {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.formulario-produto {
+  background-color: #f5f5f5;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.botoes-formulario {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.botao-voltar {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #5a6268;
+}
+
+.botao-enviar {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.8;
+.botao-enviar:hover {
+  background-color: #218838;
 }
 
-button:nth-child(1) {
+.lista-produtos {
+  margin-top: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titulo-lista {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.itens-produtos {
+  list-style: none;
+  padding: 0;
+}
+
+.item-produto {
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.botoes-produto {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.botao-atualizar {
   background-color: #007bff;
   color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-button:nth-child(2) {
+.botao-deletar {
   background-color: #dc3545;
   color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botao-atualizar:hover,
+.botao-deletar:hover {
+  opacity: 0.9;
+}
+
+.mensagem-erro {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
 }
