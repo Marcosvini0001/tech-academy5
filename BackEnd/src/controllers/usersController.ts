@@ -1,19 +1,26 @@
 import { Request, Response } from "express";
 
 interface AuthenticatedRequest extends Request {
-  user?: { id: string };
+  user?: { id: string; email: string };
 }
 import UserModel from "../models/usersModel";
 import "../routes/usersRoutes";
 import bcrypt from "bcryptjs";
 
 export const getAll = async (req: Request, res: Response) => {
-  try {
-    const users = await UserModel.findAll();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Erro interno no servidor", details: error });
-  }
+  const { page = 1, limit = 10 } = req.query;
+  const offset = (Number(page) - 1) * Number(limit);
+
+  const users = await UserModel.findAndCountAll({
+    limit: Number(limit),
+    offset,
+  });
+
+  res.json({
+    total: users.count,
+    pages: Math.ceil(users.count / Number(limit)),
+    data: users.rows,
+  });
 };
 
 export const getUserById = async (
@@ -49,6 +56,11 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
         error:
           "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
       });
+    }
+
+    const existingUser = await UserModel.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "E-mail já cadastrado." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -88,7 +100,7 @@ export const updateUser = async (
     if (!req.user || req.user.id !== String(user.id)) {
       return res
         .status(403)
-        .json({ error: "You can only edit your own data." });
+        .json({ error: "Você só pode editar seus próprios dados." });
     }
 
     if (email && email !== user.email) {
@@ -181,6 +193,14 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+const validatePassword = async (user: UserModel, senha: string): Promise<boolean> => {
+  return bcrypt.compare(senha, user.password);
+};
+
+const findUserById = async (id: string): Promise<UserModel | null> => {
+  return UserModel.findByPk(id);
+};
+
 export const updateUserAddress = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
@@ -191,20 +211,17 @@ export const updateUserAddress = async (req: Request, res: Response): Promise<vo
       return;
     }
 
-    const user = await UserModel.findByPk(id);
-
+    const user = await findUserById(id);
     if (!user) {
       res.status(404).json({ error: "Usuário não encontrado." });
       return;
     }
 
-
-    const isPasswordValid = await bcrypt.compare(senha, user.password);
+    const isPasswordValid = await validatePassword(user, senha);
     if (!isPasswordValid) {
       res.status(401).json({ error: "Senha incorreta." });
       return;
     }
-
 
     user.endereco = endereco;
     await user.save();

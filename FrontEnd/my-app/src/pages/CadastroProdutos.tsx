@@ -20,7 +20,6 @@ const CadastroProdutos = () => {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [error, setError] = useState("");
 
-
   useEffect(() => {
     fetchProdutos();
   }, []);
@@ -48,7 +47,7 @@ const CadastroProdutos = () => {
 
       console.log("Produto registrado:", response.data);
       alert("Produto registrado com sucesso!");
-      fetchProdutos(); 
+      fetchProdutos();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(
@@ -61,11 +60,11 @@ const CadastroProdutos = () => {
   };
 
   const handleDelete = async (id: number) => {
-    console.log("ID do produto a ser deletado:", id); 
+    console.log("ID do produto a ser deletado:", id);
     try {
       await axios.delete(`http://localhost:3000/produtos/${id}`);
       alert("Produto deletado com sucesso!");
-      fetchProdutos(); 
+      fetchProdutos();
     } catch (error) {
       console.error("Erro ao deletar produto:", error);
     }
@@ -82,7 +81,7 @@ const CadastroProdutos = () => {
       });
 
       alert("Produto atualizado com sucesso!");
-      fetchProdutos(); 
+      fetchProdutos();
     } catch (error) {
       console.error("Erro ao atualizar produto:", error);
     }
@@ -90,81 +89,112 @@ const CadastroProdutos = () => {
 
   return (
     <div className="registro">
-      <div className="h2-cadastro">
-        <h2>CADASTRAR PRODUTOS</h2>
+      <div className="cabecalho-cadastro">
+        <h2 className="titulo-cadastro">Cadastrar Produtos</h2>
       </div>
-      {error && <p className="error">{error}</p>}
-      <form className="div-dados" onSubmit={handleSubmit}>
-        <label htmlFor="nome">Nome do produto:</label>
-        <input
-          type="text"
-          id="nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          placeholder="Digite nome do produto"
-        />
-        <br />
-        <label htmlFor="cpf">Categoria:</label>
-        <input
-          type="text"
-          id="categoria"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          required
-          placeholder="Digite a categoria"
-        />
-        <br />
-        <label htmlFor="email">Marca:</label>
-        <input
-          type="text"
-          id="marca"
-          value={marca}
-          onChange={(e) => setMarca(e.target.value)}
-          required
-          placeholder="Marca do produto"
-        />
-        <br />
-        <label htmlFor="endereco">Preco:</label>
-        <input
-          type="text"
-          id="preco"
-          value={preco}
-          onChange={(e) => setPreco(e.target.value)}
-          required
-          placeholder="Preço do produto"
-        />
-        <br />
-        <label htmlFor="cep">Descrição:</label>
-        <textarea
-          id="descricao"
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          required
-          placeholder="Descrição"
-        />
-        <br />
-        <div className="buttons">
-          <div className="link-home">
-            <Link id="link-button" to="/">
-              Ir para o Home
-            </Link>
-          </div>
-          <div className="registrar">
-            <button type="submit">Cadastrar</button>
-          </div>
+
+      {error && <p className="mensagem-erro">{error}</p>}
+
+      <form className="formulario-produto" onSubmit={handleSubmit}>
+        <div className="div-inputs">
+          {" "}
+          <label htmlFor="nome">Nome do produto:</label>
+          <input
+            type="text"
+            id="nome"
+            className="input-texto"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            placeholder="Digite nome do produto"
+          />
+        </div>
+
+        <div className="div-inputs">
+          {" "}
+          <label htmlFor="categoria">Categoria:</label>
+          <input
+            type="text"
+            id="categoria"
+            className="input-texto"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            required
+            placeholder="Digite a categoria"
+          />
+        </div>
+
+        <div className="div-inputs">
+          <label htmlFor="marca">Marca:</label>
+          <input
+            type="text"
+            id="marca"
+            className="input-texto"
+            value={marca}
+            onChange={(e) => setMarca(e.target.value)}
+            required
+            placeholder="Marca do produto"
+          />
+        </div>
+
+        <div className="div-inputs">
+          {" "}
+          <label htmlFor="preco">Preço:</label>
+          <input
+            type="text"
+            id="preco"
+            className="input-texto"
+            value={preco}
+            onChange={(e) => setPreco(e.target.value)}
+            required
+            placeholder="Preço do produto"
+          />
+        </div>
+
+        <div className="div-inputs">
+          {" "}
+          <label htmlFor="descricao">Descrição:</label>
+          <textarea
+            id="descricao"
+            className="input-texto"
+            value={descricao}
+            onChange={(e) => setDescricao(e.target.value)}
+            required
+            placeholder="Descrição"
+          />
+        </div>
+
+        <div className="botoes-formulario">
+          <Link className="botao-voltar" to="/">
+            Ir para o Home
+          </Link>
+          <button className="botao-enviar" type="submit">
+            Cadastrar
+          </button>
         </div>
       </form>
 
-      <div className="produtos-lista">
-        <h3>Produtos Cadastrados</h3>
-        <ul>
+      <div className="lista-produtos">
+        <h3 className="titulo-lista">Produtos Cadastrados</h3>
+        <ul className="itens-produtos">
           {produtos.map((produto) => (
-            <li key={produto.id}>
+            <li className="item-produto" key={produto.id}>
               <strong>{produto.name}</strong> - {produto.descricao} - R${" "}
               {produto.preco}
-              <button onClick={() => handleUpdate(produto)}>Atualizar</button>
-              <button onClick={() => handleDelete(produto.id)}>Deletar</button>
+              <div className="botoes-produto">
+                <button
+                  className="botao-atualizar"
+                  onClick={() => handleUpdate(produto)}
+                >
+                  Atualizar
+                </button>
+                <button
+                  className="botao-deletar"
+                  onClick={() => handleDelete(produto.id)}
+                >
+                  Deletar
+                </button>
+              </div>
             </li>
           ))}
         </ul>

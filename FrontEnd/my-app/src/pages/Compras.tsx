@@ -49,15 +49,15 @@ const Usuario = () => {
       return;
     }
 
-   
-    const senha = prompt("Digite sua senha para confirmar a alteração do endereço:");
+    const senha = prompt(
+      "Digite sua senha para confirmar a alteração do endereço:"
+    );
     if (!senha) {
       setErro("A senha é obrigatória.");
       return;
     }
 
     try {
-
       const response = await axios.put(
         `http://localhost:3000/users/${user.id}/address`,
         { endereco: novoEndereco, senha }
@@ -108,22 +108,31 @@ const Usuario = () => {
 
   return (
     <div>
-      <h2>Bem-vindo, {user.name}</h2>
+      <div className="header-compras">
+        <h2>Bem-vindo, {user.name}</h2>
+      </div>
 
-      <div>
-        <h3>Atualizar Endereço</h3>
+      <div className="div-end">
+        <div className="h3-compras">
+          {" "}
+          <h3>Atualizar Endereço</h3>
+        </div>
+
         {mensagem && <p style={{ color: "green" }}>{mensagem}</p>}
         {erro && <p style={{ color: "red" }}>{erro}</p>}
         <input
+          className="input-compras"
           type="text"
           placeholder="Digite seu novo endereço"
           value={novoEndereco}
           onChange={(e) => setNovoEndereco(e.target.value)}
         />
-        <button onClick={handleUpdateUserAddress}>Atualizar Endereço</button>
+        <button className="button-compras" onClick={handleUpdateUserAddress}>
+          Atualizar Endereço
+        </button>
       </div>
 
-      <div>
+      <div className="ul-compra">
         <h3>Meus Pedidos</h3>
         {erro && <p style={{ color: "red" }}>{erro}</p>}
         {isLoading ? (
@@ -132,11 +141,21 @@ const Usuario = () => {
           <ul>
             {Array.isArray(pedidos) &&
               pedidos.map((pedido) => (
-                <li key={pedido.id_item_pedido}>
-                  <p>Produto ID: {pedido.id_produto}</p>
-                  <p>Endereço: {pedido.enderecoEntrega}</p>
-                  <p>Quantidade: {pedido.quantidade}</p>
+                <li className="li-compra" key={pedido.id_item_pedido}>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Produto ID: {pedido.id_produto}</p>
+                  </div>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Endereço: {pedido.enderecoEntrega}</p>
+                  </div>
+                  <div className="p-compra">
+                    {" "}
+                    <p>Quantidade: {pedido.quantidade}</p>
+                  </div>
                   <button
+                    className="edit-compra"
                     onClick={() =>
                       handleUpdateOrderAddress(pedido.id_item_pedido)
                     }
@@ -144,17 +163,19 @@ const Usuario = () => {
                     Alterar Endereço do Pedido
                   </button>
                   <button
+                    className="del-compra"
                     onClick={() => handleDeletePedido(pedido.id_item_pedido)}
                   >
                     Apagar Pedido
                   </button>
                 </li>
               ))}
-            
           </ul>
         )}
+        <button className="btn-home" onClick={() => navigate("/")}>
+          Ir para o Home
+        </button>
       </div>
-      <button onClick={() => navigate("/")}>Ir para o Home</button>
     </div>
   );
 };
