@@ -1,0 +1,177 @@
+.div-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .div-header a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    transition: background 0.3s;
+    cursor: pointer;
+    color: white;
+    border-bottom: 1px solid #e50914;
+  }
+  
+  .div-header a:hover {
+    background-color: #5050502f;
+  }
+  
+  .gym {
+    color: #f2f2f2;
+  }
+  
+  .poison {
+    color: #e50914;
+  }
+  
+  .titulo-principal h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+  }
+  
+  .div-conteudo-home {
+    width: 100%;
+    height: 1200px;
+    background-image: url("../img/imgheader3.png");
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    position: relative;
+  }
+  
+  .btn-produtos {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #111;
+    color: white;
+    padding: 12px 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-produtos:hover {
+    background-color: #b2070f;
+  }
+  
+  .div-login {
+    button {
+      background-color: #187a00ce;
+      border: none;
+      color: #ffffff;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #135e00c0;
+      transition: 1s ease;
+    }
+  }
+  
+  .div-registro {
+    button {
+      background-color: transparent;
+      color: #e50914;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      text-align: center;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+  }
+  
+  .header input,
+  .header textarea {
+    display: flex;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid black;
+    font-size: 16px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  
+  .div-oferta {
+    background-color: #141414f3;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 40px;
+  }
+  
+  .h3-oferta h3 {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600  ;
+  }
+  
+  .oferta-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .card-produto {
+    background-color: #fff;
+    padding: 15px;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  
+  .card-produto img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .button-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .button-carrinho, .button-comprar {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button-carrinho {
+    background-color: #ccc;
+  }
+  
+  .button-comprar {
+    background-color: #007bff;
+    color: white;
+  }
+  

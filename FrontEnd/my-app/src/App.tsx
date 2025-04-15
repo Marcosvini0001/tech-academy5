@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/Styles.css";
 import Card from "./componentes/Card";
 import "./styles/Card.css";
@@ -22,6 +17,9 @@ import "../src/styles/ListaUsuario.css";
 import "../src/styles/PageADM.css";
 import Compras from "./pages/Compras";
 import "../src/styles/Compras.css";
+import "../src/styles/Home.css";
+import ControleProdutos from "./pages/ControleProdutos";
+import "../src/styles/ControleProdutos.css"
 
 function App() {
   return (
@@ -32,8 +30,6 @@ function App() {
 }
 
 function MainContent() {
-  const location = useLocation();
-
   return (
     <div className="app">
       <Routes>
@@ -41,13 +37,11 @@ function MainContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/adm/*" element={<PaginaADM />} />
+        <Route path="/produtos" element={<Card />} />
         <Route path="/formapagamento" element={<FormaPagamento />} />
         <Route path="/compras" element={<Compras />} />
+        <Route path="/controleprodutos" element={<ControleProdutos/>} />
       </Routes>
-
-      {location.pathname === "/" && <Card />}
-
-      <Footer />
     </div>
   );
 }

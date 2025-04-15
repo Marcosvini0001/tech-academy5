@@ -159,15 +159,11 @@ const Registro = () => {
           />
         </div>
 
-        <div className="buttons">
-          <div className="link-home">
-            <Link id="link-button" to="/">
-              Ir para o Home
-            </Link>
-          </div>
-          <div className="registrar">
-            <button type="submit">Registrar</button>
-          </div>
+        <div className="div-register-button">
+          <Link id="link-register" to="/">
+            Voltar
+          </Link>
+          <button type="submit">Registrar</button>
         </div>
       </form>
     </div>

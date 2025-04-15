@@ -45,11 +45,15 @@
   border: none;
   padding: 8px;
   border-radius: 8px;
-  background-color: #2eda03;
+  background-color: #187900;
   cursor: pointer;
   color: white;
 }
 .button-comprar:hover {
   background-color: #1d9200;
   transition: 0.5s;
+}
+
+.span-paginacao {
+  color: #ccc;
 }

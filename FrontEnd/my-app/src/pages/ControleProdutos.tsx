@@ -11,7 +11,7 @@ interface Produto {
   descricao: string;
 }
 
-const CadastroProdutos = () => {
+const ControleProdutos = () => {
   const [name, setName] = useState("");
   const [categoria, setCategoria] = useState("");
   const [marca, setMarca] = useState("");
@@ -88,93 +88,39 @@ const CadastroProdutos = () => {
   };
 
   return (
-    <div className="cadastro">
-      <div className="h2-cadastro">
-        <h2 className="titulo-cadastro">Cadastrar Produtos</h2>
+    <div className="controle-produtos">
+      <div className="h2-controle">
+        <h2 className="titulo-controle-produtos">Produtos Cadastrados</h2>
       </div>
 
       {error && <p className="mensagem-erro">{error}</p>}
 
-      <form className="formulario-produto" onSubmit={handleSubmit}>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="nome">Nome do produto:</label>
-          <input
-            type="text"
-            id="nome"
-            className="input-texto"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Digite nome do produto"
-          />
-        </div>
-
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="categoria">Categoria:</label>
-          <input
-            type="text"
-            id="categoria"
-            className="input-texto"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            required
-            placeholder="Digite a categoria"
-          />
-        </div>
-
-        <div className="div-inputs">
-          <label htmlFor="marca">Marca:</label>
-          <input
-            type="text"
-            id="marca"
-            className="input-texto"
-            value={marca}
-            onChange={(e) => setMarca(e.target.value)}
-            required
-            placeholder="Marca do produto"
-          />
-        </div>
-
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="preco">Preço:</label>
-          <input
-            type="text"
-            id="preco"
-            className="input-texto"
-            value={preco}
-            onChange={(e) => setPreco(e.target.value)}
-            required
-            placeholder="Preço do produto"
-          />
-        </div>
-
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="descricao">Descrição:</label>
-          <textarea
-            id="descricao"
-            className="input-texto"
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            required
-            placeholder="Descrição"
-          />
-        </div>
-
-        <div className="botoes-formulario">
-          <Link className="botao-voltar" to="/">
-            Ir para o Home
-          </Link>
-          <button className="botao-enviar" type="submit">
-            Cadastrar
-          </button>
-        </div>
-      </form>
+      <div className="lista-produtos">
+        <ul className="itens-produtos">
+          {produtos.map((produto) => (
+            <li className="item-produto" key={produto.id}>
+              <strong>{produto.name}</strong> - {produto.descricao} - R${" "}
+              {produto.preco}
+              <div className="botoes-produto">
+                <button
+                  className="botao-atualizar"
+                  onClick={() => handleUpdate(produto)}
+                >
+                  Atualizar
+                </button>
+                <button
+                  className="botao-deletar"
+                  onClick={() => handleDelete(produto.id)}
+                >
+                  Deletar
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
       </div>
   );
 };
 
-export default CadastroProdutos;
+export default ControleProdutos;

@@ -1,70 +1,63 @@
+import Header from "../componentes/Header";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface Produto {
+  id: number;
+  name: string;
+  descricao: string;
+  preco: number;
+}
 
 const Home = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [ofertas, setOfertas] = useState<Produto[]>([]);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setIsLoggedIn(true);
-      setUserName(JSON.parse(user).name);
-    }
+    axios
+      .get("http://localhost:3000/produtos?page=1&limit=4")
+      .then((response) => {
+        setOfertas(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar ofertas:", error);
+      });
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
 
   return (
     <div>
-      <header>
-        <div className="titulo-principal">
-          <h1>GYM POISON</h1>
-        </div>
-        <div className="div-usuario">
-          {!isLoggedIn ? (
-            <>
-              <div className="div-login">
-                <button onClick={() => navigate("/login")}>Login</button>
-              </div>
-              <div className="div-registro">
-                <button onClick={() => navigate("/registro")}>Register</button>
-              </div>
-            </>
-          ) : (
-            <div className="div-logout">
-              <p>Welcome, {userName}!</p>
-              <button onClick={() => navigate("/compras")}>Usuário</button> {}
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          )}
-        </div>
-      </header>
-
-      <div className="div-header">
-        <a href="">Products</a>
-        <a href="">Home</a>
-        <a href="">Support</a>
-        <a href="" onClick={() => navigate("/adm")}>
-          ADM
-        </a>
+      <Header />
+      <div className="div-conteudo-home">
+        <button className="btn-produtos" onClick={() => navigate("/produtos")}>
+          Compre agora!
+        </button>
       </div>
 
-      <div>
-        <div className="div-nav">
-          <input
-            type="search"
-            id="search"
-            name="name"
-            placeholder="Search for your product"
-          />
-          <button>Search</button>
+      <div className="div-oferta">
+        <div className="h3-oferta">
+          <h3>Oferta da semana</h3>
+        </div>
+        <div className="oferta-cards">
+          {ofertas.map((produto) => (
+            <div className="card-produto" key={produto.id}>
+              <img src="src/img/user.png" alt={produto.name} />
+              <h4>{produto.name}</h4>
+              <p>{produto.descricao}</p>
+              <p><strong>R$ {produto.preco}</strong></p>
+              <div className="button-card">
+                <button className="button-carrinho">Adicionar ao carrinho</button>
+                <button
+                  className="button-comprar"
+                  onClick={() =>
+                    navigate("/formapagamento", { state: { produto } })
+                  }
+                >
+                  Comprar
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

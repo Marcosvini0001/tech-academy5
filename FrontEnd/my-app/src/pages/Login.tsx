@@ -49,6 +49,7 @@ const Login = () => {
         <div className="div-inputs">
           <label>Email:</label>
           <input
+            className="input-login-email"
             type="email"
             placeholder="Seu email"
             value={email}
@@ -59,6 +60,7 @@ const Login = () => {
         <div className="div-inputs">
           <label>Senha:</label>
           <input
+            className="input-login-senha"
             type="password"
             placeholder="Sua senha"
             value={password}
@@ -69,11 +71,11 @@ const Login = () => {
 
         <div className="div-button-login">
           {" "}
+          <Link className="link-login" to="/">
+            Voltar
+          </Link>
           <Link className="link-login" to="/registro">
             Criar conta
-          </Link>
-          <Link className="link-login" to="/">
-            Home
           </Link>
           <button type="submit">Login</button>
         </div>
