@@ -96,30 +96,56 @@ const ControleProdutos = () => {
       {error && <p className="mensagem-erro">{error}</p>}
 
       <div className="lista-produtos">
-        <ul className="itens-produtos">
-          {produtos.map((produto) => (
-            <li className="item-produto" key={produto.id}>
-              <strong>{produto.name}</strong> - {produto.descricao} - R${" "}
-              {produto.preco}
-              <div className="botoes-produto">
-                <button
-                  className="botao-atualizar"
-                  onClick={() => handleUpdate(produto)}
-                >
-                  Atualizar
-                </button>
-                <button
-                  className="botao-deletar"
-                  onClick={() => handleDelete(produto.id)}
-                >
-                  Deletar
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <table border={1} cellPadding={10} cellSpacing={0}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Marca</th>
+              <th>Preço</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {produtos.length > 0 ? (
+              produtos.map((produto) => (
+                <tr key={produto.id}>
+                  <td>{produto.id}</td>
+                  <td>{produto.name}</td>
+                  <td>{produto.categoria}</td>
+                  <td>{produto.marca}</td>
+                  <td>R$ {produto.preco}</td>
+                  <td>{produto.descricao}</td>
+                  <td>
+  <div className="botoes-produto">
+    <button
+      className="botao-atualizar"
+      onClick={() => handleUpdate(produto)}
+    >
+      Atualizar
+    </button>
+    <button
+      className="botao-deletar"
+      onClick={() => handleDelete(produto.id)}
+    >
+      Deletar
+    </button>
+  </div>
+</td>
+
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7}>Nenhum produto cadastrado.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-      </div>
+    </div>
   );
 };
 

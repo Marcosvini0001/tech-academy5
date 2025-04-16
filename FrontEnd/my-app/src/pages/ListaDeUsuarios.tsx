@@ -13,15 +13,20 @@ interface User {
 const ListaDeUsuarios: React.FC = () => {
   const [usuarios, setUsuarios] = useState<User[]>([]);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchUsuarios();
-  }, []);
+  }, [page]);
 
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users");
-      setUsuarios(response.data);
+      const response = await axios.get(
+        `http://localhost:3000/users?page=${page}&limit=10`
+      );
+      setUsuarios(response.data.data);
+      setTotalPages(response.data.pages);
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
       setError("Erro ao buscar usuários.");
@@ -65,9 +70,9 @@ const ListaDeUsuarios: React.FC = () => {
 
   return (
     <div>
-      <h2>Lista de Usuários</h2>
+      <h2 className="h2-lista-usuario">Lista de Usuários</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <table cellPadding="10">
+      <table cellPadding="10" border={1}>
         <thead>
           <tr>
             <th>ID</th>

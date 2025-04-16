@@ -42,6 +42,7 @@ function MainContent() {
         <Route path="/compras" element={<Compras />} />
         <Route path="/controleprodutos" element={<ControleProdutos/>} />
       </Routes>
+      <Footer/>
     </div>
   );
 }
