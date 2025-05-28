@@ -19,7 +19,9 @@ import Compras from "./pages/Compras";
 import "../src/styles/Compras.css";
 import "../src/styles/Home.css";
 import ControleProdutos from "./pages/ControleProdutos";
-import "../src/styles/ControleProdutos.css"
+import "../src/styles/ControleProdutos.css";
+import Suporte from "../src/pages/Suporte"; 
+import "../src/styles/Suporte.css";
 
 function App() {
   return (
@@ -40,9 +42,10 @@ function MainContent() {
         <Route path="/produtos" element={<Card />} />
         <Route path="/formapagamento" element={<FormaPagamento />} />
         <Route path="/compras" element={<Compras />} />
-        <Route path="/controleprodutos" element={<ControleProdutos/>} />
+        <Route path="/controleprodutos" element={<ControleProdutos />} />
+        <Route path="/suporte" element={<Suporte />} /> 
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
