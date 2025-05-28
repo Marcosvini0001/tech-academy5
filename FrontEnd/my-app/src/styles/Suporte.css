@@ -72,3 +72,32 @@
   border-left: 5px solid #e50914;
   border-radius: 6px;
 }
+
+.nao-logado {
+  text-align: center;
+  background-color: #111;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  border-left: 5px solid #e50914;
+}
+
+.mensagem-login {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn-entrar {
+  padding: 10px 20px;
+  background-color: #e50914;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-entrar:hover {
+  background-color: #b00710;
+}
