@@ -10,17 +10,29 @@ interface Produto {
   preco: number;
 }
 
+interface Avaliacao {
+  id: number;
+  id_usuario: number;
+  id_produto: number;
+  nota: number;
+  comentario: string;
+}
+
 function Card() {
   const navigate = useNavigate();
 
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [page, setPage] = useState(1);
 
+  const [avaliacoes, setAvaliacoes] = useState<{ [produtoId: number]: Avaliacao[] }>({});
+  const [nota, setNota] = useState<{ [produtoId: number]: number }>({});
+  const [comentario, setComentario] = useState<{ [produtoId: number]: string }>({});
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const fetchProdutos = () => {
     axios
       .get(`http://localhost:3000/produtos?page=${page}&limit=10`)
       .then((response) => {
-        console.log("Dados recebidos da API:", response.data);
         setProdutos(response.data.data);
       })
       .catch((error) => {
@@ -28,9 +40,41 @@ function Card() {
       });
   };
 
+  const fetchAvaliacoes = async (produtoId: number) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/avaliacoes/${produtoId}`);
+      setAvaliacoes((prev) => ({ ...prev, [produtoId]: res.data }));
+    } catch (err) {
+      setAvaliacoes((prev) => ({ ...prev, [produtoId]: [] }));
+    }
+  };
+
   useEffect(() => {
     fetchProdutos();
   }, [page]);
+
+  useEffect(() => {
+    produtos.forEach((produto) => {
+      fetchAvaliacoes(produto.id);
+    });
+  }, [produtos]);
+
+  const handleAvaliar = async (produtoId: number) => {
+    try {
+      await axios.post("http://localhost:3000/avaliacoes", {
+        id_produto: produtoId,
+        nota: nota[produtoId] || 5,
+        comentario: comentario[produtoId] || "",
+        userId: user.id,
+      });
+      setComentario((prev) => ({ ...prev, [produtoId]: "" }));
+      setNota((prev) => ({ ...prev, [produtoId]: 5 }));
+      fetchAvaliacoes(produtoId);
+      alert("Avaliação enviada!");
+    } catch (err: any) {
+      alert(err.response?.data?.error || "Erro ao enviar avaliação");
+    }
+  };
 
   return (
     <div>
@@ -61,6 +105,57 @@ function Card() {
               >
                 Comprar
               </button>
+            </div>
+
+            <div style={{ marginTop: 16, width: "100%" }}>
+              <h4>Avaliações:</h4>
+              {avaliacoes[produto.id]?.length ? (
+                <ul>
+                  {avaliacoes[produto.id].map((av) => (
+                    <li key={av.id}>
+                      <strong>Nota:</strong> {av.nota} - {av.comentario}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Sem avaliações ainda.</p>
+              )}
+              {user.id && (
+                <div style={{ marginTop: 8 }}>
+                  <label>
+                    Nota:
+                    <select
+                      value={nota[produto.id] || 5}
+                      onChange={e =>
+                        setNota((prev) => ({
+                          ...prev,
+                          [produto.id]: Number(e.target.value),
+                        }))
+                      }
+                    >
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Comentário"
+                    value={comentario[produto.id] || ""}
+                    onChange={e =>
+                      setComentario((prev) => ({
+                        ...prev,
+                        [produto.id]: e.target.value,
+                      }))
+                    }
+                  />
+                  <button onClick={() => handleAvaliar(produto.id)}>
+                    Avaliar
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}

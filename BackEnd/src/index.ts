@@ -9,6 +9,7 @@ import loginRoutes from "./routes/loginRoutes";
 import userRoutes from "./routes/usersRoutes"; 
 import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
 import itemPedidoRoutes from './routes/itemPRoutes';
+import avaliacaoRoutes from "./routes/avaliacaoRoutes";
 import cors from "cors";
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(loginRoutes);
 app.use("/users", userRoutes); 
 app.use(formaPagamentoRoutes);
 app.use('/itemPedido', itemPedidoRoutes); 
+app.use(avaliacaoRoutes);
 sequelize
   .sync({ alter: true }) 
   .then(() => {
