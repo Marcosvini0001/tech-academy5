@@ -59,3 +59,23 @@ const PrecoController = {
 };
 
 export default PrecoController;
+export function createPreco(arg0: string, createPreco: any) {
+    throw new Error("Function not implemented.");
+}
+
+export function getPrecoById(arg0: string, getPrecoById: any) {
+    throw new Error("Function not implemented.");
+}
+
+export function getAllPrecos(arg0: string, getAllPrecos: any) {
+    throw new Error("Function not implemented.");
+}
+
+export function updatePreco(arg0: string, updatePreco: any) {
+    throw new Error("Function not implemented.");
+}
+
+export function deletePreco(arg0: string, deletePreco: any) {
+    throw new Error("Function not implemented.");
+}
+

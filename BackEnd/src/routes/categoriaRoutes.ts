@@ -3,9 +3,9 @@ import CategoriaController from "../controllers/categoriaController";
 
 const router = Router();
 
-router.post("/", CategoriaController.create);
-router.get("/", CategoriaController.findAll);
-router.put("/:id", CategoriaController.update);
-router.delete("/:id", CategoriaController.delete);
+router.post("/categorias", CategoriaController.create);
+router.get("/categorias", CategoriaController.findAll);
+router.put("/categorias/:id", CategoriaController.update);
+router.delete("/categorias/:id", CategoriaController.delete);
 
 export default router;
