@@ -27,6 +27,7 @@ function Card() {
   const [avaliacoes, setAvaliacoes] = useState<{ [produtoId: number]: Avaliacao[] }>({});
   const [nota, setNota] = useState<{ [produtoId: number]: number }>({});
   const [comentario, setComentario] = useState<{ [produtoId: number]: string }>({});
+
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const fetchProdutos = () => {
@@ -79,6 +80,7 @@ function Card() {
   return (
     <div>
       <Header />
+
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <button onClick={fetchProdutos}>🔄 Atualizar Produtos</button>
       </div>
@@ -99,63 +101,10 @@ function Card() {
               <button className="button-carrinho">Adicionar ao carrinho</button>
               <button
                 className="button-comprar"
-                onClick={() =>
-                  navigate("/formapagamento", { state: { produto } })
-                }
+                onClick={() => navigate("/formapagamento", { state: { produto } })}
               >
                 Comprar
               </button>
-            </div>
-
-            <div style={{ marginTop: 16, width: "100%" }}>
-              <h4>Avaliações:</h4>
-              {avaliacoes[produto.id]?.length ? (
-                <ul>
-                  {avaliacoes[produto.id].map((av) => (
-                    <li key={av.id}>
-                      <strong>Nota:</strong> {av.nota} - {av.comentario}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Sem avaliações ainda.</p>
-              )}
-              {user.id && (
-                <div style={{ marginTop: 8 }}>
-                  <label>
-                    Nota:
-                    <select
-                      value={nota[produto.id] || 5}
-                      onChange={e =>
-                        setNota((prev) => ({
-                          ...prev,
-                          [produto.id]: Number(e.target.value),
-                        }))
-                      }
-                    >
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Comentário"
-                    value={comentario[produto.id] || ""}
-                    onChange={e =>
-                      setComentario((prev) => ({
-                        ...prev,
-                        [produto.id]: e.target.value,
-                      }))
-                    }
-                  />
-                  <button onClick={() => handleAvaliar(produto.id)}>
-                    Avaliar
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         ))}

@@ -1,13 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
+import CategoriaModel from "../models/categoriaModel";
+import PrecoModel from "../models/precoModel";
 
 class ProdutoModel extends Model {
   id: number | undefined;
   name: string | undefined;
-  categoria: string | undefined;
   marca: string | undefined;
-  preco: number | undefined;
   descricao: string | undefined;
+  categoriaId: number | undefined;
 }
 
 ProdutoModel.init(
@@ -21,20 +22,16 @@ ProdutoModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    categoria: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     marca: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    preco: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
     descricao: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    categoriaId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -44,5 +41,8 @@ ProdutoModel.init(
     tableName: "produtos",
   }
 );
+
+ProdutoModel.belongsTo(CategoriaModel, { foreignKey: "categoriaId", as: "categoria" });
+ProdutoModel.hasOne(PrecoModel, { foreignKey: "produtoId", as: "preco" });
 
 export default ProdutoModel;

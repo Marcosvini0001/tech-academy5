@@ -6,52 +6,68 @@
 }
 
 .produto {
-  background-color: white;
-  padding: 40px;
-  border-radius: 10px;
+  background-color: #fff;
+  padding: 15px;
+  width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
-  img {
-    width: 150px;
-  }
-  h3 {
-    display: flex;
-    font-weight: bold;
-  }
+  align-items: center;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+.produto img {
+  width: 100%;
+  max-width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.produto h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.produto p {
+  font-size: 1rem;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .button-card {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-carrinho, .button-comprar {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .button-carrinho {
   background-color: #ccc;
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-.button-carrinho:hover {
-  background-color: #d1cfcf;
 }
 
 .button-comprar {
-  font-size: 14px;
-  border: none;
-  padding: 8px;
-  border-radius: 8px;
   background-color: #187900;
-  cursor: pointer;
   color: white;
-}
-.button-comprar:hover {
-  background-color: #1d9200;
-  transition: 0.5s;
 }
 
 .span-paginacao {
