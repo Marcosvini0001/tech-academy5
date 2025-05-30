@@ -10,7 +10,7 @@ import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
 import loginRoutes from "./routes/loginRoutes";
 import itemPedidoRoutes from "./routes/itemPRoutes";
 import categoriaRoutes from "./routes/categoriaRoutes";
-import precoRoutes from "./routes/precoRoutes";
+import precoRoutes from "../src/routes/precoRoutes";
 
 const app = express();
 const port = 3000;

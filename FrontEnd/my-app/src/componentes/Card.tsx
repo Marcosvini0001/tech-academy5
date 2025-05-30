@@ -7,7 +7,12 @@ interface Produto {
   id: number;
   name: string;
   descricao: string;
-  preco: number;
+  categoria: {
+    nome: string;
+  };
+  preco: {
+    valor: number;
+  };
 }
 
 interface Avaliacao {
@@ -34,7 +39,7 @@ function Card() {
     axios
       .get(`http://localhost:3000/produtos?page=${page}&limit=10`)
       .then((response) => {
-        setProdutos(response.data.data);
+        setProdutos(response.data.data); 
       })
       .catch((error) => {
         console.error("Erro ao buscar produtos:", error);
@@ -94,7 +99,10 @@ function Card() {
             <p>{produto.descricao}</p>
 
             <p>
-              <strong>Preço:</strong> R$ {produto.preco}
+              <strong>Categoria:</strong> {produto.categoria?.nome || "N/A"}
+            </p>
+            <p>
+              <strong>Preço:</strong> R$ {produto.preco?.valor?.toFixed(2) || "0.00"}
             </p>
 
             <div className="button-card">

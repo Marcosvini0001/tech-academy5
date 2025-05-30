@@ -9,6 +9,7 @@ class ProdutoModel extends Model {
   marca: string | undefined;
   descricao: string | undefined;
   categoriaId: number | undefined;
+  preco: any;
 }
 
 ProdutoModel.init(

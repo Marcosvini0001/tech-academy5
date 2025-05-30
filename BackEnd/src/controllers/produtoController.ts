@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import ProdutoModel from "../models/produtoModel";
+import CategoriaModel from "../models/categoriaModel";
+import PrecoModel from "../models/precoModel";
 
 export const getAll = async (req: Request, res: Response) => {
   const { page = 1, limit = 10 } = req.query;
@@ -8,6 +10,7 @@ export const getAll = async (req: Request, res: Response) => {
   const produtos = await ProdutoModel.findAndCountAll({
     limit: Number(limit),
     offset,
+    include: [CategoriaModel, PrecoModel],
   });
 
   res.json({
@@ -21,7 +24,9 @@ export const getProdutoById = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const produto = await ProdutoModel.findByPk(req.params.id);
+  const produto = await ProdutoModel.findByPk(req.params.id, {
+    include: [CategoriaModel, PrecoModel],
+  });
 
   return res.json(produto);
 };
@@ -31,22 +36,31 @@ export const createProduto = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { name, categoria, marca, preco, descricao } = req.body;
+    const { name, marca, descricao, categoriaId, precoValor } = req.body;
 
-    if (!name || !categoria || !marca || !preco || !descricao) {
+    if (!name || !marca || !descricao || !categoriaId || !precoValor) {
       return res
         .status(400)
         .json({ error: "Todos os campos são obrigatórios" });
     }
 
-    const user = await ProdutoModel.create({
+    const produto = await ProdutoModel.create({
       name,
-      categoria,
       marca,
-      preco,
       descricao,
+      categoriaId,
     });
-    return res.status(201).json(user);
+
+    await PrecoModel.create({
+      valor: precoValor,
+      produtoId: produto.id,
+    });
+
+    const produtoCompleto = await ProdutoModel.findByPk(produto.id, {
+      include: [CategoriaModel, PrecoModel],
+    });
+
+    return res.status(201).json(produtoCompleto);
   } catch (error) {
     res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
@@ -57,25 +71,38 @@ export const updateProduto = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { name, preco, descricao } = req.body;
+    const { name, descricao, precoValor } = req.body;
 
-    if (!name || !preco || !descricao) {
-      return res.status(400).json({ error: "Values required" });
+    if (!name || !descricao || !precoValor) {
+      return res.status(400).json({ error: "Todos os campos são obrigatórios" });
     }
 
-    const produto = await ProdutoModel.findByPk(req.params.id);
+    const produto = await ProdutoModel.findByPk(req.params.id, {
+      include: [PrecoModel],
+    });
+
     if (!produto) {
-      return res.status(404).json({ error: "produto not found" });
+      return res.status(404).json({ error: "Produto não encontrado" });
     }
 
     produto.name = name;
-    produto.preco = preco;
     produto.descricao = descricao;
-
     await produto.save();
-    res.status(201).json(produto);
+
+    if (produto.preco) {
+      produto.preco.valor = precoValor;
+      await produto.preco.save();
+    } else {
+      await PrecoModel.create({ valor: precoValor, produtoId: produto.id });
+    }
+
+    const produtoAtualizado = await ProdutoModel.findByPk(produto.id, {
+      include: [CategoriaModel, PrecoModel],
+    });
+
+    res.status(200).json(produtoAtualizado);
   } catch (error) {
-    res.status(500).json("Erro interno no servidor " + error);
+    res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
 
@@ -88,7 +115,9 @@ export const deleteProduto = async (req: Request, res: Response): Promise<any> =
       return res.status(404).json({ error: "Produto não encontrado" });
     }
 
+    await PrecoModel.destroy({ where: { produtoId: produto.id } });
     await produto.destroy();
+
     return res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: "Erro interno no servidor", details: error });
