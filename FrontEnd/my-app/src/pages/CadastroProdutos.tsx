@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { isAxiosError } from "axios";
 
 interface Produto {
   id: number;
@@ -26,8 +27,9 @@ const CadastroProdutos = () => {
 
   const fetchProdutos = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/produtos");
-      setProdutos(response.data.data);
+      const response = await axios.get("/api/produtos");
+      const data = response.data as Produto[];
+      setProdutos(data);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
     }
@@ -37,7 +39,7 @@ const CadastroProdutos = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/produtos", {
+      const response = await axios.post("/api/produtos", {
         name,
         categoria,
         marca,
@@ -47,11 +49,16 @@ const CadastroProdutos = () => {
 
       console.log("Produto registrado:", response.data);
       alert("Produto registrado com sucesso!");
+      setName("");
+      setCategoria("");
+      setMarca("");
+      setPreco("");
+      setDescricao("");
       fetchProdutos();
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         setError(
-          error.response?.data?.message || "Erro ao registrar o produto"
+          ((error.response?.data as { message?: string })?.message) || "Erro ao registrar o produto"
         );
       } else {
         setError("Erro desconhecido ao registrar produto");
@@ -62,7 +69,7 @@ const CadastroProdutos = () => {
   const handleDelete = async (id: number) => {
     console.log("ID do produto a ser deletado:", id);
     try {
-      await axios.delete(`http://localhost:3000/produtos/${id}`);
+      await axios.delete(`/api/produtos/${id}`);
       alert("Produto deletado com sucesso!");
       fetchProdutos();
     } catch (error) {
@@ -75,7 +82,7 @@ const CadastroProdutos = () => {
       const updatedName = prompt("Atualize o nome do produto:", produto.name);
       if (!updatedName) return;
 
-      await axios.put(`http://localhost:3000/produtos/${produto.id}`, {
+      await axios.put(`/api/produtos/${produto.id}`, {
         ...produto,
         name: updatedName,
       });
@@ -173,6 +180,30 @@ const CadastroProdutos = () => {
           </button>
         </div>
       </form>
+      <div className="lista-produtos">
+        <h3>Produtos cadastrados</h3>
+        <ul>
+          {produtos.map((produto) => (
+            <li key={produto.id} className="item-produto">
+              <span>
+                <strong>{produto.name}</strong> - {produto.categoria} - {produto.marca} - R$ {produto.preco}
+              </span>
+              <button
+                className="botao-deletar"
+                onClick={() => handleDelete(produto.id)}
+              >
+                Deletar
+              </button>
+              <button
+                className="botao-atualizar"
+                onClick={() => handleUpdate(produto)}
+              >
+                Atualizar
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
       </div>
   );
 };

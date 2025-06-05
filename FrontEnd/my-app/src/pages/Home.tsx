@@ -16,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/produtos?page=1&limit=4")
+      .get("/api/produtos?page=1&limit=4")
       .then((response) => {
         setOfertas(response.data.data);
       })
@@ -24,6 +24,19 @@ const Home = () => {
         console.error("Erro ao buscar ofertas:", error);
       });
   }, []);
+
+  const handlePost = () => {
+    axios
+      .post("/api/users", {
+        // dados do usuário
+      })
+      .then((response) => {
+        console.log("Usuário cadastrado com sucesso:", response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao cadastrar usuário:", error);
+      });
+  };
 
   return (
     <div>

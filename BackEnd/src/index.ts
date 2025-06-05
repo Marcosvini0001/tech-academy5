@@ -22,15 +22,15 @@ app.get("/", (req, res) => {
   res.send("Hello, World! :)");
 });
 
-app.use("/users", usersRoutes);
-app.use("/admin", admRoutes);
-app.use("/produtos", produtoRoutes);
-app.use("/pagamentos", pagamentoRoutes);
-app.use("/forma-pagamento", formaPagamentoRoutes);
-app.use("/login", loginRoutes);
-app.use("/item-pedido", itemPedidoRoutes);
-app.use("/categorias", categoriaRoutes);
-app.use("/precos", precoRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/admin", admRoutes);
+app.use("/api/produtos", produtoRoutes);
+app.use("/api/pagamentos", pagamentoRoutes);
+app.use("/api/forma-pagamento", formaPagamentoRoutes);
+app.use("/api/login", loginRoutes);
+app.use("/api/item-pedido", itemPedidoRoutes);
+app.use("/api/categorias", categoriaRoutes);
+app.use("/api/precos", precoRoutes);
 
 sequelize.sync({ alter: true })
   .then(() => {

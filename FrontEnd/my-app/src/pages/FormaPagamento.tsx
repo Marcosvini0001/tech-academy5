@@ -43,7 +43,7 @@ const FormaPagamento = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/formapagamento/process",
+        "/api/formapagamento/process",
         {
           tipoPagamento,
           produto,

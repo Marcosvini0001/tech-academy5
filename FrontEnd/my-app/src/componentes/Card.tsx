@@ -15,29 +15,17 @@ interface Produto {
   };
 }
 
-interface Avaliacao {
-  id: number;
-  id_usuario: number;
-  id_produto: number;
-  nota: number;
-  comentario: string;
-}
-
 function Card() {
   const navigate = useNavigate();
 
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [page, setPage] = useState(1);
 
-  const [avaliacoes, setAvaliacoes] = useState<{ [produtoId: number]: Avaliacao[] }>({});
-  const [nota, setNota] = useState<{ [produtoId: number]: number }>({});
-  const [comentario, setComentario] = useState<{ [produtoId: number]: string }>({});
-
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const fetchProdutos = () => {
     axios
-      .get(`http://localhost:3000/produtos?page=${page}&limit=10`)
+      .get(`/api/produtos?page=${page}&limit=10`)
       .then((response) => {
         setProdutos(response.data.data); 
       })
@@ -46,41 +34,9 @@ function Card() {
       });
   };
 
-  const fetchAvaliacoes = async (produtoId: number) => {
-    try {
-      const res = await axios.get(`http://localhost:3000/avaliacoes/${produtoId}`);
-      setAvaliacoes((prev) => ({ ...prev, [produtoId]: res.data }));
-    } catch (err) {
-      setAvaliacoes((prev) => ({ ...prev, [produtoId]: [] }));
-    }
-  };
-
   useEffect(() => {
     fetchProdutos();
   }, [page]);
-
-  useEffect(() => {
-    produtos.forEach((produto) => {
-      fetchAvaliacoes(produto.id);
-    });
-  }, [produtos]);
-
-  const handleAvaliar = async (produtoId: number) => {
-    try {
-      await axios.post("http://localhost:3000/avaliacoes", {
-        id_produto: produtoId,
-        nota: nota[produtoId] || 5,
-        comentario: comentario[produtoId] || "",
-        userId: user.id,
-      });
-      setComentario((prev) => ({ ...prev, [produtoId]: "" }));
-      setNota((prev) => ({ ...prev, [produtoId]: 5 }));
-      fetchAvaliacoes(produtoId);
-      alert("Avaliação enviada!");
-    } catch (err: any) {
-      alert(err.response?.data?.error || "Erro ao enviar avaliação");
-    }
-  };
 
   return (
     <div>

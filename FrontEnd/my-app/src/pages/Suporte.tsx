@@ -19,7 +19,7 @@ const Suporte = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3000/suporte", {
+      await axios.post("/api/suporte", {
         assunto,
         mensagem,
         user: JSON.parse(localStorage.getItem("user") || "{}"),

@@ -23,9 +23,7 @@ const Usuario = () => {
   const fetchPedidos = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:3000/itemPedido/compras/${user.id}`
-      );
+      const response = await axios.get(`/api/itemPedido/compras/${user.id}`);
       setPedidos(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -59,7 +57,7 @@ const Usuario = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/${user.id}/address`,
+        `/api/users/${user.id}/address`,
         { endereco: novoEndereco, senha }
       );
       setMensagem(response.data.message);
@@ -78,7 +76,7 @@ const Usuario = () => {
   const handleUpdateOrderAddress = async (id_item_pedido: number) => {
     try {
       await axios.put(
-        `http://localhost:3000/itemPedido/${id_item_pedido}/endereco`,
+        `/api/itemPedido/${id_item_pedido}/endereco`,
         { userId: user.id }
       );
       alert("Endereço do pedido atualizado com sucesso!");
@@ -93,7 +91,7 @@ const Usuario = () => {
     if (!window.confirm("Tem certeza que deseja excluir este pedido?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/itemPedido/${id_item_pedido}`);
+      await axios.delete(`/api/itemPedido/${id_item_pedido}`);
       alert("Pedido excluído com sucesso!");
       fetchPedidos();
     } catch (error) {

@@ -37,7 +37,7 @@ const ListaDeUsuarios: React.FC = () => {
     if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/users/${id}`);
+      await axios.delete(`/api/users/${id}`);
       setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
       alert("Usuário excluído com sucesso!");
     } catch (error) {
@@ -51,7 +51,7 @@ const ListaDeUsuarios: React.FC = () => {
     if (!novoNome) return;
 
     try {
-      await axios.put(`http://localhost:3000/users/${usuario.id}`, {
+      await axios.put(`/api/users/${usuario.id}`, {
         ...usuario,
         name: novoNome,
       });

@@ -47,7 +47,7 @@ const Registro = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/users", {
+      const response = await axios.post("/api/users", {
         name,
         email,
         password,

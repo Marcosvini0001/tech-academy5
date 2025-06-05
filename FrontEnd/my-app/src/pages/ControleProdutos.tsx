@@ -26,7 +26,7 @@ const ControleProdutos = () => {
 
   const fetchProdutos = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/produtos");
+      const response = await axios.get("/api/produtos");
       setProdutos(response.data.data);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -37,7 +37,7 @@ const ControleProdutos = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/produtos", {
+      const response = await axios.post("/api/produtos", {
         name,
         categoria,
         marca,
@@ -62,7 +62,7 @@ const ControleProdutos = () => {
   const handleDelete = async (id: number) => {
     console.log("ID do produto a ser deletado:", id);
     try {
-      await axios.delete(`http://localhost:3000/produtos/${id}`);
+      await axios.delete(`/api/produtos/${id}`);
       alert("Produto deletado com sucesso!");
       fetchProdutos();
     } catch (error) {
@@ -75,7 +75,7 @@ const ControleProdutos = () => {
       const updatedName = prompt("Atualize o nome do produto:", produto.name);
       if (!updatedName) return;
 
-      await axios.put(`http://localhost:3000/produtos/${produto.id}`, {
+      await axios.put(`/api/produtos/${produto.id}`, {
         ...produto,
         name: updatedName,
       });
