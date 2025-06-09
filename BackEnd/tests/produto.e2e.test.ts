@@ -44,6 +44,6 @@ describe("E2E - CRUD de Produto", () => {
     expect(deleteRes.status).toBe(204);
 
     const afterDeleteRes = await request(app).get(`/api/produtos/${produtoId}`);
-    expect(afterDeleteRes.body).toBeNull();
+    expect(afterDeleteRes.status).toBe(404);
   });
 });

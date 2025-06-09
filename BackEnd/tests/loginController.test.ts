@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../src/index"; // certifique-se que app é sua instância do Express
+import app from "../src/index"; 
 
 describe("Login Controller", () => {
   it("Deve retornar um token JWT para login bem-sucedido", async () => {
