@@ -52,14 +52,15 @@ function Card() {
             <img src="src/img/user.png" alt={produto.name} />
 
             <h3>{produto.name}</h3>
-            <p>{produto.descricao}</p>
-
+            {/* Categoria e Preço logo abaixo do nome */}
             <p>
               <strong>Categoria:</strong> {produto.categoria?.nome || "N/A"}
             </p>
             <p>
               <strong>Preço:</strong> R$ {produto.preco?.valor?.toFixed(2) || "0.00"}
             </p>
+
+            <p>{produto.descricao}</p>
 
             <div className="button-card">
               <button className="button-carrinho">Adicionar ao carrinho</button>

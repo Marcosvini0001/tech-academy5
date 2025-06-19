@@ -4,11 +4,8 @@ services:
   backend:
     build: ./BackEnd
     container_name: backend
-    environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=sua_senha
-      - DB_DATABASE=ecommerce
+    env_file:
+      - ./BackEnd/.env
     depends_on:
       - db
     networks:
@@ -39,8 +36,9 @@ services:
 
   db:
     image: mysql:8
+    container_name: db
     environment:
-      MYSQL_ROOT_PASSWORD: sua_senha
+      MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: ecommerce
     ports:
       - "3306:3306"
