@@ -16,5 +16,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },
+<<<<<<< HEAD
   "include": ["src", "services"]
+=======
+  "include": ["src"]
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
 }

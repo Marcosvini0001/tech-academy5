@@ -13,16 +13,23 @@ services:
       - db
     networks:
       - app_network
+<<<<<<< HEAD
     restart: always
     command: ["/wait-for-it.sh", "db:3306", "--", "npm", "run", "dev"]
     extra_hosts:
       - "host.docker.internal:host-gateway"
+=======
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
 
   frontend:
     build: ./FrontEnd/my-app
     container_name: frontend
     ports:
+<<<<<<< HEAD
       - "3000:3000"
+=======
+      - "8080:80"
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
     networks:
       - app_network
 

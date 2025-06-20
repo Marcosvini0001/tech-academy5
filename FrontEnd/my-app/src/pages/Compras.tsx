@@ -23,7 +23,11 @@ const Usuario = () => {
   const fetchPedidos = async () => {
     setIsLoading(true);
     try {
+<<<<<<< HEAD
       const response = await axios.get(`/api/item-pedido/compras/${user.id}`);
+=======
+      const response = await axios.get(`/api/itemPedido/compras/${user.id}`);
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
       setPedidos(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -76,7 +80,11 @@ const Usuario = () => {
   const handleUpdateOrderAddress = async (id_item_pedido: number) => {
     try {
       await axios.put(
+<<<<<<< HEAD
         `/api/item-pedido/${id_item_pedido}/endereco`,
+=======
+        `/api/itemPedido/${id_item_pedido}/endereco`,
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
         { userId: user.id }
       );
       alert("Endereço do pedido atualizado com sucesso!");
@@ -91,7 +99,11 @@ const Usuario = () => {
     if (!window.confirm("Tem certeza que deseja excluir este pedido?")) return;
 
     try {
+<<<<<<< HEAD
       await axios.delete(`/api/item-pedido/${id_item_pedido}`);
+=======
+      await axios.delete(`/api/itemPedido/${id_item_pedido}`);
+>>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
       alert("Pedido excluído com sucesso!");
       fetchPedidos();
     } catch (error) {
