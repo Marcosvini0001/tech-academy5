@@ -1,0 +1,6 @@
+Carrinho
+Sistema de promoção
+Teste de login, busca por produtos etc...
+Page de suporte
+Search estar funcionando
+Ajustar paginação dos produtos (Card.tsx)

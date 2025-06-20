@@ -1,0 +1,12 @@
+FRONTEND
+
+npm install
+npm install axios
+
+BACKEND 
+
+npm install
+npm install --save-dev @types/jsonwebtoken
+npm install swagger-ui-express
+npm install swagger-jsdoc
+npm install --save-dev @types/swagger-jsdoc
