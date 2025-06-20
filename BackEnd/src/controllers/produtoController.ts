@@ -1,34 +1,53 @@
 import { Request, Response } from "express";
-import ProdutoModel from "../models/produtoModel";
-import CategoriaModel from "../models/categoriaModel";
-import PrecoModel from "../models/precoModel";
+import { ProdutoModel } from "../models/produtoModel";
+import { CategoriaModel } from "../models/categoriaModel";
+import { PrecoModel } from "../models/precoModel";
+import { isAxiosError } from "axios";
 
 export const getAll = async (req: Request, res: Response) => {
-  const { page = 1, limit = 10 } = req.query;
-  const offset = (Number(page) - 1) * Number(limit);
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const offset = (Number(page) - 1) * Number(limit);
 
-  const produtos = await ProdutoModel.findAndCountAll({
-    limit: Number(limit),
-    offset,
-    include: [CategoriaModel, PrecoModel],
-  });
+    const produtos = await ProdutoModel.findAndCountAll({
+      limit: Number(limit),
+      offset,
+      include: [
+        { model: CategoriaModel, as: "categoria" },
+        { model: PrecoModel, as: "preco" }
+      ],
+    });
 
-  res.json({
-    total: produtos.count,
-    pages: Math.ceil(produtos.count / Number(limit)),
-    data: produtos.rows,
-  });
+    res.json({
+      total: produtos.count,
+      pages: Math.ceil(produtos.count / Number(limit)),
+      data: produtos.rows,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar produtos", details: error });
+  }
 };
 
 export const getProdutoById = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const produto = await ProdutoModel.findByPk(req.params.id, {
-    include: [CategoriaModel, PrecoModel],
-  });
+  try {
+    const produto = await ProdutoModel.findByPk(req.params.id, {
+      include: [
+        { model: CategoriaModel, as: "categoria" },
+        { model: PrecoModel, as: "preco" }
+      ],
+    });
 
-  return res.json(produto);
+    if (!produto) {
+      return res.status(404).json({ error: "Produto não encontrado" });
+    }
+
+    return res.json(produto);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar produto", details: error });
+  }
 };
 
 export const createProduto = async (
@@ -38,30 +57,37 @@ export const createProduto = async (
   try {
     const { name, marca, descricao, categoriaId, precoValor } = req.body;
 
+    console.log("Dados recebidos:", { name, marca, descricao, categoriaId, precoValor });
+
     if (!name || !marca || !descricao || !categoriaId || !precoValor) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos são obrigatórios" });
+      console.error("Campos obrigatórios ausentes.");
+      return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+    }
+
+    if (isNaN(Number(categoriaId)) || isNaN(Number(precoValor))) {
+      console.error("CategoriaId ou PrecoValor não são números válidos.");
+      return res.status(400).json({ error: "CategoriaId e PrecoValor devem ser números válidos" });
     }
 
     const produto = await ProdutoModel.create({
       name,
       marca,
       descricao,
-      categoriaId,
+      categoriaId: Number(categoriaId), // Certifique-se de que é um número
     });
 
+    console.log("Produto criado:", produto);
+
     await PrecoModel.create({
-      valor: precoValor,
+      valor: Number(precoValor), // Certifique-se de que é um número
       produtoId: produto.id,
     });
 
-    const produtoCompleto = await ProdutoModel.findByPk(produto.id, {
-      include: [CategoriaModel, PrecoModel],
-    });
+    console.log("Preço criado para o produto:", precoValor);
 
-    return res.status(201).json(produtoCompleto);
+    return res.status(201).json(produto);
   } catch (error) {
+    console.error("Erro ao criar produto:", error);
     res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
@@ -78,7 +104,7 @@ export const updateProduto = async (
     }
 
     const produto = await ProdutoModel.findByPk(req.params.id, {
-      include: [PrecoModel],
+      include: [{ model: PrecoModel, as: "preco" }],
     });
 
     if (!produto) {
@@ -89,15 +115,21 @@ export const updateProduto = async (
     produto.descricao = descricao;
     await produto.save();
 
+    // @ts-ignore
     if (produto.preco) {
+      // @ts-ignore
       produto.preco.valor = precoValor;
+      // @ts-ignore
       await produto.preco.save();
     } else {
       await PrecoModel.create({ valor: precoValor, produtoId: produto.id });
     }
 
     const produtoAtualizado = await ProdutoModel.findByPk(produto.id, {
-      include: [CategoriaModel, PrecoModel],
+      include: [
+        { model: CategoriaModel, as: "categoria" },
+        { model: PrecoModel, as: "preco" }
+      ],
     });
 
     res.status(200).json(produtoAtualizado);
@@ -123,3 +155,5 @@ export const deleteProduto = async (req: Request, res: Response): Promise<any> =
     res.status(500).json({ error: "Erro interno no servidor", details: error });
   }
 };
+
+// (Client-side React code removed as it does not belong in the server-side controller)

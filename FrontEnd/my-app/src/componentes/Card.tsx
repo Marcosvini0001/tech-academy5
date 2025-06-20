@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api"; // <-- troque axios por api
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
@@ -24,8 +24,8 @@ function Card() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const fetchProdutos = () => {
-    axios
-      .get(`/api/produtos?page=${page}&limit=10`)
+    api
+      .get(`/produtos?page=${page}&limit=10`) // <-- troque axios por api
       .then((response) => {
         setProdutos(response.data.data); 
       })

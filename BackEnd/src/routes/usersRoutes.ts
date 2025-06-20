@@ -7,6 +7,7 @@ import {
   deleteUserById,
   updateUserAddress,
 } from "../controllers/usersController";
+import { loginUser } from "../controllers/loginController";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.post("/", createUser);
 router.put("/:id", updateUser);
 router.put("/:id/address", updateUserAddress);
 router.delete("/:id", deleteUserById);
+router.post("/login", loginUser); // Rota para login
 
 export default router;

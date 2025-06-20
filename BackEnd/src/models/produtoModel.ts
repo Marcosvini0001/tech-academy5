@@ -45,5 +45,4 @@ ProdutoModel.init(
 
 ProdutoModel.belongsTo(CategoriaModel, { foreignKey: "categoriaId", as: "categoria" });
 ProdutoModel.hasOne(PrecoModel, { foreignKey: "produtoId", as: "preco" });
-
-export default ProdutoModel;
+export { ProdutoModel };

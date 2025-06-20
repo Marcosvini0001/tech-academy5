@@ -20,7 +20,12 @@ const Login = () => {
     }
 
     try {
-      await api.post("/login", { email, password });
+      const response = await api.post("/users/login", { email, password });
+      const { token, user } = response.data;
+
+      localStorage.setItem("token", token); // Armazena o token
+      localStorage.setItem("user", JSON.stringify(user)); // Armazena os dados do usuário
+
       alert(`Login successful! Welcome, ${email}`);
       navigate("/");
     } catch (error: unknown) {
@@ -78,3 +83,4 @@ const Login = () => {
 };
 
 export default Login;
+

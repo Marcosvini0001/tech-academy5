@@ -26,3 +26,4 @@ CategoriaModel.init(
 );
 
 export default CategoriaModel;
+export { CategoriaModel };

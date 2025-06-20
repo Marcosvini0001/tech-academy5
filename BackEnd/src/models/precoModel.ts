@@ -31,3 +31,4 @@ PrecoModel.init(
 );
 
 export default PrecoModel;
+export { PrecoModel };

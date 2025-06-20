@@ -23,22 +23,12 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", usersRoutes);
-<<<<<<< HEAD
 app.use("/api/produtos", produtoRoutes);
 app.use("/api/categorias", categoriaRoutes);
 app.use("/api/item-pedido", itemPedidoRoutes);
 app.use("/api/forma-pagamento", formaPagamentoRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/pagamentos", pagamentoRoutes);
-=======
-app.use("/api/admin", admRoutes);
-app.use("/api/produtos", produtoRoutes);
-app.use("/api/pagamentos", pagamentoRoutes);
-app.use("/api/forma-pagamento", formaPagamentoRoutes);
-app.use("/api/login", loginRoutes);
-app.use("/api/item-pedido", itemPedidoRoutes);
-app.use("/api/categorias", categoriaRoutes);
->>>>>>> 082efb170aa04a841603030106c5a6bd2f859619
 app.use("/api/precos", precoRoutes);
 
 sequelize.sync({ alter: true })

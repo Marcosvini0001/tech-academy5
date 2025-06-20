@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 const Registro = () => {
   const [name, setName] = useState("");
@@ -47,7 +47,7 @@ const Registro = () => {
     }
 
     try {
-      const response = await axios.post("/api/users", {
+      const response = await api.post("/users", {
         name,
         email,
         password,
