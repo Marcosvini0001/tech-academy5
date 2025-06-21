@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ProdutoModel } from "../models/produtoModel";
-import { CategoriaModel } from "../models/categoriaModel";
 import { PrecoModel } from "../models/precoModel";
 import { isAxiosError } from "axios";
 
@@ -13,7 +12,6 @@ export const getAll = async (req: Request, res: Response) => {
       limit: Number(limit),
       offset,
       include: [
-        { model: CategoriaModel, as: "categoria" },
         { model: PrecoModel, as: "preco" }
       ],
     });
@@ -35,7 +33,6 @@ export const getProdutoById = async (
   try {
     const produto = await ProdutoModel.findByPk(req.params.id, {
       include: [
-        { model: CategoriaModel, as: "categoria" },
         { model: PrecoModel, as: "preco" }
       ],
     });
@@ -55,31 +52,30 @@ export const createProduto = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { name, marca, descricao, categoriaId, precoValor } = req.body;
+    const { name, marca, descricao, precoValor } = req.body;
 
-    console.log("Dados recebidos:", { name, marca, descricao, categoriaId, precoValor });
+    console.log("Dados recebidos:", { name, marca, descricao, precoValor });
 
-    if (!name || !marca || !descricao || !categoriaId || !precoValor) {
+    if (!name || !marca || !descricao || !precoValor) {
       console.error("Campos obrigatórios ausentes.");
       return res.status(400).json({ error: "Todos os campos são obrigatórios" });
     }
 
-    if (isNaN(Number(categoriaId)) || isNaN(Number(precoValor))) {
-      console.error("CategoriaId ou PrecoValor não são números válidos.");
-      return res.status(400).json({ error: "CategoriaId e PrecoValor devem ser números válidos" });
+    if (isNaN(Number(precoValor))) {
+      console.error("PrecoValor não é número válido.");
+      return res.status(400).json({ error: "PrecoValor deve ser número válido" });
     }
 
     const produto = await ProdutoModel.create({
       name,
       marca,
       descricao,
-      categoriaId: Number(categoriaId), // Certifique-se de que é um número
     });
 
     console.log("Produto criado:", produto);
 
     await PrecoModel.create({
-      valor: Number(precoValor), // Certifique-se de que é um número
+      valor: Number(precoValor), 
       produtoId: produto.id,
     });
 
@@ -115,11 +111,8 @@ export const updateProduto = async (
     produto.descricao = descricao;
     await produto.save();
 
-    // @ts-ignore
     if (produto.preco) {
-      // @ts-ignore
       produto.preco.valor = precoValor;
-      // @ts-ignore
       await produto.preco.save();
     } else {
       await PrecoModel.create({ valor: precoValor, produtoId: produto.id });
@@ -127,7 +120,6 @@ export const updateProduto = async (
 
     const produtoAtualizado = await ProdutoModel.findByPk(produto.id, {
       include: [
-        { model: CategoriaModel, as: "categoria" },
         { model: PrecoModel, as: "preco" }
       ],
     });
@@ -156,4 +148,3 @@ export const deleteProduto = async (req: Request, res: Response): Promise<any> =
   }
 };
 
-// (Client-side React code removed as it does not belong in the server-side controller)
