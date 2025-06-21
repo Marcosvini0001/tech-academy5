@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
-import axios from "axios";
+import api from "../services/api"; 
 
 const Suporte = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Suporte = () => {
     e.preventDefault();
 
     try {
-      await axios.post("/api/suporte", {
+      await api.post("/suporte", { 
         assunto,
         mensagem,
         user: JSON.parse(localStorage.getItem("user") || "{}"),
@@ -29,7 +29,6 @@ const Suporte = () => {
       setMensagem("");
       setAssunto("feedback");
     } catch (error) {
-      console.error("Erro ao enviar suporte:", error);
       setStatus("Erro ao enviar mensagem.");
     }
   };

@@ -1,47 +1,50 @@
-import express from "express";
-import cors from "cors";
-import sequelize from "./config/database";
+  import express from "express";
+  import cors from "cors";
+  import sequelize from "./config/database";
 
-import usersRoutes from "./routes/usersRoutes";
-import admRoutes from "./routes/admRoutes";
-import produtoRoutes from "./routes/produtoRoutes";
-import pagamentoRoutes from "./routes/pagamentoRoutes";
-import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
-import loginRoutes from "./routes/loginRoutes";
-import itemPedidoRoutes from "./routes/itemPRoutes";
-import categoriaRoutes from "./routes/categoriaRoutes";
-import precoRoutes from "../src/routes/precoRoutes";
+  import usersRoutes from "./routes/usersRoutes";
+  import admRoutes from "./routes/admRoutes";
+  import produtoRoutes from "./routes/produtoRoutes";
+  import pagamentoRoutes from "./routes/pagamentoRoutes";
+  import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
+  import loginRoutes from "./routes/loginRoutes";
+  import itemPedidoRoutes from "./routes/itemPRoutes";
+  import categoriaRoutes from "./routes/categoriaRoutes";
+  import precoRoutes from "../src/routes/precoRoutes";
+  import suporteRoutes from "./routes/suporteRoutes";
 
-const app = express();
-const port = 3000;
 
-app.use(cors());
-app.use(express.json());
+  const app = express();
+  const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello, World! :)");
-});
+  app.use(cors());
+  app.use(express.json());
 
-app.use("/api/users", usersRoutes);
-app.use("/api/admin", admRoutes);
-app.use("/api/produtos", produtoRoutes);
-app.use("/api/pagamentos", pagamentoRoutes);
-app.use("/api/forma-pagamento", formaPagamentoRoutes);
-app.use("/api/login", loginRoutes);
-app.use("/api/item-pedido", itemPedidoRoutes);
-app.use("/api/categorias", categoriaRoutes);
-app.use("/api/precos", precoRoutes);
-
-sequelize.sync({ alter: true })
-  .then(() => {
-    console.log("Banco de dados sincronizado com sucesso.");
-  })
-  .catch((error) => {
-    console.error("Erro ao sincronizar o banco de dados:", error);
+  app.get("/", (req, res) => {
+    res.send("Hello, World! :)");
   });
 
-app.listen(port, () => {
-  console.log("Server is running on port", port);
-});
+  app.use("/api/users", usersRoutes);
+  app.use("/api/produtos", produtoRoutes);
+  app.use("/api/categorias", categoriaRoutes);
+  app.use("/api/item-pedido", itemPedidoRoutes);
+  app.use("/api/forma-pagamento", formaPagamentoRoutes);
+  app.use("/api/login", loginRoutes);
+  app.use("/api/pagamentos", pagamentoRoutes);
+  app.use("/api/precos", precoRoutes);
+  app.use("/api/suporte", suporteRoutes);
 
-export default app;
+
+  sequelize.sync({ alter: true })
+    .then(() => {
+      console.log("Banco de dados sincronizado com sucesso.");
+    })
+    .catch((error) => {
+      console.error("Erro ao sincronizar o banco de dados:", error);
+    });
+
+  app.listen(port, () => {
+    console.log("Server is running on port", port);
+  });
+
+  export default app;
