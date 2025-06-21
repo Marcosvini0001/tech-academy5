@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
-import api from "../services/api"; // <-- troque axios por api
+import api from "../services/api"; 
 
 const Suporte = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Suporte = () => {
     e.preventDefault();
 
     try {
-      await api.post("/suporte", { // <-- troque axios por api
+      await api.post("/suporte", { 
         assunto,
         mensagem,
         user: JSON.parse(localStorage.getItem("user") || "{}"),
