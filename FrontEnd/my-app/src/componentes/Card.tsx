@@ -7,9 +7,6 @@
     id: number;
     name: string;
     descricao: string;
-    categoria: {
-      nome: string;
-    };
     preco: {
       valor: number;
     };
@@ -54,9 +51,6 @@
               <h3>{produto.name}</h3>
               <p>{produto.descricao}</p>
 
-              <p>
-                <strong>Categoria:</strong> {produto.categoria?.nome || "N/A"}
-              </p>
               <p>
                 <strong>Preço:</strong> R$ {produto.preco?.valor?.toFixed(2) || "0.00"}
               </p>

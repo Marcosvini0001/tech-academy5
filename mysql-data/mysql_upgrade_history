@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-{"file_format":"1","upgrade_history":[{"date":"2025-06-20 21:33:55","version":"8.4.5","maturity":"LTS","initialize":true}]}
-=======
-<<<<<<< HEAD
-{"file_format":"1","upgrade_history":[{"date":"2025-06-20 21:33:55","version":"8.4.5","maturity":"LTS","initialize":true}]}
-=======
-{"file_format":"1","upgrade_history":[{"date":"2025-06-20 21:29:13","version":"8.4.5","maturity":"LTS","initialize":true}]}
->>>>>>> 074d514727f0688e52d042b61217f8c0412b95ed
->>>>>>> b48a882eeff217de0a4e1aace64309c2b6d9a54d
+{"file_format":"1","upgrade_history":[{"date":"2025-06-21 23:06:58","version":"8.4.5","maturity":"LTS","initialize":true}]}

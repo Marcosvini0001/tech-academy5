@@ -9,7 +9,6 @@
   import formaPagamentoRoutes from "./routes/formaPagamentoRoutes";
   import loginRoutes from "./routes/loginRoutes";
   import itemPedidoRoutes from "./routes/itemPRoutes";
-  import categoriaRoutes from "./routes/categoriaRoutes";
   import precoRoutes from "../src/routes/precoRoutes";
   import suporteRoutes from "./routes/suporteRoutes";
 
@@ -26,7 +25,6 @@
 
   app.use("/api/users", usersRoutes);
   app.use("/api/produtos", produtoRoutes);
-  app.use("/api/categorias", categoriaRoutes);
   app.use("/api/item-pedido", itemPedidoRoutes);
   app.use("/api/forma-pagamento", formaPagamentoRoutes);
   app.use("/api/login", loginRoutes);

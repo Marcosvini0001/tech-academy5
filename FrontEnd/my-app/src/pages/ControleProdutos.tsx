@@ -6,7 +6,6 @@ import { isAxiosError } from "axios";
 interface Produto {
   id: number;
   name: string;
-  categoria: string;
   marca: string;
   preco: string;
   descricao: string;
@@ -14,7 +13,6 @@ interface Produto {
 
 const ControleProdutos = () => {
   const [name, setName] = useState("");
-  const [categoria, setCategoria] = useState("");
   const [marca, setMarca] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -40,7 +38,6 @@ const ControleProdutos = () => {
     try {
       const response = await api.post("/produtos", {
         name,
-        categoria,
         marca,
         preco,
         descricao,
@@ -49,7 +46,7 @@ const ControleProdutos = () => {
       console.log("Produto registrado:", response.data);
       alert("Produto registrado com sucesso!");
       fetchProdutos();
-      setError(""); // Limpa o erro se sucesso
+      setError(""); 
     } catch (error) {
       if (isAxiosError(error)) {
         setError(
@@ -102,7 +99,6 @@ const ControleProdutos = () => {
             <tr>
               <th>ID</th>
               <th>Nome</th>
-              <th>Categoria</th>
               <th>Marca</th>
               <th>Preço</th>
               <th>Descrição</th>
@@ -115,7 +111,6 @@ const ControleProdutos = () => {
                 <tr key={produto.id}>
                   <td>{produto.id}</td>
                   <td>{produto.name}</td>
-                  <td>{produto.categoria}</td>
                   <td>{produto.marca}</td>
                   <td>R$ {produto.preco}</td>
                   <td>{produto.descricao}</td>

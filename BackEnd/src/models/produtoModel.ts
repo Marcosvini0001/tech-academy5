@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import CategoriaModel from "../models/categoriaModel";
 import PrecoModel from "../models/precoModel";
 
 class ProdutoModel extends Model {
@@ -8,7 +7,6 @@ class ProdutoModel extends Model {
   name: string | undefined;
   marca: string | undefined;
   descricao: string | undefined;
-  categoriaId: number | undefined;
   preco: any;
 }
 
@@ -31,10 +29,6 @@ ProdutoModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    categoriaId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   },
   {
     sequelize,
@@ -43,6 +37,5 @@ ProdutoModel.init(
   }
 );
 
-ProdutoModel.belongsTo(CategoriaModel, { foreignKey: "categoriaId", as: "categoria" });
 ProdutoModel.hasOne(PrecoModel, { foreignKey: "produtoId", as: "preco" });
 export { ProdutoModel };

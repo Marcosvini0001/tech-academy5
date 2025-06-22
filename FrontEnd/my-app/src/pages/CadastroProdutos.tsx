@@ -6,7 +6,6 @@ import { isAxiosError } from "axios";
 interface Produto {
   id: number;
   name: string;
-  categoria: string;
   marca: string;
   preco: string;
   descricao: string;
@@ -14,7 +13,6 @@ interface Produto {
 
 const CadastroProdutos = () => {
   const [name, setName] = useState("");
-  const [categoria, setCategoria] = useState("");
   const [marca, setMarca] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -29,7 +27,7 @@ const CadastroProdutos = () => {
     try {
       const response = await api.get("/produtos");
       const data = response.data as Produto[];
-      setProdutos(Array.isArray(data) ? data : []); // Garante que `produtos` seja um array
+      setProdutos(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
     }
@@ -38,22 +36,21 @@ const CadastroProdutos = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name || !categoria || !marca || !preco || !descricao) {
+    if (!name || !marca || !preco || !descricao) {
       setError("Todos os campos são obrigatórios.");
       return;
     }
 
-    if (isNaN(Number(categoria)) || isNaN(Number(preco))) {
-      setError("Categoria e Preço devem ser números válidos.");
+    if (isNaN(Number(preco))) {
+      setError("Preço deve ser um número válido.");
       return;
     }
 
     try {
       const response = await api.post("/produtos", {
         name,
-        categoriaId: Number(categoria), // Converta para número
         marca,
-        precoValor: Number(preco), // Converta para número
+        precoValor: Number(preco), 
         descricao,
       });
 
@@ -116,19 +113,6 @@ const CadastroProdutos = () => {
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="Digite nome do produto"
-          />
-        </div>
-
-        <div className="div-inputs">
-          <label htmlFor="categoria">Categoria:</label>
-          <input
-            type="text"
-            id="categoria"
-            className="input-texto"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            required
-            placeholder="Digite a categoria"
           />
         </div>
 
