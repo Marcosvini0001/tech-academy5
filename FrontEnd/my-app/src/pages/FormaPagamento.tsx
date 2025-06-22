@@ -1,29 +1,85 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import React, { useState } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import api from "../services/api";
 import { isAxiosError } from "axios";
+import "../styles/FormaPagamento.css";
 
-type Produto = {
+// Interface simplificada para evitar objetos complexos
+interface PrecoSimples {
+  valor: number;
+}
+
+interface ProdutoSimples {
   id: number;
-  nome: string;
+  name: string;
   descricao: string;
-  preco: number;
-  // adicione outros campos se necessário
-};
-
-type LocationState = {
-  state?: {
-    produto?: Produto;
-  };
-};
+  preco?: PrecoSimples;
+}
 
 const FormaPagamento = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams(); // Captura o ID da URL
   const [tipoPagamento, setTipoPagamento] = useState("");
   const [parcelas, setParcelas] = useState(1);
-  const produto = location.state?.produto;
+  const [produto, setProduto] = useState<ProdutoSimples | null>(null);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Primeiro, verifica se temos o produto no state da navegação
+    if (location.state?.produto) {
+      try {
+        const produtoOriginal = location.state.produto;
+        const produtoSeguro = {
+          id: Number(produtoOriginal.id || 0),
+          name: String(produtoOriginal.name || ''),
+          descricao: String(produtoOriginal.descricao || ''),
+          preco: produtoOriginal.preco ? {
+            valor: Number(produtoOriginal.preco.valor || 0)
+          } : undefined
+        };
+        setProduto(produtoSeguro);
+      } catch (err) {
+        console.error("Erro ao processar dados do produto do state:", err);
+        setError("Erro ao processar informações do produto");
+      }
+    } 
+    // Se não tiver no state mas temos o ID na URL, buscar da API
+    else if (id) {
+      fetchProdutoById(Number(id));
+    } 
+    // Não tem produto nem no state nem na URL
+    else {
+      setError("Nenhum produto foi selecionado para compra");
+    }
+  }, [location.state, id]);
+
+  // Função para buscar produto pelo ID
+  const fetchProdutoById = async (produtoId: number) => {
+    setIsLoading(true);
+    try {
+      const response = await api.get(`/produtos/${produtoId}`);
+      
+      // Formatar o produto recebido da API
+      const produtoData = response.data;
+      const produtoSeguro = {
+        id: Number(produtoData.id || 0),
+        name: String(produtoData.name || ''),
+        descricao: String(produtoData.descricao || ''),
+        preco: produtoData.preco ? {
+          valor: Number(produtoData.preco.valor || 0)
+        } : undefined
+      };
+      
+      setProduto(produtoSeguro);
+    } catch (error) {
+      console.error("Erro ao buscar produto:", error);
+      setError("Não foi possível carregar as informações do produto");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const gerarParcelas = () => {
     const opçõesParcelamento = [];
@@ -35,47 +91,57 @@ const FormaPagamento = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
+    // Verificar se o usuário está logado
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (
-      !tipoPagamento ||
-      !produto ||
-      !produto.id ||
-      !produto.preco ||
-      !user.id
-    ) {
-      setError("Preencha todos os campos obrigatórios.");
+    if (!user.id) {
+      setError("Você precisa estar logado para realizar uma compra");
+      setIsLoading(false);
       return;
     }
 
-    console.log("Dados enviados para o backend:", {
-      tipoPagamento,
-      produto,
-      parcelas,
-      userId: user.id,
-    });
+    if (!tipoPagamento) {
+      setError("Selecione uma forma de pagamento");
+      setIsLoading(false);
+      return;
+    }
 
+    if (!produto) {
+      setError("Produto inválido");
+      setIsLoading(false);
+      return;
+    }
+    
     try {
-      const response = await api.post(
-        "/forma-pagamento/process",
-        {
-          tipoPagamento,
-          produto,
-          parcelas,
-          userId: user.id,
-        }
-      );
+      // Simplificar os dados enviados para evitar problemas
+      const dadosCompra = {
+        tipoPagamento,
+        produto: {
+          id: produto.id,
+          preco: produto.preco?.valor || 0
+        },
+        parcelas,
+        userId: user.id
+      };
+      
+      console.log("Dados sendo enviados:", dadosCompra);
 
-      console.log("Forma de pagamento selecionada:", response.data);
+      const response = await api.post("/forma-pagamento/process", dadosCompra);
+
+      console.log("Resposta do servidor:", response.data);
       alert("Compra realizada com sucesso!");
       navigate("/");
     } catch (error) {
+      console.error("Erro completo:", error);
+      
       if (isAxiosError(error)) {
-        setError(error.response?.data?.error || "Erro ao registrar pagamento");
+        setError(error.response?.data?.error || "Erro ao processar pagamento");
       } else {
-        setError("Erro desconhecido ao selecionar forma de pagamento");
+        setError("Erro desconhecido ao processar pagamento");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,16 +150,21 @@ const FormaPagamento = () => {
       <div className="h2-forma">
         <h2>Selecione sua forma de pagamento</h2>
       </div>
-      {error && <p className="error">{error}</p>}
-      {location.state?.produto && (
+      
+      {error && <p className="error" style={{ color: "red" }}>{error}</p>}
+      
+      {produto ? (
         <div className="produto-info">
-          <h3>{location.state.produto.nome}</h3>
-          <p>{location.state.produto.descricao}</p>
+          <h3>{produto.name}</h3>
+          <p>{produto.descricao}</p>
           <p>
-            <strong>Preço:</strong> R$ {location.state.produto.preco}
+            <strong>Preço:</strong> R$ {produto.preco?.valor ? Number(produto.preco.valor).toFixed(2) : "0.00"}
           </p>
         </div>
+      ) : (
+        <p>Carregando informações do produto...</p>
       )}
+      
       <form className="div-dados" onSubmit={handleSubmit}>
         <div className="opcoes-pagamento">
           <div className="div-forma-pagamento">
@@ -108,7 +179,6 @@ const FormaPagamento = () => {
             </label>
           </div>
           <div className="div-forma-pagamento">
-            {" "}
             <label className="label-pag">
               <input
                 type="radio"
@@ -120,7 +190,6 @@ const FormaPagamento = () => {
             </label>
           </div>
           <div className="div-forma-pagamento">
-            {" "}
             <label className="label-pag">
               <input
                 type="radio"
@@ -153,12 +222,18 @@ const FormaPagamento = () => {
         <br />
         <div className="buttons">
           <div>
-            <button id="button-cancelar" onClick={() => navigate("/")}>
+            <button 
+              type="button" 
+              id="button-cancelar" 
+              onClick={() => navigate("/produtos")}
+            >
               Cancelar
             </button>
           </div>
           <div className="registrar">
-            <button type="submit">Prosseguir</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Processando..." : "Prosseguir"}
+            </button>
           </div>
         </div>
       </form>

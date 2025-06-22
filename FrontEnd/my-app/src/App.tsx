@@ -41,6 +41,7 @@ function MainContent() {
         <Route path="/adm/*" element={<PaginaADM />} />
         <Route path="/produtos" element={<Card />} />
         <Route path="/formapagamento" element={<FormaPagamento />} />
+        <Route path="/formapagamento/:id" element={<FormaPagamento />} />  
         <Route path="/compras" element={<Compras />} />
         <Route path="/controleprodutos" element={<ControleProdutos />} />
         <Route path="/suporte" element={<Suporte />} /> 

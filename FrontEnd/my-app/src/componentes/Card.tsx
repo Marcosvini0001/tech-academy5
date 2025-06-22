@@ -58,7 +58,21 @@ import { useState, useEffect } from "react";
                   <button className="button-carrinho">Adicionar ao carrinho</button>
                   <button
                     className="button-comprar"
-                    onClick={() => navigate("/formapagamento", { state: { produto } })}
+                    onClick={() => {
+                      // Criar uma versão totalmente nova do produto com apenas os dados necessários
+                      const produtoLimpo = {
+                        id: produto.id,
+                        name: produto.name,
+                        descricao: produto.descricao,
+                        // Extrair apenas o valor numérico do preço
+                        preco: {
+                          valor: produto.preco ? Number(produto.preco.valor) : 0
+                        }
+                      };
+                      
+                      console.log("Produto limpo sendo passado:", produtoLimpo);
+                      navigate("/formapagamento", { state: { produto: produtoLimpo } });
+                    }}
                   >
                     Comprar
                   </button>
