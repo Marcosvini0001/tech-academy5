@@ -20,7 +20,8 @@ const Login = () => {
     }
 
     try {
-      const response = await api.post("/users/login", { email, password });
+      // Corrigido para usar a URL correta
+      const response = await api.post("/login", { email, password });
       const { token, user } = response.data;
 
       localStorage.setItem("token", token); // Armazena o token
@@ -68,7 +69,6 @@ const Login = () => {
         </div>
 
         <div className="div-button-login">
-          {" "}
           <Link className="link-login" to="/">
             Voltar
           </Link>

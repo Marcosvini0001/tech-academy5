@@ -11,16 +11,10 @@ export const getAll = async (req: Request, res: Response) => {
     const produtos = await ProdutoModel.findAndCountAll({
       limit: Number(limit),
       offset,
-      include: [
-        { model: PrecoModel, as: "preco" }
-      ],
+      include: [{ model: PrecoModel, as: "preco" }],
     });
 
-    res.json({
-      total: produtos.count,
-      pages: Math.ceil(produtos.count / Number(limit)),
-      data: produtos.rows,
-    });
+    res.status(200).json(produtos);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar produtos", details: error });
   }

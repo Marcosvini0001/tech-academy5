@@ -18,7 +18,7 @@ const Home = () => {
     api
       .get("/produtos?page=1&limit=4")
       .then((response) => {
-        setOfertas(response.data.data);
+        setOfertas(response.data.produtos || []);
       })
       .catch((error) => {
         console.error("Erro ao buscar ofertas:", error);

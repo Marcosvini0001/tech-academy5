@@ -1,4 +1,4 @@
-  import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
   import api from "../services/api"; 
   import { useNavigate } from "react-router-dom";
   import Header from "./Header";
@@ -46,13 +46,12 @@
         <div className="lista-cards">
           {produtos.map((produto) => (
             <div className="produto" key={produto.id}>
-              <img src="src/img/user.png" alt={produto.name} />
+              <img src="/assets/img/user.png" alt={produto.name} />
 
               <h3>{produto.name}</h3>
               <p>{produto.descricao}</p>
-
               <p>
-                <strong>Preço:</strong> R$ {produto.preco?.valor?.toFixed(2) || "0.00"}
+                <strong>Preço:</strong> R$ {produto.preco?.valor ? produto.preco.valor.toFixed(2) : "0.00"}
               </p>
 
               <div className="button-card">

@@ -177,3 +177,4 @@ export const getCompras = async (req: Request, res: Response): Promise<void> => 
     res.status(500).json({ error: 'Erro interno no servidor.' });
   }
 };
+
