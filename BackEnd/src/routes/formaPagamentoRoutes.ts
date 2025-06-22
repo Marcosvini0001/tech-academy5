@@ -3,7 +3,7 @@ import { getAll, processPayment } from "../controllers/formaPagamentoController"
 
 const router = express.Router();
 
-router.get("/formapagamento", getAll);
-router.post("/formapagamento/process", processPayment);
+router.get("/", getAll);
+router.post("/process", processPayment);
 
 export default router;

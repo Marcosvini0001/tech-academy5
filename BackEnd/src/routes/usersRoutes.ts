@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import {
   getAll,
   getUserById,
@@ -7,14 +7,16 @@ import {
   deleteUserById,
   updateUserAddress,
 } from "../controllers/usersController";
+import { loginUser } from "../controllers/loginController";
 
-const router = express.Router();
+const router = Router();
 
-router.get("/users", getAll);
-router.get("/users/:id", getUserById);
-router.post("/users", createUser);
-router.put("/users/:id", updateUser);
-router.put("/users/:id/address", updateUserAddress);
-router.delete("/users/:id", deleteUserById);
+router.get("/", getAll);
+router.get("/:id", getUserById);
+router.post("/", createUser);
+router.put("/:id", updateUser);
+router.put("/:id/address", updateUserAddress);
+router.delete("/:id", deleteUserById);
+router.post("/login", loginUser); // Rota para login
 
 export default router;

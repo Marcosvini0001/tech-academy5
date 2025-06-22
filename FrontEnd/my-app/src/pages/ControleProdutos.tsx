@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
+import { isAxiosError } from "axios";
 
 interface Produto {
   id: number;
   name: string;
-  categoria: string;
   marca: string;
   preco: string;
   descricao: string;
@@ -13,7 +13,6 @@ interface Produto {
 
 const ControleProdutos = () => {
   const [name, setName] = useState("");
-  const [categoria, setCategoria] = useState("");
   const [marca, setMarca] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -26,7 +25,7 @@ const ControleProdutos = () => {
 
   const fetchProdutos = async () => {
     try {
-      const response = await axios.get("/api/produtos");
+      const response = await api.get("/produtos");
       setProdutos(response.data.data);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -37,9 +36,8 @@ const ControleProdutos = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/produtos", {
+      const response = await api.post("/produtos", {
         name,
-        categoria,
         marca,
         preco,
         descricao,
@@ -48,8 +46,9 @@ const ControleProdutos = () => {
       console.log("Produto registrado:", response.data);
       alert("Produto registrado com sucesso!");
       fetchProdutos();
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      setError(""); 
+    } catch (error) {
+      if (isAxiosError(error)) {
         setError(
           error.response?.data?.message || "Erro ao registrar o produto"
         );
@@ -60,9 +59,8 @@ const ControleProdutos = () => {
   };
 
   const handleDelete = async (id: number) => {
-    console.log("ID do produto a ser deletado:", id);
     try {
-      await axios.delete(`/api/produtos/${id}`);
+      await api.delete(`/produtos/${id}`);
       alert("Produto deletado com sucesso!");
       fetchProdutos();
     } catch (error) {
@@ -75,7 +73,7 @@ const ControleProdutos = () => {
       const updatedName = prompt("Atualize o nome do produto:", produto.name);
       if (!updatedName) return;
 
-      await axios.put(`/api/produtos/${produto.id}`, {
+      await api.put(`/produtos/${produto.id}`, {
         ...produto,
         name: updatedName,
       });
@@ -101,7 +99,6 @@ const ControleProdutos = () => {
             <tr>
               <th>ID</th>
               <th>Nome</th>
-              <th>Categoria</th>
               <th>Marca</th>
               <th>Preço</th>
               <th>Descrição</th>
@@ -114,27 +111,25 @@ const ControleProdutos = () => {
                 <tr key={produto.id}>
                   <td>{produto.id}</td>
                   <td>{produto.name}</td>
-                  <td>{produto.categoria}</td>
                   <td>{produto.marca}</td>
                   <td>R$ {produto.preco}</td>
                   <td>{produto.descricao}</td>
                   <td>
-  <div className="botoes-produto">
-    <button
-      className="botao-atualizar"
-      onClick={() => handleUpdate(produto)}
-    >
-      Atualizar
-    </button>
-    <button
-      className="botao-deletar"
-      onClick={() => handleDelete(produto.id)}
-    >
-      Deletar
-    </button>
-  </div>
-</td>
-
+                    <div className="botoes-produto">
+                      <button
+                        className="botao-atualizar"
+                        onClick={() => handleUpdate(produto)}
+                      >
+                        Atualizar
+                      </button>
+                      <button
+                        className="botao-deletar"
+                        onClick={() => handleDelete(produto.id)}
+                      >
+                        Deletar
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (

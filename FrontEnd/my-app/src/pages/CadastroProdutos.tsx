@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { isAxiosError } from "axios";
 
 interface Produto {
   id: number;
   name: string;
-  categoria: string;
   marca: string;
   preco: string;
   descricao: string;
@@ -14,7 +13,6 @@ interface Produto {
 
 const CadastroProdutos = () => {
   const [name, setName] = useState("");
-  const [categoria, setCategoria] = useState("");
   const [marca, setMarca] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -27,9 +25,9 @@ const CadastroProdutos = () => {
 
   const fetchProdutos = async () => {
     try {
-      const response = await axios.get("/api/produtos");
+      const response = await api.get("/produtos");
       const data = response.data as Produto[];
-      setProdutos(data);
+      setProdutos(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
     }
@@ -38,22 +36,25 @@ const CadastroProdutos = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!name || !marca || !preco || !descricao) {
+      setError("Todos os campos são obrigatórios.");
+      return;
+    }
+
+    if (isNaN(Number(preco))) {
+      setError("Preço deve ser um número válido.");
+      return;
+    }
+
     try {
-      const response = await axios.post("/api/produtos", {
+      const response = await api.post("/produtos", {
         name,
-        categoria,
         marca,
-        preco,
+        precoValor: Number(preco), 
         descricao,
       });
 
-      console.log("Produto registrado:", response.data);
       alert("Produto registrado com sucesso!");
-      setName("");
-      setCategoria("");
-      setMarca("");
-      setPreco("");
-      setDescricao("");
       fetchProdutos();
     } catch (error: unknown) {
       if (isAxiosError(error)) {
@@ -67,9 +68,8 @@ const CadastroProdutos = () => {
   };
 
   const handleDelete = async (id: number) => {
-    console.log("ID do produto a ser deletado:", id);
     try {
-      await axios.delete(`/api/produtos/${id}`);
+      await api.delete(`/produtos/${id}`);
       alert("Produto deletado com sucesso!");
       fetchProdutos();
     } catch (error) {
@@ -82,7 +82,7 @@ const CadastroProdutos = () => {
       const updatedName = prompt("Atualize o nome do produto:", produto.name);
       if (!updatedName) return;
 
-      await axios.put(`/api/produtos/${produto.id}`, {
+      await api.put(`/produtos/${produto.id}`, {
         ...produto,
         name: updatedName,
       });
@@ -104,7 +104,6 @@ const CadastroProdutos = () => {
 
       <form className="formulario-produto" onSubmit={handleSubmit}>
         <div className="div-inputs">
-          {" "}
           <label htmlFor="nome">Nome do produto:</label>
           <input
             type="text"
@@ -114,20 +113,6 @@ const CadastroProdutos = () => {
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="Digite nome do produto"
-          />
-        </div>
-
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="categoria">Categoria:</label>
-          <input
-            type="text"
-            id="categoria"
-            className="input-texto"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            required
-            placeholder="Digite a categoria"
           />
         </div>
 
@@ -145,7 +130,6 @@ const CadastroProdutos = () => {
         </div>
 
         <div className="div-inputs">
-          {" "}
           <label htmlFor="preco">Preço:</label>
           <input
             type="text"
@@ -159,7 +143,6 @@ const CadastroProdutos = () => {
         </div>
 
         <div className="div-inputs">
-          {" "}
           <label htmlFor="descricao">Descrição:</label>
           <textarea
             id="descricao"
@@ -183,28 +166,17 @@ const CadastroProdutos = () => {
       <div className="lista-produtos">
         <h3>Produtos cadastrados</h3>
         <ul>
-          {produtos.map((produto) => (
-            <li key={produto.id} className="item-produto">
-              <span>
-                <strong>{produto.name}</strong> - {produto.categoria} - {produto.marca} - R$ {produto.preco}
-              </span>
-              <button
-                className="botao-deletar"
-                onClick={() => handleDelete(produto.id)}
-              >
-                Deletar
-              </button>
-              <button
-                className="botao-atualizar"
-                onClick={() => handleUpdate(produto)}
-              >
-                Atualizar
-              </button>
-            </li>
-          ))}
+          {Array.isArray(produtos) &&
+            produtos.map((produto) => (
+              <li key={produto.id}>
+                <span>{produto.name}</span>
+                <button onClick={() => handleUpdate(produto)}>Editar</button>
+                <button onClick={() => handleDelete(produto.id)}>Deletar</button>
+              </li>
+            ))}
         </ul>
       </div>
-      </div>
+    </div>
   );
 };
 

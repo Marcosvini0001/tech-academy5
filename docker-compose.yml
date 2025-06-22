@@ -2,7 +2,10 @@ version: "3"
 
 services:
   backend:
-    build: ./BackEnd
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    command: ["./wait-for-it.sh", "db:3306", "--", "npm", "run", "dev"]
     container_name: backend
     env_file:
       - ./BackEnd/.env
@@ -10,6 +13,8 @@ services:
       - db
     networks:
       - app_network
+    ports:
+      - "3000:3000"
 
   frontend:
     build: ./FrontEnd/my-app

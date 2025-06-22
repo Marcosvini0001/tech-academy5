@@ -3,6 +3,6 @@ import { getAll } from "../controllers/pagamentoController";
 
 const router = express.Router();
 
-router.get("/pagamentos", getAll);
+router.get("/", getAll);
 
 export default router;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
+import { isAxiosError } from "axios";
 
 interface Pedido {
   id_item_pedido: number;
@@ -23,10 +24,11 @@ const Usuario = () => {
   const fetchPedidos = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`/api/itemPedido/compras/${user.id}`);
+      const response = await api.get(`/item-pedido/compras/${user.id}`);
       setPedidos(response.data);
+      setErro("");
     } catch (error) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         console.error(
           "Erro ao buscar pedidos:",
           error.response?.data || error.message
@@ -56,34 +58,39 @@ const Usuario = () => {
     }
 
     try {
-      const response = await axios.put(
-        `/api/users/${user.id}/address`,
+      const response = await api.put(
+        `/users/${user.id}/address`,
         { endereco: novoEndereco, senha }
       );
       setMensagem(response.data.message);
       setErro("");
     } catch (error) {
-      console.error("Erro ao atualizar endereço:", error);
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         setErro(error.response?.data?.error || "Erro ao atualizar endereço.");
       } else {
         setErro("Erro desconhecido ao atualizar endereço.");
       }
       setMensagem("");
     }
+    fetchPedidos();
   };
 
   const handleUpdateOrderAddress = async (id_item_pedido: number) => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
     try {
-      await axios.put(
-        `/api/itemPedido/${id_item_pedido}/endereco`,
+      await api.put(
+        `/item-pedido/${id_item_pedido}/endereco`,
         { userId: user.id }
       );
       alert("Endereço do pedido atualizado com sucesso!");
       fetchPedidos();
     } catch (error) {
+      if (isAxiosError(error)) {
+        setErro(error.response?.data?.error || "Erro ao atualizar endereço do pedido.");
+      } else {
+        setErro("Erro ao atualizar endereço do pedido.");
+      }
       console.error("Erro ao atualizar endereço do pedido:", error);
-      setErro("Erro ao atualizar endereço do pedido.");
     }
   };
 
@@ -91,12 +98,16 @@ const Usuario = () => {
     if (!window.confirm("Tem certeza que deseja excluir este pedido?")) return;
 
     try {
-      await axios.delete(`/api/itemPedido/${id_item_pedido}`);
+      await api.delete(`/item-pedido/${id_item_pedido}`);
       alert("Pedido excluído com sucesso!");
       fetchPedidos();
     } catch (error) {
+      if (isAxiosError(error)) {
+        setErro(error.response?.data?.error || "Erro ao excluir pedido.");
+      } else {
+        setErro("Erro ao excluir pedido.");
+      }
       console.error("Erro ao excluir pedido:", error);
-      setErro("Erro ao excluir pedido.");
     }
   };
 
@@ -132,7 +143,6 @@ const Usuario = () => {
 
       <div className="ul-compra">
         <h3>Meus Pedidos</h3>
-        {erro && <p style={{ color: "red" }}>{erro}</p>}
         {isLoading ? (
           <p>Carregando...</p>
         ) : (
@@ -179,3 +189,4 @@ const Usuario = () => {
 };
 
 export default Usuario;
+

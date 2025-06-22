@@ -13,7 +13,7 @@ const options: swaggerJsdoc.Options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/api',
+                url: 'https://gympoisonapp.local/api',
                 description: 'Local server',
             },
         ],

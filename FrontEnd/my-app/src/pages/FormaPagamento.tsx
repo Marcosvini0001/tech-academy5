@@ -1,6 +1,21 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../services/api";
+import { isAxiosError } from "axios";
+
+type Produto = {
+  id: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  // adicione outros campos se necessário
+};
+
+type LocationState = {
+  state?: {
+    produto?: Produto;
+  };
+};
 
 const FormaPagamento = () => {
   const navigate = useNavigate();
@@ -42,8 +57,8 @@ const FormaPagamento = () => {
     });
 
     try {
-      const response = await axios.post(
-        "/api/formapagamento/process",
+      const response = await api.post(
+        "/forma-pagamento/process",
         {
           tipoPagamento,
           produto,
@@ -55,15 +70,10 @@ const FormaPagamento = () => {
       console.log("Forma de pagamento selecionada:", response.data);
       alert("Compra realizada com sucesso!");
       navigate("/");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.error(
-          "Erro ao registrar pagamento:",
-          error.response?.data || error.message
-        );
+    } catch (error) {
+      if (isAxiosError(error)) {
         setError(error.response?.data?.error || "Erro ao registrar pagamento");
       } else {
-        console.error("Erro desconhecido:", error);
         setError("Erro desconhecido ao selecionar forma de pagamento");
       }
     }
@@ -75,12 +85,12 @@ const FormaPagamento = () => {
         <h2>Selecione sua forma de pagamento</h2>
       </div>
       {error && <p className="error">{error}</p>}
-      {produto && (
+      {location.state?.produto && (
         <div className="produto-info">
-          <h3>{produto.name}</h3>
-          <p>{produto.descricao}</p>
+          <h3>{location.state.produto.nome}</h3>
+          <p>{location.state.produto.descricao}</p>
           <p>
-            <strong>Preço:</strong> R$ {produto.preco}
+            <strong>Preço:</strong> R$ {location.state.produto.preco}
           </p>
         </div>
       )}

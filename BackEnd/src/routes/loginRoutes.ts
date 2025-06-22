@@ -7,6 +7,6 @@ const router = express.Router();
  * Route for user login
  * Accepts email and password in the request body
  */
-router.post("/login", loginUser);
+router.post("/", loginUser);
 
 export default router;

@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || "ecommerce",
+  process.env.DB_DATABASE || "ecommerce",
   process.env.DB_USER || "root",
-  process.env.DB_PASSWORD || "",
+  process.env.DB_PASSWORD || "sua_senha",
   {
     host: process.env.DB_HOST || "localhost",
     dialect: "mysql",

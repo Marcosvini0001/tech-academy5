@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import PrecoModel from "../models/precoModel";
-import ProdutoModel from "../models/produtoModel";
+import { ProdutoModel } from "../models/produtoModel";
 
 const PrecoController = {
   async create(req: Request, res: Response) {

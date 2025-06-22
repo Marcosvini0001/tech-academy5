@@ -1,7 +1,7 @@
 import Header from "../componentes/Header";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 interface Produto {
   id: number;
@@ -15,8 +15,8 @@ const Home = () => {
   const [ofertas, setOfertas] = useState<Produto[]>([]);
 
   useEffect(() => {
-    axios
-      .get("/api/produtos?page=1&limit=4")
+    api
+      .get("/produtos?page=1&limit=4")
       .then((response) => {
         setOfertas(response.data.data);
       })
@@ -26,8 +26,8 @@ const Home = () => {
   }, []);
 
   const handlePost = () => {
-    axios
-      .post("/api/users", {
+    api
+      .post("/users", {
         // dados do usuário
       })
       .then((response) => {

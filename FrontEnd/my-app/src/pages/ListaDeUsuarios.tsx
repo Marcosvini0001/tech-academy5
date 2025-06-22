@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 interface User {
   id: number;
@@ -22,9 +22,7 @@ const ListaDeUsuarios: React.FC = () => {
 
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/users?page=${page}&limit=10`
-      );
+      const response = await api.get(`/users?page=${page}&limit=10`);
       setUsuarios(response.data.data);
       setTotalPages(response.data.pages);
     } catch (error) {
@@ -37,7 +35,7 @@ const ListaDeUsuarios: React.FC = () => {
     if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
 
     try {
-      await axios.delete(`/api/users/${id}`);
+      await api.delete(`/users/${id}`);
       setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
       alert("Usuário excluído com sucesso!");
     } catch (error) {
@@ -51,7 +49,7 @@ const ListaDeUsuarios: React.FC = () => {
     if (!novoNome) return;
 
     try {
-      await axios.put(`/api/users/${usuario.id}`, {
+      await api.put(`/users/${usuario.id}`, {
         ...usuario,
         name: novoNome,
       });
