@@ -1,0 +1,8 @@
+# Criar um arquivo de teste
+echo "// Arquivo de teste" > teste.js
+
+# Adicionar ao staging
+git add teste.js
+
+# Tentar fazer um commit com mensagem correta
+git commit -m "test: verificar funcionamento do hook"
