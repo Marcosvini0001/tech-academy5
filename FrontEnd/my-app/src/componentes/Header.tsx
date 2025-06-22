@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+
 const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,6 +46,7 @@ const Header = () => {
           placeholder="Search for your product"
         />
         <button className="btn-button">Search</button>
+        <button onClick={() => navigate("/carrinho")}>🛒 Carrinho</button>
 
         {!isLoggedIn ? (
           <>

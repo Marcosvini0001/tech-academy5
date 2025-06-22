@@ -22,6 +22,10 @@ import ControleProdutos from "./pages/ControleProdutos";
 import "../src/styles/ControleProdutos.css";
 import Suporte from "../src/pages/Suporte"; 
 import "../src/styles/Suporte.css";
+import Carrinho from "./pages/Carrinho";
+import "../src/styles/Carrinho.css";
+import FinalizarCompra from "./pages/FinalizarCompra";
+
 
 function App() {
   return (
@@ -45,6 +49,8 @@ function MainContent() {
         <Route path="/compras" element={<Compras />} />
         <Route path="/controleprodutos" element={<ControleProdutos />} />
         <Route path="/suporte" element={<Suporte />} /> 
+        <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/finalizar-compra" element={<FinalizarCompra />} />
       </Routes>
       <Footer />
     </div>

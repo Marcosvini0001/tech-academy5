@@ -1,4 +1,4 @@
-  import express from "express";
+import express from "express";
   import cors from "cors";
   import sequelize from "./config/database";
 
@@ -11,6 +11,7 @@
   import itemPedidoRoutes from "./routes/itemPRoutes";
   import precoRoutes from "../src/routes/precoRoutes";
   import suporteRoutes from "./routes/suporteRoutes";
+  import cartRoutes from "./routes/cartRoutes";
 
 
   const app = express();
@@ -31,6 +32,7 @@
   app.use("/api/pagamentos", pagamentoRoutes);
   app.use("/api/precos", precoRoutes);
   app.use("/api/suporte", suporteRoutes);
+  app.use("/api/cart", cartRoutes);
 
 
   sequelize.sync({ alter: true })

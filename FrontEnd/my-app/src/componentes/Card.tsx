@@ -12,6 +12,16 @@ import { useState, useEffect } from "react";
     };
   }
 
+  interface CarrinhoItem {
+    id: number;
+    name: string;
+    descricao: string;
+    quantidade: number;
+    preco: {
+      valor: number;
+    };
+  }
+
   function Card() {
     const navigate = useNavigate();
 
@@ -24,8 +34,8 @@ import { useState, useEffect } from "react";
       api
         .get(`/produtos?page=${page}&limit=10`)
         .then((response) => {
-          console.log("Produtos carregados:", response.data.data); // Verifique se os produtos aparecem aqui
-          setProdutos(response.data.data || []); // Garante que será um array
+          console.log("Produtos carregados:", response.data.data); 
+          setProdutos(response.data.data || []); 
         })
         .catch((error) => {
           console.error("Erro ao buscar produtos:", error);
@@ -55,16 +65,50 @@ import { useState, useEffect } from "react";
                   <strong>Preço:</strong> R$ {produto.preco?.valor ? Number(produto.preco.valor).toFixed(2) : "0.00"}
                 </p>
                 <div className="button-card">
-                  <button className="button-carrinho">Adicionar ao carrinho</button>
+                  <button
+  className="button-carrinho"
+  onClick={() => {
+    // Recuperar o carrinho atual
+    const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho") || "[]");
+    
+    // Verifique se o produto já está no carrinho
+    const produtoNoCarrinho = carrinhoAtual.find((item: CarrinhoItem) => item.id === produto.id);
+    
+    if (produtoNoCarrinho) {
+      // Se já estiver, aumente a quantidade
+      const carrinhoAtualizado: CarrinhoItem[] = carrinhoAtual.map((item: CarrinhoItem) => 
+        item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item
+      );
+      localStorage.setItem("carrinho", JSON.stringify(carrinhoAtualizado));
+    } else {
+      // Se não estiver, adicione com quantidade 1
+      const produtoLimpo = {
+        id: produto.id,
+        name: produto.name,
+        descricao: produto.descricao,
+        quantidade: 1,
+        preco: {
+          valor: produto.preco?.valor || 0
+        }
+      };
+      
+      localStorage.setItem("carrinho", JSON.stringify([...carrinhoAtual, produtoLimpo]));
+      // Disparar evento customizado para atualizar o carrinho
+      window.dispatchEvent(new Event('carrinhoAtualizado'));
+    }
+    
+    alert(`${produto.name} adicionado ao carrinho!`);
+  }}
+>
+  Adicionar ao carrinho
+</button>
                   <button
                     className="button-comprar"
                     onClick={() => {
-                      // Criar uma versão totalmente nova do produto com apenas os dados necessários
                       const produtoLimpo = {
                         id: produto.id,
                         name: produto.name,
                         descricao: produto.descricao,
-                        // Extrair apenas o valor numérico do preço
                         preco: {
                           valor: produto.preco ? Number(produto.preco.valor) : 0
                         }

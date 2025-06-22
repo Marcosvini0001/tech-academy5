@@ -12,4 +12,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+export const getCart = (userId: number) => api.get(`/cart/${userId}`);
+export const addToCart = (userId: number, produtoId: number, quantidade = 1) =>
+  api.post("/cart", { userId, produtoId, quantidade });
+export const updateCartItem = (id: number, quantidade: number) =>
+  api.put(`/cart/${id}`, { quantidade });
+export const deleteCartItem = (id: number) => api.delete(`/cart/${id}`);
+
 export default api;
