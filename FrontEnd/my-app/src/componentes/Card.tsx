@@ -22,9 +22,10 @@ import { useState, useEffect } from "react";
 
     const fetchProdutos = () => {
       api
-        .get(`/produtos?page=${page}&limit=10`) 
+        .get(`/produtos?page=${page}&limit=10`)
         .then((response) => {
-          setProdutos(response.data.data); 
+          console.log("Produtos carregados:", response.data.data); // Verifique se os produtos aparecem aqui
+          setProdutos(response.data.data || []); // Garante que será um array
         })
         .catch((error) => {
           console.error("Erro ao buscar produtos:", error);
@@ -44,27 +45,29 @@ import { useState, useEffect } from "react";
         </div>
 
         <div className="lista-cards">
-          {produtos.map((produto) => (
-            <div className="produto" key={produto.id}>
-              <img src="/assets/img/user.png" alt={produto.name} />
-
-              <h3>{produto.name}</h3>
-              <p>{produto.descricao}</p>
-              <p>
-                <strong>Preço:</strong> R$ {produto.preco?.valor ? produto.preco.valor.toFixed(2) : "0.00"}
-              </p>
-
-              <div className="button-card">
-                <button className="button-carrinho">Adicionar ao carrinho</button>
-                <button
-                  className="button-comprar"
-                  onClick={() => navigate("/formapagamento", { state: { produto } })}
-                >
-                  Comprar
-                </button>
+          {produtos.length > 0 ? (
+            produtos.map((produto) => (
+              <div className="produto" key={produto.id}>
+                <img src="img/user.png" alt={produto.name} />
+                <h3>{produto.name}</h3>
+                <p>{produto.descricao}</p>
+                <p>
+                  <strong>Preço:</strong> R$ {produto.preco?.valor ? Number(produto.preco.valor).toFixed(2) : "0.00"}
+                </p>
+                <div className="button-card">
+                  <button className="button-carrinho">Adicionar ao carrinho</button>
+                  <button
+                    className="button-comprar"
+                    onClick={() => navigate("/formapagamento", { state: { produto } })}
+                  >
+                    Comprar
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p style={{ textAlign: "center", color: "#666" }}>Nenhum produto encontrado.</p>
+          )}
         </div>
 
         <div style={{ textAlign: "center", margin: "20px 0" }}>

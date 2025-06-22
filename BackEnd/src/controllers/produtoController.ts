@@ -14,7 +14,8 @@ export const getAll = async (req: Request, res: Response) => {
       include: [{ model: PrecoModel, as: "preco" }],
     });
 
-    res.status(200).json(produtos);
+    console.log("Produtos retornados:", produtos.rows); // Adicione este log
+    res.status(200).json({ data: produtos.rows, total: produtos.count });
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar produtos", details: error });
   }
@@ -47,17 +48,10 @@ export const createProduto = async (
 ): Promise<any> => {
   try {
     const { name, marca, descricao, precoValor } = req.body;
-
     console.log("Dados recebidos:", { name, marca, descricao, precoValor });
 
     if (!name || !marca || !descricao || !precoValor) {
-      console.error("Campos obrigatórios ausentes.");
       return res.status(400).json({ error: "Todos os campos são obrigatórios" });
-    }
-
-    if (isNaN(Number(precoValor))) {
-      console.error("PrecoValor não é número válido.");
-      return res.status(400).json({ error: "PrecoValor deve ser número válido" });
     }
 
     const produto = await ProdutoModel.create({
@@ -68,14 +62,19 @@ export const createProduto = async (
 
     console.log("Produto criado:", produto);
 
-    await PrecoModel.create({
-      valor: Number(precoValor), 
+    const preco = await PrecoModel.create({
+      valor: Number(precoValor),
       produtoId: produto.id,
     });
 
-    console.log("Preço criado para o produto:", precoValor);
+    console.log("Preço criado:", preco);
 
-    return res.status(201).json(produto);
+    // Retornar o produto completo com o preço
+    const produtoCompleto = await ProdutoModel.findByPk(produto.id, {
+      include: [{ model: PrecoModel, as: "preco" }],
+    });
+
+    res.status(201).json(produtoCompleto);
   } catch (error) {
     console.error("Erro ao criar produto:", error);
     res.status(500).json({ error: "Erro interno no servidor", details: error });

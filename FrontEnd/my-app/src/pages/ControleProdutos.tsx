@@ -94,51 +94,16 @@ const ControleProdutos = () => {
       {error && <p className="mensagem-erro">{error}</p>}
 
       <div className="lista-produtos">
-        <table border={1} cellPadding={10} cellSpacing={0}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Marca</th>
-              <th>Preço</th>
-              <th>Descrição</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {produtos.length > 0 ? (
-              produtos.map((produto) => (
-                <tr key={produto.id}>
-                  <td>{produto.id}</td>
-                  <td>{produto.name}</td>
-                  <td>{produto.marca}</td>
-                  <td>R$ {produto.preco}</td>
-                  <td>{produto.descricao}</td>
-                  <td>
-                    <div className="botoes-produto">
-                      <button
-                        className="botao-atualizar"
-                        onClick={() => handleUpdate(produto)}
-                      >
-                        Atualizar
-                      </button>
-                      <button
-                        className="botao-deletar"
-                        onClick={() => handleDelete(produto.id)}
-                      >
-                        Deletar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={7}>Nenhum produto cadastrado.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        {Array.isArray(produtos) && produtos.length > 0 ? (
+          produtos.map((produto) => (
+            <div key={produto.id}>
+              <h3>{produto.name}</h3>
+              <p>{produto.descricao}</p>
+            </div>
+          ))
+        ) : (
+          <p>Nenhum produto encontrado.</p>
+        )}
       </div>
     </div>
   );

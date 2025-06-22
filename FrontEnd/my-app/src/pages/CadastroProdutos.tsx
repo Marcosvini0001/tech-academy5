@@ -26,10 +26,18 @@ const CadastroProdutos = () => {
   const fetchProdutos = async () => {
     try {
       const response = await api.get("/produtos");
-      const data = response.data as Produto[];
-      setProdutos(Array.isArray(data) ? data : []);
+      console.log("Retorno da API:", response.data);
+      
+      // Correção aqui: verificar se os dados estão em response.data.data
+      if (response.data && response.data.data) {
+        setProdutos(response.data.data);
+      } else {
+        setProdutos([]);
+        console.error("Formato de resposta inesperado:", response.data);
+      }
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
+      setProdutos([]);
     }
   };
 
@@ -47,6 +55,13 @@ const CadastroProdutos = () => {
     }
 
     try {
+      console.log("Enviando dados:", { 
+        name, 
+        marca, 
+        precoValor: Number(preco), 
+        descricao 
+      });
+      
       const response = await api.post("/produtos", {
         name,
         marca,
@@ -54,12 +69,22 @@ const CadastroProdutos = () => {
         descricao,
       });
 
+      console.log("Resposta cadastro:", response.data);
       alert("Produto registrado com sucesso!");
-      fetchProdutos();
+      
+      // Limpar os campos após o cadastro
+      setName("");
+      setMarca("");
+      setPreco("");
+      setDescricao("");
+      
+      fetchProdutos(); // Atualizar a lista
     } catch (error: unknown) {
+      console.error("Erro completo:", error);
       if (isAxiosError(error)) {
         setError(
-          ((error.response?.data as { message?: string })?.message) || "Erro ao registrar o produto"
+          ((error.response?.data as { error?: string })?.error) || 
+          "Erro ao registrar o produto"
         );
       } else {
         setError("Erro desconhecido ao registrar produto");
@@ -165,16 +190,15 @@ const CadastroProdutos = () => {
       </form>
       <div className="lista-produtos">
         <h3>Produtos cadastrados</h3>
-        <ul>
-          {Array.isArray(produtos) &&
-            produtos.map((produto) => (
-              <li key={produto.id}>
-                <span>{produto.name}</span>
+        <div>
+          {produtos.map((produto) => (
+    <div className="produto" key={produto.id}>
+        <span>{produto.name}</span>
                 <button onClick={() => handleUpdate(produto)}>Editar</button>
                 <button onClick={() => handleDelete(produto.id)}>Deletar</button>
-              </li>
-            ))}
-        </ul>
+    </div>
+))}
+        </div>
       </div>
     </div>
   );
