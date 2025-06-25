@@ -53,3 +53,22 @@ export const deleteSuporte = async (req: Request, res: Response): Promise<any> =
     res.status(500).json({ error: "Erro ao excluir suporte" });
   }
 };
+
+export const getSuportesByEmail = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { email } = req.params;
+    
+    if (!email) {
+      return res.status(400).json({ error: "Email não fornecido" });
+    }
+    
+    const suportes = await Suporte.findAll({ 
+      where: { userEmail: email },
+      order: [["createdAt", "DESC"]] 
+    });
+    
+    res.json(suportes);
+  } catch (err) {
+    res.status(500).json({ error: "Erro ao buscar suportes" });
+  }
+};

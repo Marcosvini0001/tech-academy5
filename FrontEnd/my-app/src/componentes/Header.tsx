@@ -37,6 +37,7 @@ const Header = () => {
         <a onClick={() => navigate("/")}>Home</a>
         <a onClick={() => navigate("/produtos")}>Products</a>
         <a onClick={() => navigate("/suporte")}>Support</a>
+        <a onClick={() => navigate("/meus-suportes")}>Meus support</a>
         <a onClick={() => navigate("/adm")}>ADM</a>
 
         <input

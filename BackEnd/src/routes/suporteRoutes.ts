@@ -5,6 +5,7 @@ import {
   getSuporteById,
   updateSuporte,
   deleteSuporte,
+  getSuportesByEmail,
 } from "../controllers/suporteController";
 
 const router = Router();
@@ -14,5 +15,6 @@ router.get("/", getAllSuportes);
 router.get("/:id", getSuporteById);
 router.put("/:id", updateSuporte);
 router.delete("/:id", deleteSuporte);
+router.get("/user/:email", getSuportesByEmail);
 
 export default router;

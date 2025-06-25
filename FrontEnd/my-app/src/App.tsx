@@ -25,6 +25,7 @@ import "../src/styles/Suporte.css";
 import Carrinho from "./pages/Carrinho";
 import "../src/styles/Carrinho.css";
 import FinalizarCompra from "./pages/FinalizarCompra";
+import MeusSuportes from "./pages/MeusSuportes";
 
 
 function App() {
@@ -51,6 +52,7 @@ function MainContent() {
         <Route path="/suporte" element={<Suporte />} /> 
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/finalizar-compra" element={<FinalizarCompra />} />
+        <Route path="/meus-suportes" element={<MeusSuportes />} />
       </Routes>
       <Footer />
     </div>
