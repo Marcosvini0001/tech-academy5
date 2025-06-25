@@ -32,10 +32,9 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "express": "^5.1.0",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "typescript": "^5.8.2"
   },
-  
   "scripts": {
     "prepare": "husky install",
     "test": "echo \"No tests yet, but hook is working!\"",
