@@ -179,7 +179,7 @@ test.describe('Carrinho de Compras', () => {
     expect(true).toBeTruthy();
   });
 
-  test('deve mostrar uma mensagem de erro ao tentar finalizar compra sem selecionar forma de pagamento', async ({ page }) => {
+  test('Deve mostrar erro ao não clicar no botão de finalizar compra', async ({ page }) => {
 
     await page.evaluate(() => {
       localStorage.setItem('carrinho', JSON.stringify([{
