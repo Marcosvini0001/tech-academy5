@@ -35,6 +35,7 @@
     "husky": "^8.0.3",
     "typescript": "^5.8.2"
   },
+  
   "scripts": {
     "prepare": "husky install",
     "test": "echo \"No tests yet, but hook is working!\"",
