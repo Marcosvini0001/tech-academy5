@@ -1,0 +1,29 @@
+const { test, expect } = require('@playwright/test');
+
+test('deve mostrar mensagem para usuário não logado', async ({ page }) => {
+    await page.goto('URL_DA_PAGINA_DE_SUPORTE');
+    const message = await page.locator('SELETOR_DA_MENSAGEM').innerText();
+    expect(message).toContain('mensagem para usuário não logado');
+});
+
+test('deve permitir enviar mensagem para usuário logado', async ({ page }) => {
+    await page.goto('URL_DA_PAGINA_DE_SUPORTE_LOGADO');
+    // Implementar lógica para enviar mensagem
+    const response = await page.locator('SELETOR_DA_RESPOSTA').innerText();
+    expect(response).toContain('mensagem enviada com sucesso');
+});
+
+test('deve adicionar produto ao carrinho e acessar página de finalização de compra', async ({ page }) => {
+    await page.goto('URL_DA_PAGINA_DE_PRODUTO');
+    await page.click('SELETOR_DO_BOTAO_ADICIONAR_CARRINHO');
+    await page.goto('URL_DA_PAGINA_DE_FINALIZACAO');
+    const title = await page.title();
+    expect(title).toContain('Finalização de Compra');
+});
+
+test('deve mostrar uma mensagem de erro ao tentar finalizar compra sem selecionar forma de pagamento', async ({ page }) => {
+    await page.goto('URL_DA_PAGINA_DE_FINALIZACAO');
+    await page.click('SELETOR_DO_BOTAO_FINALIZAR_COMPRA');
+    const errorMessage = await page.locator('SELETOR_DA_MENSAGEM_DE_ERRO').innerText();
+    expect(errorMessage).toContain('Selecione uma forma de pagamento');
+});

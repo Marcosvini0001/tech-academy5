@@ -1,0 +1,7 @@
+const { test, expect } = require('@playwright/test');
+
+test('homepage visual regression', async ({ page }) => {
+    await page.goto('http://localhost:3000'); // Adjust the URL as needed
+    const screenshot = await page.screenshot();
+    expect(screenshot).toMatchSnapshot('homepage.png');
+});

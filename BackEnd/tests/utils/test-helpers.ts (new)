@@ -1,0 +1,13 @@
+export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const generateRandomEmail = () => {
+    const timestamp = Date.now();
+    return `user${timestamp}@example.com`;
+};
+
+export const mockApiResponse = (status: number, body: object) => {
+    return {
+        status,
+        body: JSON.stringify(body),
+    };
+};

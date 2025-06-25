@@ -1,0 +1,7 @@
+testDir: 'tests'
+timeout: 30000
+workers: 3
+reporter: [['list'], ['json', { output: 'test-results.json' }]]
+use: {
+  trace: 'on-first-retry',
+}
