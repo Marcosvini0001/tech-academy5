@@ -37,6 +37,7 @@
   },
   "scripts": {
     "prepare": "husky && husky install",
-    "test": "echo \"No tests yet, but hook is working!\""
+    "test": "echo \"No tests yet, but hook is working!\"",
+    "build": "vite build"
   }
 }
