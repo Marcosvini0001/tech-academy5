@@ -28,7 +28,7 @@ const Home = () => {
   const handlePost = () => {
     api
       .post("/users", {
-        // dados do usuário
+
       })
       .then((response) => {
         console.log("Usuário cadastrado com sucesso:", response.data);

@@ -28,7 +28,6 @@ const CadastroProdutos = () => {
       const response = await api.get("/produtos");
       console.log("Retorno da API:", response.data);
       
-      // Correção aqui: verificar se os dados estão em response.data.data
       if (response.data && response.data.data) {
         setProdutos(response.data.data);
       } else {
@@ -72,13 +71,12 @@ const CadastroProdutos = () => {
       console.log("Resposta cadastro:", response.data);
       alert("Produto registrado com sucesso!");
       
-      // Limpar os campos após o cadastro
       setName("");
       setMarca("");
       setPreco("");
       setDescricao("");
       
-      fetchProdutos(); // Atualizar a lista
+      fetchProdutos();
     } catch (error: unknown) {
       console.error("Erro completo:", error);
       if (isAxiosError(error)) {

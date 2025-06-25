@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response) => {
       include: [{ model: PrecoModel, as: "preco" }],
     });
 
-    console.log("Produtos retornados:", produtos.rows); // Adicione este log
+    console.log("Produtos retornados:", produtos.rows); 
     res.status(200).json({ data: produtos.rows, total: produtos.count });
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar produtos", details: error });
@@ -69,7 +69,6 @@ export const createProduto = async (
 
     console.log("Preço criado:", preco);
 
-    // Retornar o produto completo com o preço
     const produtoCompleto = await ProdutoModel.findByPk(produto.id, {
       include: [{ model: PrecoModel, as: "preco" }],
     });

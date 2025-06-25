@@ -4,8 +4,8 @@ export default defineConfig({
   testDir: './tests',
   timeout: 30000,
   use: {
-    baseURL: 'https://gympoisonapp.local/api/', // Certifique-se de usar HTTPS
-    ignoreHTTPSErrors: true, // Ignorar erros de SSL
+    baseURL: 'https://gympoisonapp.local/api/', 
+    ignoreHTTPSErrors: true, 
     trace: 'on-first-retry',
   },
 });

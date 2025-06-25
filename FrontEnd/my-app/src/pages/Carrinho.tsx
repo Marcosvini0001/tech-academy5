@@ -21,7 +21,6 @@ const Carrinho = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Função para carregar itens do carrinho
     const carregarItensDoCarrinho = () => {
       const carrinhoSalvo = localStorage.getItem("carrinho");
       if (carrinhoSalvo) {
@@ -29,24 +28,20 @@ const Carrinho = () => {
       }
     };
 
-    // Carregar inicialmente
+
     carregarItensDoCarrinho();
 
-    // Adicionar listener para eventos de storage
     window.addEventListener("storage", carregarItensDoCarrinho);
 
-    // Também podemos criar e escutar um evento customizado para atualizações dentro da mesma página
     const atualizarCarrinho = () => carregarItensDoCarrinho();
     window.addEventListener("carrinhoAtualizado", atualizarCarrinho);
 
-    // Cleanup
     return () => {
       window.removeEventListener("storage", carregarItensDoCarrinho);
       window.removeEventListener("carrinhoAtualizado", atualizarCarrinho);
     };
   }, []);
 
-  // Carregar itens do carrinho do localStorage
   useEffect(() => {
     const carrinhoSalvo = localStorage.getItem("carrinho");
     if (carrinhoSalvo) {
@@ -55,7 +50,6 @@ const Carrinho = () => {
     }
   }, []);
 
-  // Atualizar localStorage sempre que o carrinho mudar
   useEffect(() => {
     localStorage.setItem("carrinho", JSON.stringify(itensCarrinho));
   }, [itensCarrinho]);
@@ -81,7 +75,7 @@ const Carrinho = () => {
   };
 
   const finalizarCompra = () => {
-    // Verificar se usuário está logado
+
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.id) {
       alert("Você precisa estar logado para finalizar a compra");
@@ -89,7 +83,6 @@ const Carrinho = () => {
       return;
     }
 
-    // Redirecionar para tela de pagamento com os produtos do carrinho
     navigate("/finalizar-compra", { state: { produtos: itensCarrinho } });
   };
 

@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const MAX_RETRIES = 5;
-const RETRY_DELAY = 5000; // 5 seconds
+const RETRY_DELAY = 5000; 
 
 const sequelize = new Sequelize(
   process.env.DB_NAME || "ecommerce",
@@ -39,7 +39,6 @@ const connectWithRetry = async () => {
   console.error("Maximum retry attempts reached. Could not connect to database.");
 };
 
-// Call the function but don't block initialization
 connectWithRetry();
 
 export default sequelize;

@@ -41,7 +41,6 @@ export const getAll = async (req: Request, res: Response): Promise<void> => {
   res.send(formaPagamento);
 };
 
-// Adicione este novo método ao controlador
 
 export const processBulkPayment = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -53,7 +52,7 @@ export const processBulkPayment = async (req: Request, res: Response): Promise<v
       return;
     }
 
-    // Criar um registro de forma de pagamento único para todos os itens
+  
     const tipoPagamento = pedidos[0].tipoPagamento;
     const pagamento = await formaPagamentoModel.create({
       tipo_pagamento: tipoPagamento,
@@ -61,7 +60,6 @@ export const processBulkPayment = async (req: Request, res: Response): Promise<v
 
     console.log("Pagamento em lote criado com ID:", pagamento.id_forma_pagamento);
 
-    // Criar os registros de item para cada produto no pedido
     for (const pedido of pedidos) {
       const { produto, userId } = pedido;
       

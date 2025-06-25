@@ -13,7 +13,7 @@ test.describe('User Creation', () => {
   test('should create a new user successfully', async ({ playwright }) => {
     const context = await playwright.request.newContext({
       baseURL: 'https://gympoisonapp.local/api/users',
-      ignoreHTTPSErrors: true, // Ignorar erros de SSL
+      ignoreHTTPSErrors: true, 
     });
 
     const userData = generateUserData();
@@ -26,13 +26,11 @@ test.describe('User Creation', () => {
   test('should fail to create a user with duplicate email', async ({ playwright }) => {
     const context = await playwright.request.newContext({
       baseURL: 'https://gympoisonapp.local/',
-      ignoreHTTPSErrors: true, // Ignorar erros de SSL
+      ignoreHTTPSErrors: true, 
     });
 
     const userData = generateUserData();
-    // First, create the user
     await context.post('/api/users', { data: userData });
-    // Try to create again with the same email
     const response = await context.post('/api/users', { data: userData });
     expect(response.status()).toBe(400);
     const responseBody = await response.json();
