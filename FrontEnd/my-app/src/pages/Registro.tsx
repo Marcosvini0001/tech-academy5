@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import api from "../services/api";
+import "../styles/Registro.css";
 
 const Registro = () => {
   const [name, setName] = useState("");
@@ -72,93 +73,114 @@ const Registro = () => {
   return (
     <div className="registro">
       <div className="h2-registro">
-        <h2>REGISTRE-SE</h2>
+        <h2>Crie sua conta</h2>
+        <p className="registro-subtitle">
+          Preencha os campos abaixo para se cadastrar
+        </p>
       </div>
-      {error && <p className="error">{error}</p>}
-      <form className="div-dados" onSubmit={handleSubmit}>
-        <div className="div-inputs">
-          <label htmlFor="nome">Nome:</label>
-          <input
-            type="text"
-            id="nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Digite seu nome"
-          />
-        </div>
-        <div className="div-inputs">
-          <label htmlFor="cpf">CPF:</label>
-          <input
-            type="text"
-            id="cpf"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-            required
-            placeholder="Digite seu CPF"
-          />
-        </div>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="Digite seu email"
-          />
-        </div>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="endereco">Endereço:</label>
-          <input
-            type="text"
-            id="endereco"
-            value={endereco}
-            onChange={(e) => setEndereco(e.target.value)}
-            required
-            placeholder="Digite seu endereço"
-          />
-        </div>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="cep">CEP:</label>
-          <input
-            type="text"
-            id="cep"
-            value={cep}
-            onChange={(e) => setCep(e.target.value)}
-            required
-            placeholder="Digite seu CEP"
-          />
-        </div>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="senha">Senha:</label>
-          <input
-            type="password"
-            id="senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Digite sua senha"
-          />
-        </div>
-        <div className="div-inputs">
-          {" "}
-          <label htmlFor="confirmar-senha">Confirmar Senha:</label>
-          <input
-            type="password"
-            id="confirmar-senha"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            placeholder="Confirme sua senha"
-          />
-        </div>
-
+      {error && <div className="registro-error">{error}</div>}
+      <form className="formulario-registro" onSubmit={handleSubmit}>
+        <div className="registro-row">
+  <div className="registro-field">
+    <label htmlFor="nome">Nome</label>
+    <input
+      className="registro-input"
+      type="text"
+      id="nome"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+      placeholder="Seu nome completo"
+      autoComplete="name"
+    />
+  </div>
+  <div className="registro-field">
+    <label htmlFor="cpf">CPF</label>
+    <input
+      className="registro-input"
+      type="text"
+      id="cpf"
+      value={cpf}
+      onChange={(e) => setCpf(e.target.value)}
+      required
+      placeholder="Apenas números"
+      autoComplete="off"
+      maxLength={11}
+    />
+  </div>
+</div>
+<div className="registro-row">
+  <div className="registro-field">
+    <label htmlFor="email">E-mail</label>
+    <input
+      className="registro-input"
+      type="email"
+      id="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+      placeholder="seu@email.com"
+      autoComplete="email"
+    />
+  </div>
+  <div className="registro-field">
+    <label htmlFor="endereco">Endereço</label>
+    <input
+      className="registro-input"
+      type="text"
+      id="endereco"
+      value={endereco}
+      onChange={(e) => setEndereco(e.target.value)}
+      required
+      placeholder="Rua, número, bairro"
+      autoComplete="street-address"
+    />
+  </div>
+</div>
+<div className="registro-row">
+  <div className="registro-field">
+    <label htmlFor="cep">CEP</label>
+    <input
+      className="registro-input"
+      type="text"
+      id="cep"
+      value={cep}
+      onChange={(e) => setCep(e.target.value)}
+      required
+      placeholder="Somente números"
+      autoComplete="postal-code"
+      maxLength={8}
+    />
+  </div>
+</div>
+<div className="registro-row">
+  <div className="registro-field">
+    <label htmlFor="senha">Senha</label>
+    <input
+      className="registro-input"
+      type="password"
+      id="senha"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+      placeholder="Crie uma senha"
+      autoComplete="new-password"
+    />
+  </div>
+  <div className="registro-field">
+    <label htmlFor="confirmar-senha">Confirmar Senha</label>
+    <input
+      className="registro-input"
+      type="password"
+      id="confirmar-senha"
+      value={confirmPassword}
+      onChange={(e) => setConfirmPassword(e.target.value)}
+      required
+      placeholder="Repita a senha"
+      autoComplete="new-password"
+    />
+  </div>
+</div>
         <div className="div-register-button">
           <Link id="link-register" to="/">
             Voltar

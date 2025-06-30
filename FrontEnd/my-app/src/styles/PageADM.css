@@ -1,48 +1,46 @@
 .pageadm {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 40px;
-  background: linear-gradient(to bottom, #1a1a1a, #2b2b2b);
-  padding: 80px 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-  max-width: 800px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px rgba(37,99,235,0.08);
+  max-width: 900px;
   margin: 60px auto;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
 }
 
 .h2-pageadm {
-  background-color: #111;
-  width: 100%;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  h2 {
-    color: #e50914;
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 800;
-  }
+  color: #2563eb;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
 }
 
-.nav-pageadm{
+.nav-pageadm {
   display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
   justify-content: center;
-  align-items: center;
-  gap: 32px;
-  .link-pageadm{
-    text-decoration: none;
-    border-bottom: 1px solid #e50914;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  .link-pageadm:hover {
-    background-color: #5050502f;
-  }
+  margin-bottom: 32px;
+}
+
+.link-pageadm {
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 1px 6px rgba(37,99,235,0.04);
+  display: inline-block;
+}
+
+.link-pageadm:hover {
+  background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
+  color: #fff;
 }

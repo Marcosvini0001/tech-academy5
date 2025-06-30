@@ -28,7 +28,6 @@ const Carrinho = () => {
       }
     };
 
-
     carregarItensDoCarrinho();
 
     window.addEventListener("storage", carregarItensDoCarrinho);
@@ -45,7 +44,6 @@ const Carrinho = () => {
   useEffect(() => {
     const carrinhoSalvo = localStorage.getItem("carrinho");
     if (carrinhoSalvo) {
-      console.log("Itens do carrinho:", JSON.parse(carrinhoSalvo));
       setItensCarrinho(JSON.parse(carrinhoSalvo));
     }
   }, []);
@@ -75,7 +73,6 @@ const Carrinho = () => {
   };
 
   const finalizarCompra = () => {
-
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.id) {
       alert("Você precisa estar logado para finalizar a compra");

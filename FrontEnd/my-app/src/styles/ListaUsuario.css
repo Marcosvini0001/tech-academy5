@@ -1,28 +1,18 @@
 .container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px rgba(37,99,235,0.08);
   max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  margin: 60px auto;
+  padding: 40px 32px;
 }
 
 .h2-lista-usuario {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: white;
+  color: #2563eb;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
 }
-
-.error-message {
-  color: red;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.table-container {
-  overflow-x: auto;
-}
-
 
 .table-container {
   overflow-x: auto;
@@ -31,69 +21,38 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to bottom, #1a1a1a, #2b2b2b);
+  background: #f8fafc;
   border-radius: 8px;
-  color: white;
+  color: #22223b;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
-thead {
-  background-color: linear-gradient(to bottom, #1a1a1a, #2b2b2b);
-  color: white;
-}
-
-th,
-td {
+th, td {
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e7ef;
   text-align: center;
 }
 
 tbody tr:nth-child(even) {
-  background-color: linear-gradient(to bottom, #1a1a1a, #2b2b2b);
+  background: #e0e7ef;
 }
 
 tbody tr:hover {
-  background-color: #7575750c;
-  transition: 0.3s;
+  background: #dbeafe;
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-button {
+.action-buttons button {
+  background: #2563eb;
+  color: #fff;
   border: none;
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 5px;
+  border-radius: 18px;
+  padding: 8px 18px;
+  margin-left: 8px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background 0.2s;
 }
-
-.td-btn {
-  display: flex;
-  gap: 4px;
-}
-
-.edit-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.edit-btn:hover {
-  opacity: 0.9;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
-}
-
-.delete-btn:hover {
-  opacity: 0.9;
-
+.action-buttons button:hover {
+  background: #1e40af;
 }

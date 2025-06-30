@@ -26,6 +26,7 @@ import Carrinho from "./pages/Carrinho";
 import "../src/styles/Carrinho.css";
 import FinalizarCompra from "./pages/FinalizarCompra";
 import MeusSuportes from "./pages/MeusSuportes";
+import '../src/styles/Footer.css'
 
 
 function App() {

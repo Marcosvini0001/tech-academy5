@@ -1,112 +1,180 @@
 .ul-compra {
+    width: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    border-radius: 4px;
+    gap: 24px;
+  }
+  
+  .ul-compra h3 {
+    color: #2563eb;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .ul-compra ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
   }
   
   .li-compra {
+    background: #f8fafc;
+    border-radius: 14px;
+    box-shadow: 0 1px 8px rgba(37,99,235,0.06);
+    padding: 18px 16px;
     display: flex;
     flex-direction: column;
-    background-color: #708090;
-    list-style: none;
-    padding: 20px;
-    border-radius: 4px;
+    gap: 10px;
+    align-items: flex-start;
   }
   
-  .p-compra {
-    background-color: white;
-    padding: 10px;
+  .p-compra p {
+    color: #22223b;
+    font-size: 1rem;
+    margin: 0 0 2px 0;
   }
   
-  .del-compra {
-    background-color: #dc3545;
-    color: white;
+  .edit-compra, .del-compra {
+    border: none;
+    border-radius: 18px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 10px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
   }
   
   .edit-compra {
-    background-color: #ffd700;
-    color: black;
+    background: #ffd700;
+    color: #22223b;
+  }
+  
+  .edit-compra:hover {
+    background: #ffe066;
+  }
+  
+  .del-compra {
+    background: #dc3545;
+    color: #fff;
+  }
+  
+  .del-compra:hover {
+    background: #b91c1c;
   }
   
   .btn-home {
-    background-color: black;
-    color: white;
+    background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 12px 32px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: background 0.2s;
+  }
+  
+  .btn-home:hover {
+    background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
+  }
+  
+  .compras-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 24px rgba(37,99,235,0.08);
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header-compras h2 {
+    color: #2563eb;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
   }
   
   .div-end {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 14px;
+    box-shadow: 0 1px 8px rgba(37,99,235,0.06);
+    padding: 24px 20px;
+    margin-bottom: 32px;
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    background-color: #232f3e;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
   }
-  .h3-compras {
-    color: white;
+  
+  .h3-compras h3 {
+    color: #2563eb;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
   }
+  
   .input-compras {
-    padding: 5px;
-    color: white;
+    border: 1.5px solid #dbeafe;
+    border-radius: 22px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    background: #f1f5f9;
+    color: #22223b;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 1px 6px rgba(37,99,235,0.04);
+    width: 100%;
+    max-width: 400px;
   }
+  
+  .input-compras:focus {
+    border: 1.5px solid #38bdf8;
+    background: #fff;
+    box-shadow: 0 0 0 2px #bae6fd;
+    outline: none;
+    color: #22223b;
+  }
+  
   .button-compras {
-    background-color: #28a745;
-    color: white;
+    background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 12px 32px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
   }
   
   .button-compras:hover {
-    background-color: #218838;
+    background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
   }
   
-.li-compra {
-  display: flex;
-  flex-direction: column;
-  background-color: #708090;
-  list-style: none;
-  padding: 20px;
-  border-radius: 4px;
-}
-
-.p-compra {
-  background-color: white;
-  padding: 10px;
-}
-
-.del-compra {
-  background-color: #dc3545;
-  color: white;
-}
-
-.edit-compra {
-  background-color: #ffd700;
-  color: black;
-}
-
-.btn-home {
-  background-color: black;
-  color: white;
-}
-
-.div-end {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  background-color: #232f3e;
-}
-.h3-compras {
-  color: white;
-}
-.input-compras {
-  padding: 5px;
-  color: white;
-}
-.button-compras {
-  background-color: #28a745;
-  color: white;
-}
-
-.button-compras:hover {
-  background-color: #218838;
-}
+  @media (max-width: 700px) {
+    .compras-container {
+      padding: 18px 4px;
+    }
+    .div-end, .li-compra {
+      padding: 12px 6px;
+    }
+    .input-compras {
+      max-width: 100%;
+    }
+  }

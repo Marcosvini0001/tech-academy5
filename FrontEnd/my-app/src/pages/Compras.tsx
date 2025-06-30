@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { isAxiosError } from "axios";
+import "../styles/Compras.css";
 
 interface Pedido {
   id_item_pedido: number;
@@ -29,13 +30,8 @@ const Usuario = () => {
       setErro("");
     } catch (error) {
       if (isAxiosError(error)) {
-        console.error(
-          "Erro ao buscar pedidos:",
-          error.response?.data || error.message
-        );
         setErro(error.response?.data?.error || "Erro ao buscar pedidos.");
       } else {
-        console.error("Erro desconhecido:", error);
         setErro("Erro desconhecido ao buscar pedidos.");
       }
     } finally {
@@ -90,7 +86,6 @@ const Usuario = () => {
       } else {
         setErro("Erro ao atualizar endereço do pedido.");
       }
-      console.error("Erro ao atualizar endereço do pedido:", error);
     }
   };
 
@@ -107,7 +102,6 @@ const Usuario = () => {
       } else {
         setErro("Erro ao excluir pedido.");
       }
-      console.error("Erro ao excluir pedido:", error);
     }
   };
 
@@ -116,19 +110,18 @@ const Usuario = () => {
   }, []);
 
   return (
-    <div>
+    <div className="compras-container">
       <div className="header-compras">
         <h2>Bem-vindo, {user.name}</h2>
       </div>
 
       <div className="div-end">
         <div className="h3-compras">
-          {" "}
           <h3>Atualizar Endereço</h3>
         </div>
 
-        {mensagem && <p style={{ color: "green" }}>{mensagem}</p>}
-        {erro && <p style={{ color: "red" }}>{erro}</p>}
+        {mensagem && <p style={{ color: "green", fontWeight: 600 }}>{mensagem}</p>}
+        {erro && <p style={{ color: "#e50914", fontWeight: 600 }}>{erro}</p>}
         <input
           className="input-compras"
           type="text"
@@ -151,31 +144,30 @@ const Usuario = () => {
               pedidos.map((pedido) => (
                 <li className="li-compra" key={pedido.id_item_pedido}>
                   <div className="p-compra">
-                    {" "}
                     <p>Produto ID: {pedido.id_produto}</p>
                   </div>
                   <div className="p-compra">
-                    {" "}
                     <p>Endereço: {pedido.enderecoEntrega}</p>
                   </div>
                   <div className="p-compra">
-                    {" "}
                     <p>Quantidade: {pedido.quantidade}</p>
                   </div>
-                  <button
-                    className="edit-compra"
-                    onClick={() =>
-                      handleUpdateOrderAddress(pedido.id_item_pedido)
-                    }
-                  >
-                    Alterar Endereço do Pedido
-                  </button>
-                  <button
-                    className="del-compra"
-                    onClick={() => handleDeletePedido(pedido.id_item_pedido)}
-                  >
-                    Apagar Pedido
-                  </button>
+                  <div>
+                    <button
+                      className="edit-compra"
+                      onClick={() =>
+                        handleUpdateOrderAddress(pedido.id_item_pedido)
+                      }
+                    >
+                      Alterar Endereço do Pedido
+                    </button>
+                    <button
+                      className="del-compra"
+                      onClick={() => handleDeletePedido(pedido.id_item_pedido)}
+                    >
+                      Apagar Pedido
+                    </button>
+                  </div>
                 </li>
               ))}
           </ul>

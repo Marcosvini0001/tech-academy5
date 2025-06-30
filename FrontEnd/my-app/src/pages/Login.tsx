@@ -20,12 +20,11 @@ const Login = () => {
     }
 
     try {
-      // Corrigido para usar a URL correta
       const response = await api.post("/login", { email, password });
       const { token, user } = response.data;
 
-      localStorage.setItem("token", token); // Armazena o token
-      localStorage.setItem("user", JSON.stringify(user)); // Armazena os dados do usuário
+      localStorage.setItem("token", token); 
+      localStorage.setItem("user", JSON.stringify(user)); 
 
       alert(`Login successful! Welcome, ${email}`);
       navigate("/");
@@ -68,15 +67,15 @@ const Login = () => {
           />
         </div>
 
-        <div className="div-button-login">
-          <Link className="link-login" to="/">
-            Voltar
-          </Link>
-          <Link className="link-login" to="/registro">
-            Criar conta
-          </Link>
-          <button type="submit">Login</button>
-        </div>
+              <div className="div-button-login">
+        <Link className="link-login" to="/">
+          Voltar
+        </Link>
+        <Link className="link-login" to="/registro">
+          Criar conta
+        </Link>
+        <button type="submit">Login</button>
+      </div>
       </form>
     </div>
   );

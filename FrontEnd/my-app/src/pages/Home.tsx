@@ -25,27 +25,20 @@ const Home = () => {
       });
   }, []);
 
-  const handlePost = () => {
-    api
-      .post("/users", {
-
-      })
-      .then((response) => {
-        console.log("Usuário cadastrado com sucesso:", response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao cadastrar usuário:", error);
-      });
-  };
-
   return (
     <div>
       <Header />
       <div className="div-conteudo-home">
-        <button className="btn-produtos" onClick={() => navigate("/produtos")}>
-          Compre agora!
-        </button>
-      </div>
+        <div className="div-img-home">
+          <img src="../src/img/imgheader.png" alt="Banner Home" />
+            <button
+              className="btn-produtos"
+               onClick={() => navigate("/produtos")}
+                      >
+                      Compre agora!
+                      </button>
+                     </div>
+                    </div>
 
       <div className="div-oferta">
         <div className="h3-oferta">
@@ -54,10 +47,12 @@ const Home = () => {
         <div className="oferta-cards">
           {ofertas.map((produto) => (
             <div className="card-produto" key={produto.id}>
-              <img src="src/img/user.png" alt={produto.name} />
+              <img src="/img/produto-default.png" alt={produto.name} />
               <h4>{produto.name}</h4>
               <p>{produto.descricao}</p>
-              <p><strong>R$ {produto.preco}</strong></p>
+              <p>
+                <strong>R$ {produto.preco.toFixed(2)}</strong>
+              </p>
               <div className="button-card">
                 <button className="button-carrinho">Adicionar ao carrinho</button>
                 <button
