@@ -82,7 +82,7 @@ const Registro = () => {
       <form className="formulario-registro" onSubmit={handleSubmit}>
         <div className="registro-row">
   <div className="registro-field">
-    <label htmlFor="nome">Nome</label>
+    <label className="label-registro" htmlFor="nome">Nome</label>
     <input
       className="registro-input"
       type="text"
@@ -95,7 +95,7 @@ const Registro = () => {
     />
   </div>
   <div className="registro-field">
-    <label htmlFor="cpf">CPF</label>
+    <label className="label-registro" htmlFor="cpf">CPF</label>
     <input
       className="registro-input"
       type="text"
@@ -111,7 +111,7 @@ const Registro = () => {
 </div>
 <div className="registro-row">
   <div className="registro-field">
-    <label htmlFor="email">E-mail</label>
+    <label className="label-registro" htmlFor="email">E-mail</label>
     <input
       className="registro-input"
       type="email"
@@ -124,7 +124,7 @@ const Registro = () => {
     />
   </div>
   <div className="registro-field">
-    <label htmlFor="endereco">Endereço</label>
+    <label className="label-registro" htmlFor="endereco">Endereço</label>
     <input
       className="registro-input"
       type="text"
@@ -139,7 +139,7 @@ const Registro = () => {
 </div>
 <div className="registro-row">
   <div className="registro-field">
-    <label htmlFor="cep">CEP</label>
+    <label className="label-registro" htmlFor="cep">CEP</label>
     <input
       className="registro-input"
       type="text"
@@ -155,7 +155,7 @@ const Registro = () => {
 </div>
 <div className="registro-row">
   <div className="registro-field">
-    <label htmlFor="senha">Senha</label>
+    <label className="label-registro" htmlFor="senha">Senha</label>
     <input
       className="registro-input"
       type="password"
@@ -168,7 +168,7 @@ const Registro = () => {
     />
   </div>
   <div className="registro-field">
-    <label htmlFor="confirmar-senha">Confirmar Senha</label>
+    <label className="label-registro" htmlFor="confirmar-senha">Confirmar Senha</label>
     <input
       className="registro-input"
       type="password"

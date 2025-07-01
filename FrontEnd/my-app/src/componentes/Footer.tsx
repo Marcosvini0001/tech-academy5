@@ -14,6 +14,31 @@ const Footer = () => {
           <a href="">Comprar</a>
           <a href="">Vender</a>
         </div>
+        <div className="desenvolvedores">
+          <h5>Desenvolvedores</h5>
+          <div>
+            <span>Lucas Koji Takahashi Maeda</span>
+            <a
+              href="https://www.linkedin.com/in/lucas-koji" 
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginLeft: "8px", color: "#0e76a8" }}
+            >
+              <i className="fab fa-linkedin fa-lg"></i>
+            </a>
+          </div>
+          <div>
+            <span>Marcos Vinicius Bartoli Senko</span>
+            <a
+              href="https://www.linkedin.com/in/marcos-vinicius-bartoli-senko" 
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginLeft: "8px", color: "#0e76a8" }}
+            >
+              <i className="fab fa-linkedin fa-lg"></i>
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );

@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import api from "../services/api";
 import { isAxiosError } from "axios";
+import "../styles/Registro.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
-      setError("Invalid email format.");
+      setError("Formato de e-mail inválido.");
       return;
     }
 
@@ -26,56 +27,63 @@ const Login = () => {
       localStorage.setItem("token", token); 
       localStorage.setItem("user", JSON.stringify(user)); 
 
-      alert(`Login successful! Welcome, ${email}`);
+      alert(`Login realizado com sucesso! Bem-vindo, ${email}`);
       navigate("/");
     } catch (error: unknown) {
       if (isAxiosError(error)) {
-        setError(error.response?.data?.error || "Error during login.");
+        setError(error.response?.data?.error || "Erro ao fazer login.");
       } else {
-        setError("Unknown error during login.");
+        setError("Erro desconhecido ao fazer login.");
       }
     }
   };
 
   return (
-    <div className="login">
-      <div className="h2-login">
+    <div className="registro">
+      <div className="h2-registro">
         <h2>LOGIN</h2>
       </div>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div className="div-inputs">
-          <label>Email:</label>
-          <input
-            className="input-login-email"
-            type="email"
-            placeholder="Seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      {error && <div className="registro-error">{error}</div>}
+      <form className="formulario-registro" onSubmit={handleLogin}>
+        <div className="registro-row">
+          <div className="registro-field">
+            <label className="label-login" htmlFor="login-email">E-mail</label>
+            <input
+              className="registro-input"
+              type="email"
+              id="login-email"
+              placeholder="Seu email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
         </div>
-        <div className="div-inputs">
-          <label>Senha:</label>
-          <input
-            className="input-login-senha"
-            type="password"
-            placeholder="Sua senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="registro-row">
+          <div className="registro-field">
+            <label className="label-login" htmlFor="login-senha">Senha</label>
+            <input
+              className="registro-input"
+              type="password"
+              id="login-senha"
+              placeholder="Sua senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </div>
         </div>
-
-              <div className="div-button-login">
-        <Link className="link-login" to="/">
-          Voltar
-        </Link>
-        <Link className="link-login" to="/registro">
-          Criar conta
-        </Link>
-        <button type="submit">Login</button>
-      </div>
+        <div className="div-register-button">
+          <Link id="link-register" to="/">
+            Voltar
+          </Link>
+          <Link id="link-register" to="/registro">
+            Criar conta
+          </Link>
+          <button type="submit">Login</button>
+        </div>
       </form>
     </div>
   );

@@ -10,6 +10,21 @@ interface Produto {
   preco: number;
 }
 
+const categorias = [
+  { nome: "Proteínas", icone: "🥛" },
+  { nome: "Pré-treino", icone: "⚡" },
+  { nome: "Vitaminas", icone: "💊" },
+  { nome: "Aminoácidos", icone: "🧬" },
+  { nome: "Emagrecedores", icone: "🔥" },
+  { nome: "Acessórios", icone: "🏋️" },
+];
+
+const promocoes = [
+  { titulo: "Frete Grátis", descricao: "Para compras acima de R$ 199 em todo Brasil!" },
+  { titulo: "Combo Fitness", descricao: "Leve 3, pague 2 em produtos selecionados." },
+  { titulo: "Descontos Progressivos", descricao: "Quanto mais você compra, maior o desconto!" },
+];
+
 const Home = () => {
   const navigate = useNavigate();
   const [ofertas, setOfertas] = useState<Produto[]>([]);
@@ -28,21 +43,49 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div className="div-conteudo-home">
-        <div className="div-img-home">
-          <img src="../src/img/imgheader.png" alt="Banner Home" />
-            <button
-              className="btn-produtos"
-               onClick={() => navigate("/produtos")}
-                      >
-                      Compre agora!
-                      </button>
-                     </div>
-                    </div>
+
+      <section className="home-destaques">
+        <div className="home-destaque-categorias">
+          <h2>Categorias em destaque</h2>
+          <div className="home-categorias-lista">
+            {categorias.map((cat) => (
+              <button
+                key={cat.nome}
+                className="home-categoria-btn"
+                onClick={() => navigate(`/produtos?categoria=${cat.nome.toLowerCase()}`)}
+              >
+                <span className="home-categoria-icone">{cat.icone}</span>
+                <span>{cat.nome}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="home-destaque-promocoes">
+          <h2>Promoções Especiais</h2>
+          <ul className="home-promocoes-lista">
+            {promocoes.map((promo) => (
+              <li key={promo.titulo}>
+                <strong>{promo.titulo}:</strong> {promo.descricao}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="home-chamada">
+        <h1>Suplementos para sua evolução!</h1>
+        <p>
+          Os melhores produtos para performance, saúde e bem-estar. 
+          Encontre proteínas, pré-treinos, vitaminas e muito mais para potencializar seus resultados na academia.
+        </p>
+        <button className="btn-produtos" onClick={() => navigate("/produtos")}>
+          Ver todos os produtos
+        </button>
+      </section>
 
       <div className="div-oferta">
         <div className="h3-oferta">
-          <h3>Oferta da semana</h3>
+          <h3>Ofertas da Semana</h3>
         </div>
         <div className="oferta-cards">
           {ofertas.map((produto) => (

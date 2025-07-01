@@ -35,6 +35,14 @@
   width: 100%;
 }
 
+.label-registro {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 2px;
+  letter-spacing: 0.2px;
+}
+
 .formulario-registro {
   width: 100%;
   display: flex;
