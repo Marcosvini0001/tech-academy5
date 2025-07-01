@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
-import { isAxiosError } from "axios";
 import "../styles/Carrinho.css";
 
 interface ProdutoCarrinho {
@@ -12,6 +10,7 @@ interface ProdutoCarrinho {
   preco?: {
     valor: number;
   };
+  imagemUrl?: string;
 }
 
 const Carrinho = () => {
@@ -22,9 +21,11 @@ const Carrinho = () => {
 
   useEffect(() => {
     const carregarItensDoCarrinho = () => {
-      const carrinhoSalvo = localStorage.getItem("carrinho");
-      if (carrinhoSalvo) {
-        setItensCarrinho(JSON.parse(carrinhoSalvo));
+      const itens = localStorage.getItem("carrinho");
+      if (itens) {
+        setItensCarrinho(JSON.parse(itens));
+      } else {
+        setItensCarrinho([]);
       }
     };
 
@@ -41,46 +42,38 @@ const Carrinho = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const carrinhoSalvo = localStorage.getItem("carrinho");
-    if (carrinhoSalvo) {
-      setItensCarrinho(JSON.parse(carrinhoSalvo));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("carrinho", JSON.stringify(itensCarrinho));
-  }, [itensCarrinho]);
-
   const calcularTotal = () => {
-    return itensCarrinho.reduce((total, item) => {
-      return total + (item.preco?.valor || 0) * item.quantidade;
-    }, 0);
+    return itensCarrinho.reduce(
+      (total, item) =>
+        total + (item.preco?.valor || 0) * (item.quantidade || 1),
+      0
+    );
   };
 
   const alterarQuantidade = (id: number, novaQuantidade: number) => {
     if (novaQuantidade < 1) return;
-
-    setItensCarrinho((prevItens) =>
-      prevItens.map((item) =>
-        item.id === id ? { ...item, quantidade: novaQuantidade } : item
-      )
+    const novosItens = itensCarrinho.map((item) =>
+      item.id === id ? { ...item, quantidade: novaQuantidade } : item
     );
+    setItensCarrinho(novosItens);
+    localStorage.setItem("carrinho", JSON.stringify(novosItens));
   };
 
   const removerItem = (id: number) => {
-    setItensCarrinho((prevItens) => prevItens.filter((item) => item.id !== id));
+    const novosItens = itensCarrinho.filter((item) => item.id !== id);
+    setItensCarrinho(novosItens);
+    localStorage.setItem("carrinho", JSON.stringify(novosItens));
   };
 
   const finalizarCompra = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    if (!user.id) {
-      alert("Você precisa estar logado para finalizar a compra");
-      navigate("/login");
-      return;
-    }
-
-    navigate("/finalizar-compra", { state: { produtos: itensCarrinho } });
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Compra finalizada com sucesso!");
+      setItensCarrinho([]);
+      localStorage.removeItem("carrinho");
+      navigate("/");
+    }, 1500);
   };
 
   const continuarComprando = () => {
@@ -92,9 +85,6 @@ const Carrinho = () => {
       <div className="carrinho-titulo">
         <h2>Seu Carrinho</h2>
       </div>
-
-      {error && <p className="mensagem-erro">{error}</p>}
-
       {itensCarrinho.length === 0 ? (
         <div className="carrinho-vazio">
           <p>Seu carrinho está vazio</p>
@@ -103,35 +93,33 @@ const Carrinho = () => {
           </button>
         </div>
       ) : (
-        <>
+        <div className="carrinho-conteudo">
           <div className="lista-itens">
             {itensCarrinho.map((item) => (
               <div key={item.id} className="item-carrinho">
+                <img
+                  className="item-img"
+                  src={item.imagemUrl || "/img/produto-default.png"}
+                  alt={item.name}
+                />
                 <div className="item-info">
                   <h3>{item.name}</h3>
                   <p>{item.descricao}</p>
                   <p className="preco">
-                    R${" "}
-                    {item.preco?.valor
-                      ? (item.preco.valor * item.quantidade).toFixed(2)
-                      : "0.00"}
+                    R$ {item.preco?.valor ? (item.preco.valor * item.quantidade).toFixed(2) : "0.00"}
                   </p>
                 </div>
                 <div className="item-controles">
                   <div className="controle-quantidade">
                     <button
-                      onClick={() =>
-                        alterarQuantidade(item.id, item.quantidade - 1)
-                      }
+                      onClick={() => alterarQuantidade(item.id, item.quantidade - 1)}
                       disabled={item.quantidade <= 1}
                     >
                       -
                     </button>
                     <span>{item.quantidade}</span>
                     <button
-                      onClick={() =>
-                        alterarQuantidade(item.id, item.quantidade + 1)
-                      }
+                      onClick={() => alterarQuantidade(item.id, item.quantidade + 1)}
                     >
                       +
                     </button>
@@ -146,7 +134,6 @@ const Carrinho = () => {
               </div>
             ))}
           </div>
-
           <div className="resumo-compra">
             <h3>Resumo da Compra</h3>
             <div className="total">
@@ -167,8 +154,9 @@ const Carrinho = () => {
               Continuar Comprando
             </button>
           </div>
-        </>
+        </div>
       )}
+      {error && <div className="mensagem-erro">{error}</div>}
     </div>
   );
 };
