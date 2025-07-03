@@ -27,6 +27,7 @@ import "../src/styles/Carrinho.css";
 import FinalizarCompra from "./pages/FinalizarCompra";
 import MeusSuportes from "./pages/MeusSuportes";
 import '../src/styles/Footer.css'
+import AdminRoute from "./componentes/AdminRoute";
 
 
 function App() {
@@ -44,7 +45,14 @@ function MainContent() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/adm/*" element={<PaginaADM />} />
+        <Route
+          path="/adm/*"
+          element={
+            <AdminRoute>
+              <PaginaADM />
+            </AdminRoute>
+          }
+        />
         <Route path="/produtos" element={<Card />} />
         <Route path="/formapagamento" element={<FormaPagamento />} />
         <Route path="/formapagamento/:id" element={<FormaPagamento />} />  

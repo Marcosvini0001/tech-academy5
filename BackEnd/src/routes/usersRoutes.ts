@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUserById,
   updateUserAddress,
+  registerUser, 
 } from "../controllers/usersController";
 import { loginUser } from "../controllers/loginController";
 
@@ -18,5 +19,7 @@ router.put("/:id", updateUser);
 router.put("/:id/address", updateUserAddress);
 router.delete("/:id", deleteUserById);
 router.post("/login", loginUser); // Rota para login
+router.post('/register', registerUser); 
+
 
 export default router;

@@ -6,15 +6,19 @@ const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const userStr = localStorage.getItem("user");
     const token = localStorage.getItem("token");
-    if (user && token) {
+    if (userStr && token) {
+      const user = JSON.parse(userStr);
       setIsLoggedIn(true);
-      setUserName(JSON.parse(user).name);
+      setUserName(user.name);
+      setIsAdmin(user.role === "admin");
     } else {
       setIsLoggedIn(false);
+      setIsAdmin(false);
     }
   }, []);
 
@@ -22,6 +26,7 @@ const Header = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    setIsAdmin(false);
     navigate("/login");
   };
 
@@ -38,7 +43,9 @@ const Header = () => {
         <a onClick={() => navigate("/produtos")}>Products</a>
         <a onClick={() => navigate("/suporte")}>Support</a>
         <a onClick={() => navigate("/meus-suportes")}>Meus support</a>
-        <a onClick={() => navigate("/adm")}>ADM</a>
+        {isAdmin && (
+          <a onClick={() => navigate("/adm")}>ADM</a>
+        )}
 
         <input
           type="search"

@@ -1,17 +1,18 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/database';
 
-class UserModel extends Model {
+class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
   public password!: string;
-  public cpf!: string;
   public endereco!: string;
+  public cpf!: string;
   public cep!: string;
+  public role!: string;
 }
 
-UserModel.init(
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -31,24 +32,30 @@ UserModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    cpf: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     endereco: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    cpf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     cep: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'user', // 'user' ou 'admin'
+    },
   },
   {
     sequelize,
-    modelName: "User",
-    tableName: "users",
+    modelName: 'User',
+    tableName: 'users',
   }
 );
 
-export default UserModel;
+export default User;

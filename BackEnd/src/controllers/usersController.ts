@@ -1,17 +1,12 @@
 import { Request, Response } from "express";
-
-interface AuthenticatedRequest extends Request {
-  user?: { id: string; email: string };
-}
-import UserModel from "../models/usersModel";
-import "../routes/usersRoutes";
 import bcrypt from "bcryptjs";
+import User from "../models/usersModel";
 
 export const getAll = async (req: Request, res: Response) => {
   const { page = 1, limit = 10 } = req.query;
   const offset = (Number(page) - 1) * Number(limit);
 
-  const users = await UserModel.findAndCountAll({
+  const users = await User.findAndCountAll({
     limit: Number(limit),
     offset,
   });
@@ -27,7 +22,7 @@ export const getUserById = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const user = await UserModel.findByPk(req.params.id);
+  const user = await User.findByPk(req.params.id);
 
   return res.json(user);
 };
@@ -58,14 +53,14 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    const existingUser = await UserModel.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: "E-mail já cadastrado." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await UserModel.create({
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
@@ -82,7 +77,7 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
 };
 
 export const updateUser = async (
-  req: AuthenticatedRequest & { params: { id: string } },
+  req: Request & { user?: { id: string }, params: { id: string } },
   res: Response
 ): Promise<any> => {
   try {
@@ -92,7 +87,7 @@ export const updateUser = async (
       return res.status(400).json({ error: "Valor invalido" });
     }
 
-    const user = await UserModel.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id);
     if (!user) {
       return res.status(404).json({ error: "Usuário nao encontrado" });
     }
@@ -126,7 +121,7 @@ export const deleteUserById = async (
 ): Promise<any> => {
   try {
     const { id } = req.params;
-    const user = await UserModel.findByPk(id);
+    const user = await User.findByPk(id);
 
     if (!user) {
       return res.status(404).json({ error: "Usuário não encontrado" });
@@ -139,66 +134,63 @@ export const deleteUserById = async (
   }
 };
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { name, email, password, cpf } = req.body;
+    const { name, email, password, endereco, cpf, cep, role } = req.body;
 
-    if (!name || !email || !password || !cpf) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos são obrigatórios." });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Formato de e-mail inválido." });
-    }
-
-    const cpfRegex = /^\d{11}$/;
-    if (!cpfRegex.test(cpf)) {
-      return res
-        .status(400)
-        .json({ error: "CPF inválido. Deve conter 11 dígitos." });
-    }
-
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        error:
-          "A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial.",
-      });
-    }
-
-    const existingUser = await UserModel.findOne({ where: { email } });
+    // Verifica se já existe usuário com o mesmo email ou cpf
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: "E-mail já cadastrado." });
+      return res.status(400).json({ message: "Email já cadastrado." });
     }
 
+    const existingCpf = await User.findOne({ where: { cpf } });
+    if (existingCpf) {
+      return res.status(400).json({ message: "CPF já cadastrado." });
+    }
+
+    // Hash da senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await UserModel.create({
+    // Só permite criar admin se for o primeiro usuário
+    const userCount = await User.count();
+    let userRole = "user";
+    if (userCount === 0 && role === "admin") {
+      userRole = "admin";
+    }
+
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
+      endereco,
       cpf,
+      cep,
+      role: userRole,
     });
 
-    res
-      .status(201)
-      .json({ message: "Usuário registrado com sucesso.", user: newUser });
+    res.status(201).json({
+      message: "Usuário criado com sucesso!",
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
+    });
   } catch (error) {
-    console.error("Erro ao registrar usuário:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
+    res.status(500).json({ message: "Erro ao criar usuário.", error });
   }
 };
 
-const validatePassword = async (user: UserModel, senha: string): Promise<boolean> => {
+type UserInstance = typeof User.prototype;
+
+const validatePassword = async (user: UserInstance, senha: string): Promise<boolean> => {
   return bcrypt.compare(senha, user.password);
 };
 
-const findUserById = async (id: string): Promise<UserModel | null> => {
-  return UserModel.findByPk(id);
+const findUserById = async (id: string): Promise<UserInstance | null> => {
+  return User.findByPk(id);
 };
 
 export const updateUserAddress = async (req: Request, res: Response): Promise<void> => {

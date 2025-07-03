@@ -12,7 +12,7 @@ import express from "express";
   import precoRoutes from "../src/routes/precoRoutes";
   import suporteRoutes from "./routes/suporteRoutes";
   import cartRoutes from "./routes/cartRoutes";
-
+  
 
   const app = express();
   const port = 3000;
@@ -33,6 +33,7 @@ import express from "express";
   app.use("/api/precos", precoRoutes);
   app.use("/api/suporte", suporteRoutes);
   app.use("/api/cart", cartRoutes);
+  app.use('/users', usersRoutes);
 
 
   sequelize.sync({ alter: true })
