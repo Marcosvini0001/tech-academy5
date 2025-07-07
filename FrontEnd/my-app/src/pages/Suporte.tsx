@@ -36,30 +36,30 @@ const Suporte = () => {
   return (
     <>
       <Header />
-      <div className="suporte">
-        <div className="h2-suporte">
+      <div className="sup-suporte">
+        <div className="sup-h2-suporte">
           <h2>SUPORTE</h2>
         </div>
 
         {!isLoggedIn ? (
-          <div className="nao-logado">
-            <p className="mensagem-login">
+          <div className="sup-nao-logado">
+            <p className="sup-mensagem-login">
               Você precisa estar <strong>logado</strong> para enviar uma mensagem de suporte.
             </p>
-            <button onClick={() => navigate("/login")} className="btn-entrar">
+            <button onClick={() => navigate("/login")} className="sup-btn-entrar">
               Fazer Login
             </button>
           </div>
         ) : (
           <>
-            {status && <p className="status-suporte">{status}</p>}
+            {status && <p className="sup-status-suporte">{status}</p>}
             <form onSubmit={handleSubmit}>
-              <div className="div-inputs">
+              <div className="sup-div-inputs">
                 <label>Assunto:</label>
                 <select
                   value={assunto}
                   onChange={(e) => setAssunto(e.target.value)}
-                  className="select-assunto"
+                  className="sup-select-assunto"
                 >
                   <option value="feedback">Feedback</option>
                   <option value="elogio">Elogio</option>
@@ -67,17 +67,17 @@ const Suporte = () => {
                   <option value="outros">Outros</option>
                 </select>
               </div>
-              <div className="div-inputs">
+              <div className="sup-div-inputs">
                 <label>Mensagem:</label>
                 <textarea
-                  className="textarea-suporte"
+                  className="sup-textarea-suporte"
                   placeholder="Escreva sua mensagem aqui..."
                   value={mensagem}
                   onChange={(e) => setMensagem(e.target.value)}
                   required
                 ></textarea>
               </div>
-              <div className="div-button-suporte">
+              <div className="sup-div-button-suporte">
                 <button type="submit">Enviar</button>
               </div>
             </form>

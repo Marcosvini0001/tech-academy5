@@ -123,15 +123,15 @@ const CadastroProdutos = () => {
         <h2 className="titulo-cadastro">Cadastrar Produtos</h2>
       </div>
 
-      {error && <p className="mensagem-erro">{error}</p>}
+      {error && <p className="cad-prod-mensagem-erro">{error}</p>}
 
-      <form className="formulario-produto" onSubmit={handleSubmit}>
-        <div className="div-inputs">
+      <form className="cad-prod-formulario" onSubmit={handleSubmit}>
+        <div className="cad-prod-div-inputs">
           <label htmlFor="nome">Nome do produto:</label>
           <input
             type="text"
             id="nome"
-            className="input-texto"
+            className="cad-prod-input-texto"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -139,12 +139,12 @@ const CadastroProdutos = () => {
           />
         </div>
 
-        <div className="div-inputs">
+        <div className="cad-prod-div-inputs">
           <label htmlFor="marca">Marca:</label>
           <input
             type="text"
             id="marca"
-            className="input-texto"
+            className="cad-prod-input-texto"
             value={marca}
             onChange={(e) => setMarca(e.target.value)}
             required
@@ -152,12 +152,12 @@ const CadastroProdutos = () => {
           />
         </div>
 
-        <div className="div-inputs">
+        <div className="cad-prod-div-inputs">
           <label htmlFor="preco">Preço:</label>
           <input
             type="text"
             id="preco"
-            className="input-texto"
+            className="cad-prod-input-texto"
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
             required
@@ -165,11 +165,11 @@ const CadastroProdutos = () => {
           />
         </div>
 
-        <div className="div-inputs">
+        <div className="cad-prod-div-inputs">
           <label htmlFor="descricao">Descrição:</label>
           <textarea
             id="descricao"
-            className="input-texto"
+            className="cad-prod-input-texto"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
             required
@@ -177,11 +177,11 @@ const CadastroProdutos = () => {
           />
         </div>
 
-        <div className="botoes-formulario">
-          <Link className="botao-voltar" to="/">
+        <div className="cad-prod-botoes-formulario">
+          <Link className="cad-prod-botao-voltar" to="/">
             Ir para o Home
           </Link>
-          <button className="botao-enviar" type="submit">
+          <button className="cad-prod-botao-enviar" type="submit">
             Cadastrar
           </button>
         </div>

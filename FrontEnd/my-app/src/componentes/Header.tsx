@@ -7,6 +7,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -28,6 +29,14 @@ const Header = () => {
     setIsLoggedIn(false);
     setIsAdmin(false);
     navigate("/login");
+  };
+
+  const handleSearch = () => { // nova funcção para pesquisa
+    if (searchTerm.trim() !== "") {
+      navigate(`/produtos?q=${encodeURIComponent(searchTerm)}`);
+    } else {
+      navigate("/produtos");
+    }
   };
 
   return (
@@ -52,8 +61,11 @@ const Header = () => {
           className="search-input"
           name="name"
           placeholder="Search for your product"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={e => { if (e.key === "Enter") handleSearch(); }}
         />
-        <button className="btn-button">Search</button>
+        <button className="btn-button" onClick={handleSearch}>Search</button>
         <button onClick={() => navigate("/carrinho")}>🛒 Carrinho</button>
 
         {!isLoggedIn ? (
