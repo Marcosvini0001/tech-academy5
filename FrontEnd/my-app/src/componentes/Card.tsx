@@ -68,20 +68,16 @@ import { useState, useEffect } from "react";
                   <button
   className="button-carrinho"
   onClick={() => {
-    // Recuperar o carrinho atual
     const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho") || "[]");
     
-    // Verifique se o produto já está no carrinho
     const produtoNoCarrinho = carrinhoAtual.find((item: CarrinhoItem) => item.id === produto.id);
     
     if (produtoNoCarrinho) {
-      // Se já estiver, aumente a quantidade
       const carrinhoAtualizado: CarrinhoItem[] = carrinhoAtual.map((item: CarrinhoItem) => 
         item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item
       );
       localStorage.setItem("carrinho", JSON.stringify(carrinhoAtualizado));
     } else {
-      // Se não estiver, adicione com quantidade 1
       const produtoLimpo = {
         id: produto.id,
         name: produto.name,
@@ -93,7 +89,6 @@ import { useState, useEffect } from "react";
       };
       
       localStorage.setItem("carrinho", JSON.stringify([...carrinhoAtual, produtoLimpo]));
-      // Disparar evento customizado para atualizar o carrinho
       window.dispatchEvent(new Event('carrinhoAtualizado'));
     }
     
