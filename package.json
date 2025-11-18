@@ -37,7 +37,7 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "test": "echo \"No tests yet, but hook is working!\"",
     "build": "vite build"
   }
